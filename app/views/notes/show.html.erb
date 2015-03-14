@@ -1,14 +1,14 @@
-<p id="notice"><%= notice %></p>
+<% content_for :navigation do %>
+          <li><%= link_to 'Index', notes_path %></li>
+          <li><%= link_to 'New Note', new_note_path %></li>
+          <li><%= link_to 'Edit', edit_note_path(@note) %></li>
+          <li><%= link_to 'Destroy', @note, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+<% end %>
 
-<p>
-  <strong>Title:</strong>
+<h2 class="text-center">
   <%= @note.title %>
-</p>
+</h2>
 
-<p>
-  <strong>Text:</strong>
-  <%= @note.text %>
-</p>
-
-<%= link_to 'Edit', edit_note_path(@note) %> |
-<%= link_to 'Back', notes_path %>
+<% renderer = Redcarpet::Render::HTML.new(render_options = {escape_html: true}) %>
+<% markdown = Redcarpet::Markdown.new(renderer, :autolink => true, :space_after_headers => true) %>
+<%= markdown.render(@note.text).html_safe %>

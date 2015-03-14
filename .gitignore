@@ -27,3 +27,7 @@
 /doc/**
 # But includes *.tex files
 !/doc/*.tex
+
+#Ignore sass cache file
+.sass-cache
+*.css.map

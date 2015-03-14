@@ -7,3 +7,13 @@ one:
 two:
   title: MyString
   text: MyText
+
+three:
+  title: redcarpet
+  text: |
+    ### Redcarpet
+    
+    - line one
+    - line two
+    - line three
+

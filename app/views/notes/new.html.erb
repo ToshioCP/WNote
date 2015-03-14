@@ -1,5 +1,8 @@
-<h1>New Note</h1>
+<% content_for :navigation do %>
+          <li><%= link_to 'Index', notes_path %></li>
+<% end %>
+
+<h2>New Note</h2>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', notes_path %>
