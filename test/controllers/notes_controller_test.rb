@@ -51,8 +51,6 @@ class NotesControllerTest < ActionController::TestCase
     get :show, id: @note
     assert_select 'div.note-main' do
       assert_select 'h3'
-    end
-    assert_select 'div.note-main' do
       assert_select 'ul' do
         assert_select 'li',3
       end

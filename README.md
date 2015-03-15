@@ -9,10 +9,13 @@ You can read any note you saved.
 WNote is not in production mode.
 It doesn't have enough power, yet.
 
+### features
+
+- Markdown is available
+- designed with Bootstrap
+
 ### TODO list
 
-- bootstrap
 - admin/user/guest
 - signin/signout
-- redcarpet -- markdown
 - backup/reset/restore
