@@ -1,12 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  text: MyText
+  title: Install_ruby
+  text: "Visit ruby site."
+  section_id:
 
 two:
-  title: MyString
-  text: MyText
+  title: Install_rails
+  text: "VIsiti rails site."
+  section_id:
 
 three:
   title: redcarpet
@@ -16,4 +18,5 @@ three:
     - line one
     - line two
     - line three
+  section_id:
 

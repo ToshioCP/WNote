@@ -1,0 +1,36 @@
+<% content_for :navigation do %>
+          <li><%= link_to 'Article', @section.article %></li>
+          <li><%= link_to 'New Section', new_article_section_path(@section.article) %></li>
+          <li><%= link_to 'Edit Section', edit_section_path(@section) %></li>
+          <li><%= link_to 'Destroy Section', @section, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+          <li><%= link_to 'New Note', new_section_note_path(@section) %></li>
+          <% if @previous_section %>
+            <li><%= link_to '<<==', section_path(@previous_section) %></li>
+          <% end %>
+          <% if @next_section %>
+            <li><%= link_to '==>>', section_path(@next_section) %></li>
+          <% end %>
+<% end %>
+
+<h2><%= @section.heading %></h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th class='col-md-1'>Show</th>
+      <th class='col-md-2'>Title</th>
+      <th class='col-md-9'>Text</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @section.notes.each do |note| %>
+      <tr>
+        <td><%= link_to 'Show', note, class: 'btn btn-sm btn-info', role: 'button' %></td>
+        <td><%= note.title %></td>
+        <td><%= note.text.length >50 ? note.text[0, 46]+'...' : note.text %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

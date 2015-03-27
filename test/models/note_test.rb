@@ -9,4 +9,8 @@ class NoteTest < ActiveSupport::TestCase
     note = Note.new(title: "title is not empty", text: "")
     assert_not note.save, "Saved the note without a text."
   end
+  test "the presence of the reference to the section" do
+    note = Note.new(title: "title", text: "text is not empty.")
+    assert_not note.save, "Saved the note without a reference to the section."
+  end
 end

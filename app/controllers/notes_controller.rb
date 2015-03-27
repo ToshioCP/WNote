@@ -1,27 +1,24 @@
 class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
 
-  # GET /notes
-  def index
-    @notes = Note.all
-  end
-
-  # GET /notes/1
   def show
+    @previous_note = Note.where("section_id = ? AND id < ?", @note.section.id, @note.id).last
+    @next_note = Note.where("section_id = ? AND id > ?", @note.section.id, @note.id).first
   end
 
-  # GET /notes/new
   def new
     @note = Note.new
+    @note.section= Section.find(params[:section_id])
+    @redirect_path = section_notes_path(@note.section)
   end
 
-  # GET /notes/1/edit
   def edit
+    @redirect_path = note_path(@note)
   end
 
-  # POST /notes
   def create
     @note = Note.new(note_params)
+    @note.section= Section.find(params[:section_id])
 
     if @note.save
       flash[:success] = 'Note was successfully created.'
@@ -31,7 +28,6 @@ class NotesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /notes/1
   def update
     if @note.update(note_params)
       flash[:success] = 'Note was successfully updated.'
@@ -41,11 +37,11 @@ class NotesController < ApplicationController
     end
   end
 
-  # DELETE /notes/1
   def destroy
+    section = @note.section
     @note.destroy
     flash[:success] = 'Note was successfully destroyed.'
-    redirect_to notes_url
+    redirect_to section
   end
 
   private

@@ -1,8 +1,15 @@
 <% content_for :navigation do %>
-          <li><%= link_to 'Index', notes_path %></li>
-          <li><%= link_to 'New Note', new_note_path %></li>
-          <li><%= link_to 'Edit', edit_note_path(@note) %></li>
-          <li><%= link_to 'Destroy', @note, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+          <li><%= link_to 'Article', article_path(@note.section.article) %></li>
+          <li><%= link_to 'Section', section_path(@note.section) %></li>
+          <li><%= link_to 'New Note', new_section_note_path(@note.section) %></li>
+          <li><%= link_to 'Edit Note', edit_note_path(@note) %></li>
+          <li><%= link_to 'Destroy Note', @note, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+          <% if @previous_note %>
+            <li><%= link_to '<<==', note_path(@previous_note) %></li>
+          <% end %>
+          <% if @next_note %>
+            <li><%= link_to '==>>', note_path(@next_note) %></li>
+          <% end %>
 <% end %>
 
 <h2 class="text-center">
