@@ -4,11 +4,15 @@
           <li><%= link_to 'New Note', new_section_note_path(@note.section) %></li>
           <li><%= link_to 'Edit Note', edit_note_path(@note) %></li>
           <li><%= link_to 'Destroy Note', @note, method: :delete, data: { confirm: 'Are you sure?' } %></li>
-          <% if @previous_note %>
-            <li><%= link_to '<<==', note_path(@previous_note) %></li>
+          <% if @prev_note %>
+            <li><%= link_to '<<==', note_path(@prev_note) %></li>
+          <% else %>
+            <li class='navbar-text'><<==</li>
           <% end %>
           <% if @next_note %>
             <li><%= link_to '==>>', note_path(@next_note) %></li>
+          <% else %>
+            <li class='navbar-text'>==>></li>
           <% end %>
 <% end %>
 

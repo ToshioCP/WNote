@@ -11,14 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321132337) do
+ActiveRecord::Schema.define(version: 20150328133522) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "title"
     t.string   "author"
     t.date     "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "section_order"
   end
 
   create_table "notes", force: :cascade do |t|
@@ -36,6 +37,7 @@ ActiveRecord::Schema.define(version: 20150321132337) do
     t.integer  "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "note_order"
   end
 
   add_index "sections", ["article_id"], name: "index_sections_on_article_id"

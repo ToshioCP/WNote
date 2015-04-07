@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+wnote:
   title: WNote_Howto
   author: ToshioCP
   date: 2015-03-21
+  section_order: "<%= ActiveRecord::FixtureSet.identify(:one) %>,<%= ActiveRecord::FixtureSet.identify(:two) %>"
 
-two:
+rails_howto:
   title: Raiils_Howto
   author: Toshio_Sekiya
   date: 2015-03-21
+  section_order:

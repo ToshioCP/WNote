@@ -21,9 +21,32 @@
   </div>
   <div class="form-group">
     <%= f.label :date %><br>
-    <%= f.date_select :date, options={class: "form-control", placeholder: "date"} %>
+    <%= f.date_select :date, options = {}, html_options = {} %>
   </div>
-  <div style="margin-top:5px;">
+
+  <% if ! @article.section_order.blank? %>
+    <div class="form-group">
+      <h5><strong>Change ordering</strong></h5>
+      <%= f.hidden_field :section_order %>
+      <p>
+      You can change the order of the sections by dragging it which you want to move.
+      </p>
+      <ul id="sortable">
+        <% as = ArrayString.new(@article.section_order) %>
+        <% as.each do |no| %>
+          <% section = @article.sections.find(no) %>
+          <li class="ui-state-default" id="<%=section.id%>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><%= section.heading %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+  <% if ! @article.section_order.blank? %>
+    <%= f.submit options={class: "btn btn-primary", id: "edit_article_submit"} %>
+  <% else %>
     <%= f.submit options={class: "btn btn-primary"} %>
+  <% end %>
   </div>
+
 <% end %>

@@ -13,4 +13,11 @@ class ArticleTest < ActiveSupport::TestCase
     article = Article.new(title: "WNote howto", author: "ToshioCP", date: nil)
     assert_not article.save, "Saved the note without a date."
   end
+  test "delete the desendant sections and notes when article deleted" do
+    assert_difference('Section.count',-2) do
+      assert_difference('Note.count',-4) do
+        articles(:wnote).destroy
+      end
+    end
+  end
 end

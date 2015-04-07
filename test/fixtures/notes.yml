@@ -1,16 +1,21 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+install_rbenv:
+  title: Install_rbenv
+  text: "Visit rbeny site and download it."
+  section: one
+
+install_ruby:
   title: Install_ruby
-  text: "Visit ruby site."
-  section_id:
+  text: "Install ruby with rbenv."
+  section: one
 
-two:
+install_rails:
   title: Install_rails
-  text: "VIsiti rails site."
-  section_id:
+  text: "gem rails."
+  section: one
 
-three:
+markdown:
   title: redcarpet
   text: |
     ### Redcarpet
@@ -18,5 +23,5 @@ three:
     - line one
     - line two
     - line three
-  section_id:
+  section: two
 

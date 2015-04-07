@@ -23,7 +23,7 @@
   </thead>
 
   <tbody>
-    <% @sections.each do |section| %>
+    <% @article.ordered_sections.each do |section| %>
       <tr>
         <td><%= link_to 'Show', section, class: 'btn btn-sm btn-info', role: 'button' %></td>
         <td><%= section.heading %></td>

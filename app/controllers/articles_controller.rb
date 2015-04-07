@@ -6,7 +6,6 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    @sections = @article.sections
   end
 
   def new
@@ -46,6 +45,6 @@ class ArticlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
-      params.require(:article).permit(:title, :author, :date)
+      params.require(:article).permit(:title, :author, :date, :section_order)
     end
 end

@@ -2,14 +2,14 @@ class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
 
   def show
-    @previous_note = Note.where("section_id = ? AND id < ?", @note.section.id, @note.id).last
-    @next_note = Note.where("section_id = ? AND id > ?", @note.section.id, @note.id).first
+    @prev_note = @note.section.prev_note(@note)
+    @next_note = @note.section.next_note(@note)
   end
 
   def new
     @note = Note.new
-    @note.section= Section.find(params[:section_id])
-    @redirect_path = section_notes_path(@note.section)
+    @note.section_id = params[:section_id]
+    @redirect_path = notes_path
   end
 
   def edit
@@ -18,8 +18,6 @@ class NotesController < ApplicationController
 
   def create
     @note = Note.new(note_params)
-    @note.section= Section.find(params[:section_id])
-
     if @note.save
       flash[:success] = 'Note was successfully created.'
       redirect_to @note
@@ -52,6 +50,6 @@ class NotesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def note_params
-      params.require(:note).permit(:title, :text)
+      params.require(:note).permit(:section_id, :title, :text)
     end
 end

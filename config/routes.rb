@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
   root 'articles#index'
   resources :articles do
-    resources :sections, only: [:new, :create]
+    resources :sections, only: :new
   end
-  resources :sections, only: [:show, :edit, :update, :destroy] do
-    resources :notes, only: [:new, :create]
+  resources :sections, except: [:index, :new] do
+    resources :notes, only: :new
   end
-  resources :notes, except: [:index, :new, :create]
+  resources :notes, except: [:index, :new]
+
+  # for the development
+  get 'admin/reset' => 'admin#reset'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

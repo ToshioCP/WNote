@@ -12,6 +12,10 @@
   <% end %>
 
   <div class="form-group">
+    <%= f.label :section %><br>
+    <%= f.collection_select(:section_id, @note.section.article.sections, :id, :heading, options = {}, html_options = {class: "form-control"}) %>
+  </div>
+  <div class="form-group">
     <%= f.label :title %><br>
     <%= f.text_field :title, options={class: "form-control", placeholder: "title"} %>
   </div>

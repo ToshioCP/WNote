@@ -1,9 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  heading: Section_one
-  article_id: 
+  heading: Instalation
+  article: wnote
+  note_order: "<%= [
+    ActiveRecord::FixtureSet.identify(:install_rbenv),
+    ActiveRecord::FixtureSet.identify(:install_ruby),
+    ActiveRecord::FixtureSet.identify(:install_rails)
+    ].join(',') %>"
 
 two:
-  heading: Section_two
-  article_id: 
+  heading: Rails_generate_scaffold
+  article: wnote
+  note_order: "<%= ActiveRecord::FixtureSet.identify(:markdown) %>"
+

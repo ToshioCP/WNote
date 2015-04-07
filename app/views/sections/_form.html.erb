@@ -12,10 +12,36 @@
   <% end %>
 
   <div class="form-group">
+    <%= f.label :article %><br>
+    <%= f.collection_select(:article_id, Article.all, :id, :title, options = {}, html_options = {class: "form-control"}) %>
+  </div>
+  <div class="form-group">
     <%= f.label :heading %><br>
     <%= f.text_field :heading, options={class: "form-control", placeholder: "heading"} %>
   </div>
-  <div style="margin-top:5px;">
+
+  <% if ! @section.note_order.blank? %>
+    <div class="form-group">
+      <h5><strong>Change ordering</strong></h5>
+      <%= f.hidden_field :note_order %>
+      <p>
+      You can change the order of the notes by dragging it which you want to move.
+      </p>
+      <ul id="sortable">
+        <% as = ArrayString.new(@section.note_order) %>
+        <% as.each do |no| %>
+          <% note = @section.notes.find(no) %>
+          <li class="ui-state-default" id="<%=note.id%>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><%= note.title %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+  <% if ! @section.note_order.blank? %>
+    <%= f.submit options={class: "btn btn-primary", id: "edit_section_submit"} %>
+  <% else %>
     <%= f.submit options={class: "btn btn-primary"} %>
+  <% end %>
   </div>
 <% end %>

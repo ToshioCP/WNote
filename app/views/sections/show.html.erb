@@ -4,11 +4,15 @@
           <li><%= link_to 'Edit Section', edit_section_path(@section) %></li>
           <li><%= link_to 'Destroy Section', @section, method: :delete, data: { confirm: 'Are you sure?' } %></li>
           <li><%= link_to 'New Note', new_section_note_path(@section) %></li>
-          <% if @previous_section %>
-            <li><%= link_to '<<==', section_path(@previous_section) %></li>
+          <% if @prev_section %>
+            <li><%= link_to '<<==', section_path(@prev_section) %></li>
+          <% else %>
+            <li class='navbar-text'><<==</li>
           <% end %>
           <% if @next_section %>
             <li><%= link_to '==>>', section_path(@next_section) %></li>
+          <% else %>
+            <li class='navbar-text'>==>></li>
           <% end %>
 <% end %>
 
@@ -24,13 +28,17 @@
   </thead>
 
   <tbody>
-    <% @section.notes.each do |note| %>
+  <% if @section.note_order %>
+    <% as = ArrayString.new(@section.note_order) %>
+    <% as.each do |no| %>
+      <% note = @section.notes.find(no) %>
       <tr>
-        <td><%= link_to 'Show', note, class: 'btn btn-sm btn-info', role: 'button' %></td>
-        <td><%= note.title %></td>
-        <td><%= note.text.length >50 ? note.text[0, 46]+'...' : note.text %></td>
+        <td> <%= link_to 'Show', note, class: 'btn btn-sm btn-info', role: 'button' %> </td>
+        <td> <%= note.title %> </td>
+        <td> <%= note.text.length >50 ? note.text[0, 46]+'...' : note.text %> </td>
       </tr>
     <% end %>
+  <% end %>
   </tbody>
 </table>
 

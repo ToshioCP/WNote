@@ -2,14 +2,14 @@ class SectionsController < ApplicationController
   before_action :set_section, only: [:show, :edit, :update, :destroy]
 
   def show
-    @previous_section = Section.where("article_id = ? AND id < ?", @section.article.id, @section.id).last
-    @next_section = Section.where("article_id = ? AND id > ?", @section.article.id, @section.id).first
+    @prev_section = @section.article.prev_section(@section)
+    @next_section = @section.article.next_section(@section)
   end
 
   def new
     @section = Section.new
-    @section.article= Article.find(params[:article_id])
-    @redirect_path = article_sections_path(@section.article) 
+    @section.article_id = params[:article_id]
+    @redirect_path = sections_path
   end
 
   def edit
@@ -18,7 +18,6 @@ class SectionsController < ApplicationController
 
   def create
     @section = Section.new(section_params)
-    @section.article= Article.find(params[:article_id])
 
     if @section.save
       flash[:success] = 'Section was successfully created.'
@@ -52,6 +51,6 @@ class SectionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def section_params
-      params.require(:section).permit(:heading)
+      params.require(:section).permit(:article_id, :heading, :note_order)
     end
 end
