@@ -1,7 +1,17 @@
 class SectionsController < ApplicationController
+  before_action :login_check_and_set_user, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_section, only: [:show, :edit, :update, :destroy]
+  before_action only: [:edit, :update] do
+    if @section.article.w_public == 0
+      check_correct_user
+    end
+  end
+  before_action :check_correct_user, only: :destroy
 
   def show
+    if @section.article.r_public == 0
+        check_correct_user
+    end
     @prev_section = @section.article.prev_section(@section)
     @next_section = @section.article.next_section(@section)
   end
@@ -44,13 +54,23 @@ class SectionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    def login_check_and_set_user
+      if (@user = current_user) == nil
+        flash[:error] = "You don't have access to this section."
+        redirect_to :back
+      end
+    end
     def set_section
       @section = Section.find(params[:id])
     end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
     def section_params
       params.require(:section).permit(:article_id, :heading, :note_order)
     end
+    def check_correct_user
+      if (@user = current_user) != @section.article.user
+        flash[:warnings] = "Only article's owner is allowed to access to this section."
+        redirect_to :back
+      end
+    end
+
 end

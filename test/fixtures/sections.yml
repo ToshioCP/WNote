@@ -14,3 +14,7 @@ two:
   article: wnote
   note_order: "<%= ActiveRecord::FixtureSet.identify(:markdown) %>"
 
+three:
+  heading: Introduction
+  article: rails_howto
+  note_order: "<%= ActiveRecord::FixtureSet.identify(:getting_started) %>"

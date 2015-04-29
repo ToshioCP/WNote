@@ -18,7 +18,7 @@ class SectionTest < ActiveSupport::TestCase
   test "move the section_id from the section_order in the old article to the one in the new article when section was updated" do
     section = sections(:one)
     old_section_order = section.article.section_order.dup
-    section.update(heading: "New Hedding") # if article_id was not changed.
+    section.update(heading: "New Headding") # if article_id was not changed.
     assert_equal old_section_order, section.article.section_order,
       "Section_order in the article was changed when the article_id in the section was not updated."
     old_article_id = section.article.id

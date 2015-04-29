@@ -1,0 +1,46 @@
+<div class="page-header">
+  <h1>
+    <span><%= @user.name %></span>
+    <%= link_to 'Edit', edit_users_path, class: "btn btn-primary", role: "button" %>
+    <%= link_to 'Delete Account', '/users', method: :delete, class: "btn btn-danger", role: "button" %>
+  </h1>
+</div>
+<h3>Profile</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th class='col-md-2'>Key</th><th class='col-md-10'>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class='col-md-2'>Name</td><td class='col-md-10'><%= @user.name %></td>
+    </tr>
+    <tr>
+      <td class='col-md-2'>email</td><td class='col-md-10'><%= @user.email %></td>
+    </tr>
+  </tbody>
+</table>
+<h3>Articles</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th class='col-md-1'>Show</th>
+      <th class='col-md-3'>Title</th>
+      <th class='col-md-3'>Author</th>
+      <th class='col-md-5'>Date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user.article.each do |article| %>
+      <tr>
+        <td><%= link_to 'Show', article, class: 'btn btn-sm btn-info', role: 'button' %></td>
+        <td><%= article.title %></td>
+        <td><%= article.author %></td>
+        <td><%= article.date %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

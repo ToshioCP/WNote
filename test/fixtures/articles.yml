@@ -5,9 +5,15 @@ wnote:
   author: ToshioCP
   date: 2015-03-21
   section_order: "<%= ActiveRecord::FixtureSet.identify(:one) %>,<%= ActiveRecord::FixtureSet.identify(:two) %>"
+  user: toshiocp
+  r_public: 0
+  w_public: 0
 
 rails_howto:
   title: Raiils_Howto
   author: Toshio_Sekiya
   date: 2015-03-21
   section_order:
+  user: foobar
+  r_public: 0
+  w_public: 0

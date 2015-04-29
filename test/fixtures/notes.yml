@@ -25,3 +25,7 @@ markdown:
     - line three
   section: two
 
+getting_started:
+  title: "Getting Started"
+  text: "It's time to start learning RAILS !!"
+  section: three

@@ -1,7 +1,17 @@
 class NotesController < ApplicationController
+  before_action :login_check_and_set_user, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_note, only: [:show, :edit, :update, :destroy]
+  before_action only: [:edit, :update] do
+    if @note.section.article.w_public == 0
+      check_correct_user
+    end
+  end
+  before_action :check_correct_user, only: :destroy
 
   def show
+    if @note.section.article.r_public == 0
+        check_correct_user
+    end
     @prev_note = @note.section.prev_note(@note)
     @next_note = @note.section.next_note(@note)
   end
@@ -43,13 +53,23 @@ class NotesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    def login_check_and_set_user
+      if (@user = current_user) == nil
+        flash[:error] = "You don't have access to this section."
+        redirect_to :back
+      end
+    end
     def set_note
       @note = Note.find(params[:id])
     end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
     def note_params
       params.require(:note).permit(:section_id, :title, :text)
     end
+    def check_correct_user
+      if (@user = current_user) != @note.section.article.user
+        flash[:warnings] = "Only article's owner is allowed to access to this section."
+        redirect_to :back
+      end
+    end
+
 end

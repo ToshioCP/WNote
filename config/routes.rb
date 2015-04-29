@@ -1,6 +1,21 @@
 Rails.application.routes.draw do
-  root 'articles#index'
-  resources :articles do
+  root 'static_pages#home'
+# session -- logins controller
+  post 'logins/create'
+  get 'logins/new'
+  delete 'logins/destroy'
+
+# reserved for the future
+# resource :admins do
+#  resources :users
+# end
+
+# users controller
+  post 'users/destroy'
+  resource :users do
+    resources :articles, only: :new
+  end
+  resources :articles, except: :new do
     resources :sections, only: :new
   end
   resources :sections, except: [:index, :new] do

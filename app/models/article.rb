@@ -1,4 +1,5 @@
 class Article < ActiveRecord::Base
+  belongs_to :user
   has_many :sections, dependent: :destroy
   validates :title, presence: true
   validates :author, presence: true

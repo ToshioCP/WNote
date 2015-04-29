@@ -1,8 +1,10 @@
 ### What's WNote
 
 WNote is 'Web Note'.
-You can write anything in WNote and save it.
-You can read any note you saved.
+User is a person who has logged in to this site.
+If you want to be a User, you need to sign up first.
+User can write anything in WNote and save it.
+User can read any note you saved.
 
 ### WNote has article and section
 
@@ -24,5 +26,4 @@ It doesn't have enough power, yet.
 ### TODO list
 
 - admin/user/guest
-- signin/signout
 - backup/reset/restore

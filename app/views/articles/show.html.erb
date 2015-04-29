@@ -1,6 +1,6 @@
 <% content_for :navigation do %>
           <li><%= link_to 'List Articles', articles_path %></li>
-          <li><%= link_to 'New Article', new_article_path %></li>
+          <li><%= link_to 'New Article', new_users_article_path %></li>
           <li><%= link_to 'Edit Article', edit_article_path(@article) %></li>
           <li><%= link_to 'Destroy Article', @article, method: :delete, data: { confirm: 'Are you sure?' } %></li>
           <li><%= link_to 'New Section', new_article_section_path(@article) %></li>

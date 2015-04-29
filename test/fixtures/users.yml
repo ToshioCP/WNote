@@ -1,0 +1,12 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+toshiocp:
+  name: ToshioCP
+  email: lxboyjp@gmail.com
+  password_digest: <%= digest('aabbccddeeffgg') %>
+
+foobar:
+  name: FooBar
+  email: foobar@foobar.co.jp
+  password_digest: <%= digest('hhiijjkkllmmnn') %>
+

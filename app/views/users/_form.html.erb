@@ -1,0 +1,49 @@
+<% url = '/users' %>
+<% method = from_new? ? 'post' : 'patch' %>
+<%= form_for @user, url: url, method: method do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if from_edit? %>
+    <h2>Authentication</h2>
+    <p>You must enter your password before editting your profile.</p>
+    <div class="form-group">
+      <%= label_tag :current_password, 'current password' %><br>
+      <%= password_field_tag :current_password, nil, {class: "form-control", placeholder: "current_password"} %>
+    </div>
+    <hr>
+    <h2>Edit your profile</h2>
+    <p>If you don't want to modify some of the following attributes, don't fill in the blanks.</p>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, options={class: "form-control", placeholder: "name"} %>
+  </div>
+  <div class="form-group">
+    <%= f.label :email %><br>
+    <%= f.text_field :email, options={class: "form-control", placeholder: "email"} %>
+  </div>
+  <div class="form-group">
+    <%= f.label :"email\sconfirmation" %><br>
+    <%= f.text_field :email_confirmation, options={class: "form-control", placeholder: "email confirmation"} %>
+  </div>
+  <div class="form-group">
+    <%= f.label :password %><br>
+    <%= f.password_field :password, options = {class: "form-control", placeholder: "password"} %>
+  </div>
+  <div class="form-group">
+    <%= f.label :"password\sconfirmation" %><br>
+    <%= f.password_field :password_confirmation, options = {class: "form-control", placeholder: "password confirmation"} %>
+  </div>
+  <div class="form-group">
+    <%= f.submit options={class: "btn btn-primary"} %>
+  </div>
+<% end %>

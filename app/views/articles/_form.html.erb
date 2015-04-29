@@ -23,6 +23,16 @@
     <%= f.label :date %><br>
     <%= f.date_select :date, options = {}, html_options = {} %>
   </div>
+  <div class="checkbox">
+    <label>
+    <%= f.check_box :r_public %> r_public
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+    <%= f.check_box :w_public %> w_public
+    </label>
+  </div>
 
   <% if ! @article.section_order.blank? %>
     <div class="form-group">
