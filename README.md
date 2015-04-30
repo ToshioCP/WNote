@@ -23,6 +23,17 @@ It doesn't have enough power, yet.
 - designed with Bootstrap
 - tree structure ( article - section - note )
 
+### Installation notes
+
+WNote runs on Heroku in production mode.
+You need to use Postgresql database for the rails application on Heroku.
+So, WNote is configured to use Postgrsql as its database.
+If you want to use other database ( for example Mysql ), modify 'Gemfile', 'config/database.yml'.
+With Postgresql you should notice that postgresql user has to be SUPERUSER.
+Because Rails Test does't work by no SUPERUSER.
+It's OK everything without test even if you are not SUPERUSER of Postgresql.
+Someone said it's a bug of Active Record (but I don't know it's true or not).
+
 ### TODO list
 
 - admin/user/guest

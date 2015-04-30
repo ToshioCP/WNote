@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150426071509) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "articles", force: :cascade do |t|
     t.string   "title"
     t.string   "author"
@@ -25,7 +28,7 @@ ActiveRecord::Schema.define(version: 20150426071509) do
     t.integer  "r_public"
   end
 
-  add_index "articles", ["user_id"], name: "index_articles_on_user_id"
+  add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
 
   create_table "notes", force: :cascade do |t|
     t.string   "title"
@@ -35,7 +38,7 @@ ActiveRecord::Schema.define(version: 20150426071509) do
     t.integer  "section_id"
   end
 
-  add_index "notes", ["section_id"], name: "index_notes_on_section_id"
+  add_index "notes", ["section_id"], name: "index_notes_on_section_id", using: :btree
 
   create_table "sections", force: :cascade do |t|
     t.string   "heading"
@@ -45,7 +48,7 @@ ActiveRecord::Schema.define(version: 20150426071509) do
     t.string   "note_order"
   end
 
-  add_index "sections", ["article_id"], name: "index_sections_on_article_id"
+  add_index "sections", ["article_id"], name: "index_sections_on_article_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -55,4 +58,7 @@ ActiveRecord::Schema.define(version: 20150426071509) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "articles", "users"
+  add_foreign_key "notes", "sections"
+  add_foreign_key "sections", "articles"
 end
