@@ -1,35 +1,41 @@
 <% content_for :navigation do %>
-          <li>
-            <%= link_to(@section.article) do %>
-              <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>Article
-            <% end %>
-          </li>
-          <% if @prev_section %>
-            <li>
-              <%= link_to(@prev_section) do %>
-                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-              <% end %>
-            </li>
-          <% else %>
-            <li class='navbar-text'>
-              <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-            </li>
-          <% end %>
-          <% if @next_section %>
-            <li>
-              <%= link_to(@next_section) do %>
-                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-              <% end %>
-            </li>
-          <% else %>
-            <li class='navbar-text'>
-              <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-            </li>
-          <% end %>
-          <li><%= link_to 'New Section', new_article_section_path(@section.article) %></li>
-          <li><%= link_to 'Edit Section', edit_section_path(@section) %></li>
-          <li><%= link_to 'Destroy Section', @section, method: :delete, data: { confirm: 'Are you sure?' } %></li>
-          <li><%= link_to 'New Note', new_section_note_path(@section) %></li>
+  <li>
+    <%= link_to(@section.article) do %>
+      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>Article
+    <% end %>
+  </li>
+  <% if @prev_section %>
+    <li>
+      <%= link_to(@prev_section) do %>
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+      <% end %>
+    </li>
+  <% else %>
+    <li class="disabled">
+      <%= link_to('#') do %>
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+      <% end %>
+    </li>
+  <% end %>
+  <% if @next_section %>
+    <li>
+      <%= link_to(@next_section) do %>
+        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+      <% end %>
+    </li>
+  <% else %>
+    <li class="disabled">
+      <%= link_to('#') do %>
+        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+      <% end %>
+    </li>
+  <% end %>
+  <% if login? %>
+    <li><%= link_to 'New Section', new_article_section_path(@section.article) %></li>
+    <li><%= link_to 'Edit Section', edit_section_path(@section) %></li>
+    <li><%= link_to 'Destroy Section', @section, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+    <li><%= link_to 'New Note', new_section_note_path(@section) %></li>
+  <% end %>
 <% end %>
 
 <h2><%= @section.heading %></h2>

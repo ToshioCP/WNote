@@ -1,40 +1,46 @@
 <% content_for :navigation do %>
-          <li>
-            <%= link_to(@note.section.article) do %>
-              <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-              <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>Article
-            <% end %>
-          </li>
-          <li>
-            <%= link_to(@note.section) do %>
-              <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>Section
-            <% end %>
-          </li>
-          <% if @prev_note %>
-            <li>
-              <%= link_to(@prev_note) do %>
-                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-              <% end %>
-            </li>
-          <% else %>
-            <li class='navbar-text'>
-              <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-            </li>
-          <% end %>
-          <% if @next_note %>
-            <li>
-              <%= link_to(@next_note) do %>
-                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-              <% end %>
-            </li>
-          <% else %>
-            <li class='navbar-text'>
-              <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-            </li>
-          <% end %>
-          <li><%= link_to 'New Note', new_section_note_path(@note.section) %></li>
-          <li><%= link_to 'Edit Note', edit_note_path(@note) %></li>
-          <li><%= link_to 'Destroy Note', @note, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+  <li>
+    <%= link_to(@note.section.article) do %>
+      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>Article
+    <% end %>
+  </li>
+  <li>
+    <%= link_to(@note.section) do %>
+      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>Section
+    <% end %>
+  </li>
+  <% if @prev_note %>
+    <li>
+      <%= link_to(@prev_note) do %>
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+      <% end %>
+    </li>
+  <% else %>
+    <li class="disabled">
+      <%= link_to('#') do %>
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+      <% end %>
+    </li>
+  <% end %>
+  <% if @next_note %>
+    <li>
+      <%= link_to(@next_note) do %>
+        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+      <% end %>
+    </li>
+  <% else %>
+    <li class="disabled">
+      <%= link_to('#') do %>
+        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+      <% end %>
+    </li>
+  <% end %>
+  <% if login? %>
+    <li><%= link_to 'New Note', new_section_note_path(@note.section) %></li>
+    <li><%= link_to 'Edit Note', edit_note_path(@note) %></li>
+    <li><%= link_to 'Destroy Note', @note, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+  <% end %>
 <% end %>
 
 <h2 class="text-center">

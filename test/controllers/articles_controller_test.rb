@@ -22,7 +22,7 @@ class ArticlesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:articles)
     assert_select 'nav' do
       assert_select 'a.navbar-brand', 'WNote'
-      assert_select 'a', 'New Article'
+#      assert_select 'a', 'New Article'
     end
     assert_select 'div.wnote-main' do
       assert_select 'th', 'Show'

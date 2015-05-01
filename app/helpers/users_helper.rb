@@ -3,7 +3,7 @@ module UsersHelper
     session[:current_user_id] && User.find_by(id: session[:current_user_id])
   end
   def login?
-    current_user
+    uh_current_user ? true : false
   end
   def guest?
     !login?
