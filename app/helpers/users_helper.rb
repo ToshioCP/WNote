@@ -8,6 +8,9 @@ module UsersHelper
   def guest?
     !login?
   end
+  def admin?
+    (user = uh_current_user) && user.admin
+  end
 
   def from_edit?
     @user.id

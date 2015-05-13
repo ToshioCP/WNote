@@ -13,6 +13,12 @@ private
   def guest?
     !login?
   end
+  def admin?
+    (user = current_user) && user.admin
+  end
+  def noadmin?
+    admin? ? false : true
+  end
   def logoff
     session[:current_user_id] = nil
   end

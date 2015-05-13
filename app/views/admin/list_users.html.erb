@@ -1,0 +1,25 @@
+<h2>Listing Users</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th class='col-md-1'>Show</th>
+      <th class='col-md-3'>Name</th>
+      <th class='col-md-3'>Email</th>
+      <th class='col-md-5'>Admin</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to 'Delete', "/admin/users/#{user.id}", {method: :delete, data: { confirm: 'Are you sure?' },
+               class: 'btn btn-sm btn-danger', role: 'button'} %></td>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.admin %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

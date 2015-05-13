@@ -2,6 +2,9 @@
   <h1>
     <span><%= @user.name %></span>
     <%= link_to 'Edit', edit_users_path, class: "btn btn-primary", role: "button" %>
+    <%= link_to 'Backup data', users_backup_path, class: "btn btn-primary", role: "button" %>
+    <%= link_to 'Restore data', users_upload_path, class: "btn btn-primary", role: "button" %>
+    <%= link_to 'Reset', users_reset_path, class: "btn btn-danger", role: "button" %>
     <%= link_to 'Delete Account', '/users', method: :delete, class: "btn btn-danger", role: "button" %>
   </h1>
 </div>
@@ -33,7 +36,7 @@
   </thead>
 
   <tbody>
-    <% @user.article.each do |article| %>
+    <% @user.articles.each do |article| %>
       <tr>
         <td><%= link_to 'Show', article, class: 'btn btn-sm btn-info', role: 'button' %></td>
         <td><%= article.title %></td>

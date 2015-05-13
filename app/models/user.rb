@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :article, dependent: :destroy
+  has_many :articles, dependent: :destroy
   before_save do
     self.email && self.email.downcase!
     self.email_confirmation && self.email_confirmation.downcase!
@@ -25,7 +25,6 @@ class User < ActiveRecord::Base
 # Remark!! validation_of_the_presence of email_confirmation prohibits @user.save
 #
 #  validates :email_confirmation, presence: true
-
   has_secure_password
-
+  validates :admin, inclusion: { in: [true, false] }
 end

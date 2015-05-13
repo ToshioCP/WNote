@@ -73,7 +73,7 @@ class ArticlesController < ApplicationController
     end
     def check_correct_user
       if (@user = current_user) != @article.user
-        flash[:warnings] = "Only article's owner is allowed to access to this section."
+        flash[:warning] = "Only article's owner is allowed to access to this section."
         redirect_to :back
       end
     end
