@@ -26,6 +26,9 @@ It doesn't have enough power, yet.
 - designed with Bootstrap
 - tree structure ( article - section - note )
 - user login/logout/signup system
+- backup/restore system
+- some admin method supported
+
 ### Installation notes
 
 WNote runs on Heroku in production mode.
@@ -40,4 +43,4 @@ Someone said it's a bug of Active Record (but I don't know it's true or not).
 ### TODO list
 
 - admin ( superuser )
-- backup/reset/restore
+
