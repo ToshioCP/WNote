@@ -99,7 +99,7 @@ class ArticlesController < ApplicationController
     end
     def mkkindle
       renderer = Redcarpet::Render::HTML.new(render_options = {escape_html: true})
-      markdown = Redcarpet::Markdown.new(renderer, :autolink => true, :space_after_headers => true)
+      markdown = Redcarpet::Markdown.new(renderer, no_intra_emphasis: true, tables: true, lax_spacing: true, space_after_headers: true)
       html_data = "<html>\n"
       html_data << "<head>\n"
       html_data << "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n"
