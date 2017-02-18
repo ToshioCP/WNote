@@ -4,9 +4,11 @@ toshiocp:
   name: ToshioCP
   email: lxboyjp@gmail.com
   password_digest: <%= digest('aabbccddeeffgg') %>
+  admin: true
 
 foobar:
   name: FooBar
   email: foobar@foobar.co.jp
   password_digest: <%= digest('hhiijjkkllmmnn') %>
+  admin: false
 

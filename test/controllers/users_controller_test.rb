@@ -103,6 +103,12 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal 'User was successfully destroyed.', flash[:success]
   end
 
+  test "should reset articles" do
+    get :reset, nil, {'current_user_id' => @user.id}
+    assert_redirected_to '/users'
+    assert_empty @user.articles
+  end
+
   private
     def user_param(name, email, password)
       {name: name, email: email, email_confirmation: email, password: password, password_confirmation: password}

@@ -11,6 +11,9 @@
   <h1><%= @article.title %>
   <small>
     <span style='padding-left: 30px'><%= @article.author %> / <%= @article.date %></span>
+    <% if login? %>
+      <%= link_to 'Kindle-右クリック', "#{@article.id}/kindle", class: 'btn btn-sm btn-warning', role: 'button' %>
+    <% end %>
   </small>
   </h1>
 

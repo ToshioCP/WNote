@@ -95,6 +95,8 @@ class UsersController < ApplicationController
   end
 
   def reset
+    # destroy_all is written in 'Ruby on Rails API' ActiveRecord::Associations::CollectionProxy
+    # The following line can be substituted by @user.articles.each { |article| article.destroy }
     @user.articles.destroy_all
     redirect_to '/users', flash: { success: 'All articles was successfully destroyed.' } 
   end

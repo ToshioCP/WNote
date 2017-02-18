@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   get 'admin/list_users'
   delete 'admin/users/:id' => 'admin#delete_user'
 
+  get 'articles/:id/kindle' => 'articles#kindle'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

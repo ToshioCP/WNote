@@ -32,5 +32,5 @@
 </h2>
 
 <% renderer = Redcarpet::Render::HTML.new(render_options = {escape_html: true}) %>
-<% markdown = Redcarpet::Markdown.new(renderer, :autolink => true, :space_after_headers => true) %>
-<%= markdown.render(@note.text).html_safe %>
+<% markdown = Redcarpet::Markdown.new(renderer, no_intra_emphasis: true, tables: true, lax_spacing: true, space_after_headers: true) %>
+<%= markdown.render(@note.text).gsub("<table>", "<table class=\"table table-bordered\">").html_safe %>
