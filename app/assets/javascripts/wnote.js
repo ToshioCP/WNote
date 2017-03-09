@@ -1,13 +1,12 @@
 $(function() {
   $( "#sortable" ).sortable();
-  $( "#sortable" ).disableSelection();
-  $( "#edit_article_submit" ).click(function() {
-    $( "#article_section_order" ).val( $( "#sortable" ).sortable( "toArray" ).join() );
-    $( "form" ).submit();
+  $( "form.edit_article" ).submit(function() {
+    $( "input#article_section_order" ).val( $( "#sortable" ).sortable( "toArray" ).join( "," ) );
+    return true;
   });
-  $( "#edit_section_submit" ).click(function() {
-    $( "#section_note_order" ).val( $( "#sortable" ).sortable( "toArray" ).join() );
-    $( "form" ).submit();
+  $( "form.edit_section" ).submit(function() {
+    $( "input#section_note_order" ).val( $( "#sortable" ).sortable( "toArray" ).join( "," ) );
+    return true;
   });
 });
 
