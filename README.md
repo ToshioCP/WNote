@@ -83,7 +83,7 @@ WNoteはHeroku上で「Ruby on Rails」のプロダクション・モードで�
 (https://floating-shore-5277.herokuapp.com/)
 WNoteは、「Ruby on Rails」とPostgresqlデータベースが必要です。
 というのは、HerokuではデータベースにPostgreaqlが使われているからです。
-もしも、多のデータベース（例えばMySql）を使いたい場合は、'Gemfile'と'config/database.yml'をそれに合うように変更してください。
+もしも、他のデータベース（例えばMySql）を使いたい場合は、'Gemfile'と'config/database.yml'をそれに合うように変更してください。
 Postgresqlを使う場合、そのユーザはSUPERUSERでなければなりません。
 なぜなら、Ruby on RailsのテストはSUPERUSERでないと動作しないからです。
 テスト以外の機能はSUPERUSERでなくてもPostgresqlはきちんと動作します。
