@@ -149,8 +149,8 @@ class ArticlesController < ApplicationController
       uploaded_io = params[:article][:cover_image]
       if uploaded_io
         ap[:cover_image] = uploaded_io.read
-        img = Magick::Image.from_blob(ap[:cover_image]).first
-        ap[:icon_base64] = img.thumbnail(32,32).to_blob
+        img = Magick::ImageList.new.from_blob(ap[:cover_image]).first
+        ap[:icon_base64] = Base64.encode64(img.thumbnail(32,32).to_blob)
       end
       return ap
     end
