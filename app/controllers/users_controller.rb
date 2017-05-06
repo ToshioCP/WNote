@@ -81,8 +81,9 @@ class UsersController < ApplicationController
     articles = ActiveSupport::JSON.decode(uploaded_io.read)
     articles.each do |a|
       article, sections = a
-      @article = @user.articles.create(title: article['title'], author: article['author'], date: article['date'],
-        w_public: article['w_public'], r_public: article['r_public'])
+      @article = @user.articles.create(title: article['title'], author: article['author'],
+        w_public: article['w_public'], r_public: article['r_public'],
+        language: article['language'], modified_datetime: article['modified_datetime'], identifier_uuid: article['identifier_uuid'],)
       sections.each do |s|
         section, notes = s
         @section = @article.sections.create(heading: section['heading'])
@@ -91,14 +92,14 @@ class UsersController < ApplicationController
         end
       end
     end
-    redirect_to '/users', flash: { success: 'Backup data was successfully restored.' } 
+    redirect_to '/user', flash: { success: 'Backup data was successfully restored.' } 
   end
 
   def reset
     # destroy_all is written in 'Ruby on Rails API' ActiveRecord::Associations::CollectionProxy
     # The following line can be substituted by @user.articles.each { |article| article.destroy }
     @user.articles.destroy_all
-    redirect_to '/users', flash: { success: 'All articles was successfully destroyed.' } 
+    redirect_to '/user', flash: { success: 'All articles was successfully destroyed.' } 
   end
 
   private
@@ -106,7 +107,7 @@ class UsersController < ApplicationController
     def login_check_and_set_user
       if (@user = current_user) == nil
         flash[:error] = "You don't have access to this section."
-        redirect_to :back
+        redirect_to root_path
       end
     end
     # Never trust parameters from the scary internet, only allow the white list through.

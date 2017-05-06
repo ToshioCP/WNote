@@ -4,11 +4,10 @@ class UsersControllerTest < ActionController::TestCase
 
   setup do
     @user = users(:toshiocp)
-    @request.headers["HTTP_REFERER"] = root_url
   end
 
   test "should show user" do
-    get :show, nil, {'current_user_id' => @user.id}
+    get :show, session: {'current_user_id' => @user.id}
     assert_response :success
     assert_select 'nav' do
 #      assert_select 'a.navbar-brand', 'WNote'
@@ -40,14 +39,14 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should create user" do
     assert_difference('User.count') do
-      post :create, user: user_param('Mayu','Mayu@sekiya.jp','mayuchan')
+      post :create, params: {user: user_param('Mayu','Mayu@sekiya.jp','mayuchan')}
     end
     assert_redirected_to action: :show
     assert_equal 'Welcome to WNote !!', flash[:success]
   end
 
   test "should get edit" do
-    get :edit, nil, {'current_user_id' => @user.id}
+    get :edit, session: {'current_user_id' => @user.id}
     assert_response :success
     assert_select 'div.wnote-main' do
       assert_select 'form' do
@@ -74,7 +73,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should update user" do
     parameter = {current_password: 'aabbccddeeffgg', user: user_param('Mayu', 'mayu@sekiya.jp', 'mayuchan')}
-    patch :update, parameter, {'current_user_id' => @user.id}
+    patch :update, params: parameter, session: {'current_user_id' => @user.id}
     assert_redirected_to '/users'
     assert_equal 'User was successfully updated.', flash[:success]
     @user = User.find(@user.id) # reload
@@ -84,7 +83,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "before destroy user" do
-    delete :destroy, nil, {'current_user_id' => @user.id}
+    delete :destroy, session: {'current_user_id' => @user.id}
     assert_response :success
     assert_select 'div.wnote-main' do
       assert_select 'form' do
@@ -97,15 +96,15 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should destroy user" do
     assert_difference('User.count', -1) do
-      post :destroy, {user: {password: 'aabbccddeeffgg'}}, {'current_user_id' => @user.id}
+      post :destroy, params: {user: {password: 'aabbccddeeffgg'}}, session: {'current_user_id' => @user.id}
     end
     assert_redirected_to root_url
     assert_equal 'User was successfully destroyed.', flash[:success]
   end
 
   test "should reset articles" do
-    get :reset, nil, {'current_user_id' => @user.id}
-    assert_redirected_to '/users'
+    get :reset, session: {'current_user_id' => @user.id}
+    assert_redirected_to '/user'
     assert_empty @user.articles
   end
 

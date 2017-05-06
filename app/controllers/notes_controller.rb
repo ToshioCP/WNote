@@ -55,8 +55,8 @@ class NotesController < ApplicationController
   private
     def login_check_and_set_user
       if (@user = current_user) == nil
-        flash[:error] = "You don't have access to this section."
-        redirect_to :back
+        flash[:warning] = "You aren't allowed to access to that page."
+        redirect_back(fallback_location: root_path)
       end
     end
     def set_note
@@ -70,7 +70,7 @@ class NotesController < ApplicationController
     def check_correct_user
       if (@user = current_user) != @article.user
         flash[:warning] = "Only article's owner is allowed to access to this section."
-        redirect_to :back
+        redirect_back(fallback_location: root_path)
       end
     end
 

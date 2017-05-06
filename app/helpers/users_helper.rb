@@ -1,15 +1,21 @@
 module UsersHelper
-  def uh_current_user
-    session[:current_user_id] && User.find_by(id: session[:current_user_id])
+  def current_user
+    @_current_user ||= ( session[:current_user_id] && User.find_by(id: session[:current_user_id]) )
   end
   def login?
-    uh_current_user ? true : false
+    current_user ? true : false
   end
   def guest?
     !login?
   end
   def admin?
-    (user = uh_current_user) && user.admin
+    (user = current_user) && user.admin
+  end
+  def noadmin?
+    admin? ? false : true
+  end
+  def logoff
+    session[:current_user_id] = nil
   end
 
   def from_edit?

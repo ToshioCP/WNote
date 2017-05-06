@@ -1,7 +1,7 @@
 <% content_for :navigation do %>
   <li><%= link_to 'List Articles', articles_path %></li>
   <% if login? %>
-    <li><%= link_to 'New Article', new_users_article_path %></li>
+    <li><%= link_to 'New Article', new_user_article_path %></li>
     <li><%= link_to 'Edit Article', edit_article_path(@article) %></li>
     <li><%= link_to 'Destroy Article', @article, method: :delete, data: { confirm: 'Are you sure?' } %></li>
     <li><%= link_to 'New Section', new_article_section_path(@article) %></li>
@@ -10,9 +10,12 @@
 
   <h1><%= @article.title %>
   <small>
-    <span style='padding-left: 30px'><%= @article.author %> / <%= @article.date %></span>
+    <% if @article.icon_base64 %>
+      <%= image_tag("data:image/png;base64," + @article.icon_base64, size: "32x32", alt: "<表紙画像>") %> 
+    <% end %>
+    <span style='padding-left: 30px'><%= @article.author %> / <%= @article.modified_datetime %></span>
     <% if login? %>
-      <%= link_to 'Kindle-右クリック', "#{@article.id}/kindle", class: 'btn btn-sm btn-warning', role: 'button' %>
+      <%= link_to 'Epub', "#{@article.id}/epub", class: 'btn btn-sm btn-warning', role: 'button' %>
     <% end %>
   </small>
   </h1>

@@ -1,11 +1,11 @@
 <div class="page-header">
   <h1>
     <span><%= @user.name %></span>
-    <%= link_to 'Edit', edit_users_path, class: "btn btn-primary", role: "button" %>
-    <%= link_to 'Backup data', users_backup_path, class: "btn btn-primary", role: "button" %>
-    <%= link_to 'Restore data', users_upload_path, class: "btn btn-primary", role: "button" %>
-    <%= link_to 'Reset', users_reset_path, class: "btn btn-danger", role: "button" %>
-    <%= link_to 'Delete Account', '/users', method: :delete, class: "btn btn-danger", role: "button" %>
+    <%= link_to 'Edit', edit_user_path, class: "btn btn-primary", role: "button" %>
+    <%= link_to 'Backup data', user_backup_path, class: "btn btn-primary", role: "button" %>
+    <%= link_to 'Restore data', user_upload_path, class: "btn btn-primary", role: "button" %>
+    <%= link_to 'Reset', user_reset_path, class: "btn btn-danger", role: "button" %>
+    <%= link_to 'Delete Account', '/user', method: :delete, class: "btn btn-danger", role: "button" %>
   </h1>
 </div>
 <h3>Profile</h3>
@@ -31,7 +31,7 @@
       <th class='col-md-1'>Show</th>
       <th class='col-md-3'>Title</th>
       <th class='col-md-3'>Author</th>
-      <th class='col-md-5'>Date</th>
+      <th class='col-md-5'>Modified_Datetime</th>
     </tr>
   </thead>
 
@@ -41,7 +41,7 @@
         <td><%= link_to 'Show', article, class: 'btn btn-sm btn-info', role: 'button' %></td>
         <td><%= article.title %></td>
         <td><%= article.author %></td>
-        <td><%= article.date %></td>
+        <td><%= article.modified_datetime %></td>
       </tr>
     <% end %>
   </tbody>

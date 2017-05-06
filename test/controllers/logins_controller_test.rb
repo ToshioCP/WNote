@@ -15,7 +15,7 @@ class LoginsControllerTest < ActionController::TestCase
   end
 
   test "should get create" do
-    post :create, email: 'lxboyjp@gmail.com', password: 'aabbccddeeffgg'
+    post :create, params: {email: 'lxboyjp@gmail.com', password: 'aabbccddeeffgg'}
     assert_redirected_to controller: :users, action: :show
     assert_equal users(:toshiocp).id, session[:current_user_id]
     assert_equal "You have successfully logged in.", flash[:success]

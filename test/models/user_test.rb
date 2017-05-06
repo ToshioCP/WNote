@@ -6,7 +6,7 @@ class UserTest < ActiveSupport::TestCase
     @user.email_confirmation = @user.email
     @user.password_confirmation = @user.password
   end
-
+# validation test
   test "the legal user can be saved" do
     assert @user.save, "Couldn't save the legal user."
   end
@@ -18,7 +18,6 @@ class UserTest < ActiveSupport::TestCase
     @user.name = "a"*65
     assert_not @user.save, "Saved the User with a long name."
   end
-
   test "the presence of the email" do
     @user.email = ""
     assert_not @user.save, "Saved the User without an email."
@@ -41,24 +40,24 @@ class UserTest < ActiveSupport::TestCase
       assert_not @user.save, "Saved the User with an illegal email."
     end
   end
-
   test "the presence of the password_digest" do
     @user.password_digest = ""
     assert_not @user.save, "Saved the User without a password_digest."
   end
   test "the password confirmation" do
     @user.password_confirmation = "foobar"
-    assert_not @user.save, "Saved when the user was diffrent from the password_confirmation."
+    assert_not @user.save, "Saved when the password was diffrent from the password_confirmation."
   end
   test "the length of the password should be equal or less than 72" do
     @user.password = "a"*73
-    assert_not @user.save, "Saved the User with too long password."
+    assert_not @user.save, "Saved the User with long password."
   end
-  test "delete the desendant articles and sections and notes when user was deleted" do
+# relation test
+  test "deletion of the user" do
     assert_difference('Article.count',-1) do
       assert_difference('Section.count',-2) do
         assert_difference('Note.count',-4) do
-          articles(:wnote).destroy
+          users(:toshiocp).destroy
         end
       end
     end

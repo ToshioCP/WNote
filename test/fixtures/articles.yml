@@ -3,17 +3,22 @@
 wnote:
   title: WNote_Howto
   author: ToshioCP
-  date: 2015-03-21
   section_order: "<%= ActiveRecord::FixtureSet.identify(:one) %>,<%= ActiveRecord::FixtureSet.identify(:two) %>"
   user: toshiocp
-  r_public: 0
   w_public: 0
+  r_public: 0
+  language: ja
+  modified_datetime: 2017-04-24 11:38:07 UTC
+  identifier_uuid: 0657606a-2e3e-11e7-8eb9-4339b7fe4684
 
 rails_howto:
   title: Raiils_Howto
   author: Toshio_Sekiya
-  date: 2015-03-21
   section_order:
   user: foobar
-  r_public: 0
   w_public: 0
+  r_public: 0
+  language: en
+  modified_datetime: 2017-04-27 12:00:00 UTC
+  identifier_uuid: 18aa4016-2e3e-11e7-89d6-c3e86549948f
+

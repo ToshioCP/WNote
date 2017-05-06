@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150509104105) do
+ActiveRecord::Schema.define(version: 20170424050309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,16 +18,20 @@ ActiveRecord::Schema.define(version: 20150509104105) do
   create_table "articles", force: :cascade do |t|
     t.string   "title"
     t.string   "author"
-    t.date     "date"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.string   "section_order"
     t.integer  "user_id"
     t.integer  "w_public"
     t.integer  "r_public"
+    t.string   "language"
+    t.datetime "modified_datetime"
+    t.string   "identifier_uuid"
+    t.binary   "cover_image"
+    t.text     "css"
+    t.string   "icon_base64"
+    t.index ["user_id"], name: "index_articles_on_user_id", using: :btree
   end
-
-  add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
 
   create_table "notes", force: :cascade do |t|
     t.string   "title"
@@ -36,9 +39,8 @@ ActiveRecord::Schema.define(version: 20150509104105) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "section_id"
+    t.index ["section_id"], name: "index_notes_on_section_id", using: :btree
   end
-
-  add_index "notes", ["section_id"], name: "index_notes_on_section_id", using: :btree
 
   create_table "sections", force: :cascade do |t|
     t.string   "heading"
@@ -46,9 +48,8 @@ ActiveRecord::Schema.define(version: 20150509104105) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "note_order"
+    t.index ["article_id"], name: "index_sections_on_article_id", using: :btree
   end
-
-  add_index "sections", ["article_id"], name: "index_sections_on_article_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
