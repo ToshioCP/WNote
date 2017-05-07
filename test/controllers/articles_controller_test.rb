@@ -15,54 +15,26 @@ class ArticlesControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    articles(:wnote).update(r_public: 1)
-    articles(:rails_howto).update(r_public: 1)
     get :index
     assert_response :success
-    assert_select 'nav' do
-      assert_select 'a.navbar-brand', 'WNote'
-#      assert_select 'a', 'New Article'
-    end
-    assert_select 'div.wnote-main' do
-      assert_select 'th', 'Show'
-      assert_select 'th', 'Title'
-      assert_select 'th', 'Author'
-      assert_select 'th', 'Modified_Datetime'
-      assert_select 'td', 'Show'
-      assert_select 'td', 'WNote_Howto'
-      assert_select 'td', 'ToshioCP'
-      assert_select 'td', '2017-04-24 11:38:07 UTC'
-      assert_select 'td', 'Show'
-      assert_select 'td', 'Raiils_Howto'
-      assert_select 'td', 'Toshio_Sekiya'
-      assert_select 'td', '2017-04-27 12:00:00 UTC'
-    end
-  end
-
-  test "login user should get index under collect permission" do
+    assert_select 'h2', 'Listing Articles'
+# The article(r_public=0) is in the list when its owner accesses the page.
     articles(:wnote).update(r_public: 0)
-    articles(:rails_howto).update(r_public: 0)
     get :index, session: {current_user_id: @user.id}
     assert_response :success
-#検討中
-#    assert_select 'td', 'Wnote_Howto'
-#    assert_not_includes 'td', 'Rails_Howto'
+    assert_select 'td'
+    assert_select 'td'
+    assert_select 'td', 'WNote_Howto'
   end
 
   test "login user should get new" do
     get :new, session: { current_user_id: @user.id }
     assert_response :success
-    assert_select 'nav' do
-#      assert_select 'a.navbar-brand', 'WNote'
-      assert_select 'a', 'List Articles'
-    end
     assert_select 'div.wnote-main' do
       assert_select 'form.new_article' do
         assert_select "input.form-control[name=?]", 'article[title]'
         assert_select "input.form-control[name=?]", 'article[author]'
 #        and so on ....
-#        assert_select "input[type='checkbox'][name=?]", 'article[r_public]'
-#        assert_select "input[type='checkbox'][name=?]", 'article[w_public]'
         assert_select "input[class='btn btn-primary']"
       end
     end
