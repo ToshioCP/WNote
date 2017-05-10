@@ -1,4 +1,4 @@
-class Section < ActiveRecord::Base
+class Section < ApplicationRecord
   belongs_to :article
   has_many :notes, dependent: :destroy
   validates :heading, presence: true

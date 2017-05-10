@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   has_many :articles, dependent: :destroy
   before_save do
     self.email && self.email.downcase!

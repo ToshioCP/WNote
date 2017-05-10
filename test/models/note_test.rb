@@ -42,7 +42,9 @@ class NoteTest < ActiveSupport::TestCase
   test "the deletion of the note" do
     note = notes(:install_rbenv)
     section = note.section
-    note.destroy
+    assert_difference('Image.count', -2) do
+      note.destroy
+    end
     assert_not Section.find(section.id).note_order.include?(note.id.to_s),
       "The note_id was still in the note_order in the section even when the note was deleted."
   end

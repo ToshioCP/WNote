@@ -10,54 +10,63 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170424050309) do
+ActiveRecord::Schema.define(version: 20170509115527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "articles", force: :cascade do |t|
-    t.string   "title"
-    t.string   "author"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.string   "section_order"
-    t.integer  "user_id"
-    t.integer  "w_public"
-    t.integer  "r_public"
-    t.string   "language"
+  create_table "articles", id: :serial, force: :cascade do |t|
+    t.string "title"
+    t.string "author"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "section_order"
+    t.integer "user_id"
+    t.integer "w_public"
+    t.integer "r_public"
+    t.string "language"
     t.datetime "modified_datetime"
-    t.string   "identifier_uuid"
-    t.binary   "cover_image"
-    t.text     "css"
-    t.string   "icon_base64"
-    t.index ["user_id"], name: "index_articles_on_user_id", using: :btree
+    t.string "identifier_uuid"
+    t.binary "cover_image"
+    t.text "css"
+    t.string "icon_base64"
+    t.index ["user_id"], name: "index_articles_on_user_id"
   end
 
-  create_table "notes", force: :cascade do |t|
-    t.string   "title"
-    t.text     "text"
+  create_table "images", force: :cascade do |t|
+    t.string "name"
+    t.binary "image"
+    t.bigint "note_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "section_id"
-    t.index ["section_id"], name: "index_notes_on_section_id", using: :btree
+    t.index ["note_id"], name: "index_images_on_note_id"
   end
 
-  create_table "sections", force: :cascade do |t|
-    t.string   "heading"
-    t.integer  "article_id"
+  create_table "notes", id: :serial, force: :cascade do |t|
+    t.string "title"
+    t.text "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "note_order"
-    t.index ["article_id"], name: "index_sections_on_article_id", using: :btree
+    t.integer "section_id"
+    t.index ["section_id"], name: "index_notes_on_section_id"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.boolean  "admin"
+  create_table "sections", id: :serial, force: :cascade do |t|
+    t.string "heading"
+    t.integer "article_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "note_order"
+    t.index ["article_id"], name: "index_sections_on_article_id"
+  end
+
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "admin"
   end
 
   add_foreign_key "articles", "users"

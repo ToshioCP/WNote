@@ -1,5 +1,6 @@
-class Note < ActiveRecord::Base
+class Note < ApplicationRecord
   belongs_to :section
+  has_many :images, dependent: :destroy
   validates :title, presence: true
   validates :text, presence: true
   validates :section, presence: true

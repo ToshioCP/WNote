@@ -1,11 +1,12 @@
-class Article < ActiveRecord::Base
+class Article < ApplicationRecord
   belongs_to :user
   has_many :sections, dependent: :destroy
   validates :title, presence: true
   validates :author, presence: true
-  validates :language, presence: true
-  validates :modified_datetime, presence: true
-  validates :identifier_uuid, presence: true
+# 一時的にvalidationをストップ
+#  validates :language, presence: true
+#  validates :modified_datetime, presence: true
+#  validates :identifier_uuid, presence: true
 
   def ordered_sections
     children = []

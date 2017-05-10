@@ -142,7 +142,7 @@ class ArticlesController < ApplicationController
     # and make thumbnail
     def article_params
       ap = params.require(:article).permit(:title, :author, :language, :modified_datetime, :identifier_uuid,\
-                                           :css, :r_public, :w_public, :section_order)
+                                           :cover_image, :css, :r_public, :w_public, :section_order)
       if ap[:identifier_uuid] == ''
         ap[:identifier_uuid] = SecureRandom.uuid
       end
@@ -230,9 +230,10 @@ EOS
         @xhtml_data << "</ul>\n"
       end
       @article.ordered_sections.each do |section|
-        @xhtml_data << "<a name=\"section#{section.id}\"><h2>#{section.heading}</h2></a>\n"
+# html5 ではname属性が廃止され、id属性を使うことになった
+        @xhtml_data << "<a id=\"section#{section.id}\"><h2>#{section.heading}</h2></a>\n"
         section.ordered_notes.each do |note|
-          @xhtml_data << "<a name=\"note#{note.id}\"><h3>#{note.title}</h3></a>\n"
+          @xhtml_data << "<a id=\"note#{note.id}\"><h3>#{note.title}</h3></a>\n"
           @xhtml_data << markdown.render(note.text).html_safe
         end
       end
