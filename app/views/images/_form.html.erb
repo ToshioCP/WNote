@@ -1,0 +1,25 @@
+<%= form_for(@image, url: note_images_url(@note)) do |f| %>
+  <% if @image.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@image.errors.count, "error") %> prohibited this note from being saved:</h2>
+
+      <ul>
+      <% @image.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, options={class: "form-control", placeholder: "name"} %>
+  </div>
+  <div class="form-group">
+    <%= f.label :image %><br>
+    <%= f.file_field :image, accept: 'image/jpeg' %>
+  </div>
+  <div style="margin-top:5px;">
+    <%= f.submit options={class: "btn btn-primary"} %>
+  </div>
+<% end %>

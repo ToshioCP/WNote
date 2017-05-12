@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get 'user/upload', to: 'users#upload'
   post 'user/restore', to:'users#restore'
 # Nested resources
-# user(s) - articles - sections - notes
+# user(s) - articles - sections - notes - images
   resource :user do
     resources :articles, only: :new
   end
@@ -23,7 +23,9 @@ Rails.application.routes.draw do
   resources :sections, except: [:index, :new] do
     resources :notes, only: :new
   end
-  resources :notes, except: [:index, :new]
+  resources :notes, except: [:index, :new] do
+    resources :images
+  end
 # admin
   get 'admin/list_users'
   delete 'admin/users/:id', to: 'admin#delete_user'

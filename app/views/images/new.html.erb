@@ -1,0 +1,8 @@
+<% content_for :navigation do %>
+  <li><%= link_to 'Note', note_path(params[:note_id]) %></li>
+<% end %>
+
+<h2>New Image</h2>
+
+<%= render 'form' %>
+

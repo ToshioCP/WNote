@@ -24,6 +24,7 @@
     <li><%= link_to 'New Note', new_section_note_path(@section) %></li>
     <li><%= link_to 'Edit Note', edit_note_path(@note) %></li>
     <li><%= link_to 'Destroy Note', @note, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+    <li><%= link_to 'Index Image', note_images_url(@note) %></li>
   <% end %>
 <% end %>
 
@@ -33,4 +34,5 @@
 
 <% renderer = Redcarpet::Render::HTML.new(render_options = {escape_html: true}) %>
 <% markdown = Redcarpet::Markdown.new(renderer, no_intra_emphasis: true, tables: true, lax_spacing: true, space_after_headers: true) %>
-<%= markdown.render(@note.text).gsub("<table>", "<table class=\"table table-bordered\">").html_safe %>
+<% text = markdown.render(@note.text).gsub("<table>", "<table class=\"table table-bordered\">") %>
+<%= evaluate(parse(text)).html_safe %>
