@@ -1,21 +1,19 @@
 require 'test_helper'
 
-class SectionsControllerTest < ActionController::TestCase
+class SectionsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @section = sections(:one)
     @article = @section.article
     @user = users(:toshiocp)
-# @another_user is not the owner of @note.
-# It is used in the test for the read/write permission and r/w_public flag.
-    @another_user = users(:foobar)
 # Some situations make the redirection to :back.
 # For example GUEST can't access some action and it make the redirection to :back.
 # Testing such redirection needs HTTP_REFERER.
 #    @request.headers["HTTP_REFERER"] = root_url
   end
 
-  test "login user should get new" do
-    get :new, params: {article_id: @article.id}, session: {current_user_id: @user.id}
+  test "logged in user should get new" do
+    login
+    get new_article_section_path(@article)
     assert_response :success
     assert_select 'nav' do
       assert_select 'a', 'Article'
@@ -23,7 +21,7 @@ class SectionsControllerTest < ActionController::TestCase
     assert_select 'form' do
       assert_select 'select.form-control' do
         assert_select 'option',articles(:wnote).title
-        assert_select 'option',articles(:rails_howto).title
+#        assert_select 'option',articles(:rails_howto).title  他のユーザのアーティクルはここには出てこない
       end
       assert_select 'input.form-control'
       assert_select 'input.btn'
@@ -32,13 +30,14 @@ class SectionsControllerTest < ActionController::TestCase
   end
 
   test "guest shouldn't get new" do
-    get :new, params: {article_id: @article.id}
+    get new_article_section_path(@article)
     assert_redirected_to root_path
   end
 
-  test "login user should get create" do
+  test "logged in user should get create" do
+    login
     assert_difference('Section.count') do
-      post :create, params: {section: {article_id: @article.id, heading: 'New Heading'}}, session: {current_user_id: @user.id}
+      post sections_path, params: {section: {article_id: @article.id, heading: 'New Heading'}}
     end
     section = Section.last
     assert_redirected_to section_path(section)
@@ -49,12 +48,13 @@ class SectionsControllerTest < ActionController::TestCase
 
   test "guest shouldn't get create" do
     assert_no_difference('Section.count') do
-      post :create, params: {section: {article_id: @article.id, heading: 'New Heading'}}
+      post sections_path, params: {section: {article_id: @article.id, heading: 'New Heading'}}
     end
   end
 
-  test "login user should show section" do
-    get :show, params: {id: @section}, session: {current_user_id: @user.id}
+  test "logged in user should show section" do
+    login
+    get section_path(@section)
     assert_select 'nav' do
 #      assert_select 'a.navbar-brand', 'WNote'
       assert_select 'a', 'Article'
@@ -75,20 +75,26 @@ class SectionsControllerTest < ActionController::TestCase
   end
 
   test "Only the owner can read section when r_public is off" do
+# Guest
     @article.update(r_public: 0) # off
-    get :show, params: {id: @section}, session: {current_user_id: @another_user.id}
-    assert_redirected_to root_path
-    get :show, params: {id: @section}, session: {current_user_id: nil} #GUEST
+    get section_path(@section)
     assert_redirected_to root_path
     @article.update(r_public: 1) # on
-    get :show, params: {id: @section}, session: {current_user_id: @another_user.id}
+    get section_path(@section)
     assert_response :success
-    get :show, params: {id: @section}, session: {current_user_id: nil} #GUEST
+# Another user
+    login_another_user
+    @article.update(r_public: 0) # off
+    get section_path(@section)
+    assert_redirected_to root_path
+    @article.update(r_public: 1) # on
+    get section_path(@section)
     assert_response :success
   end
 
-  test "login user should get edit" do
-    get :edit, params: {id: @section}, session: {current_user_id: @user.id}
+  test "logged in user should get edit" do
+    login
+    get edit_section_path(@section)
     assert_response :success
     assert_select 'nav' do
       assert_select 'a', 'Article'
@@ -96,7 +102,7 @@ class SectionsControllerTest < ActionController::TestCase
     assert_select 'div.wnote-main' do
       assert_select 'select.form-control' do
         assert_select 'option',articles(:wnote).title
-        assert_select 'option',articles(:rails_howto).title
+#        assert_select 'option',articles(:rails_howto).title  他のユーザのアーティクルはここには出てこない
       end
       assert_select 'input.form-control'
       assert_select 'ul' do
@@ -111,19 +117,20 @@ class SectionsControllerTest < ActionController::TestCase
   end
 
   test "incorrect user shouldn't get edit" do
+    login_another_user
     @article.update(w_public: 0) # off
-    get :edit, params: {id: @section} , session: {current_user_id: @another_user.id}
+    get edit_section_path(@section)
     assert_response :redirect, "Incorrect user saw editing page." 
     @article.update(w_public: 1) # on
-    get :edit, params: {id: @section} , session: {current_user_id: @another_user.id}
+    get edit_section_path(@section)
     assert_response :success, "The other user couldn't see editing page, though w_public was on."
   end
 
-  test "login user should get update" do
+  test "logged in user should get update" do
+    login
     article_id = articles(:rails_howto).id
     note_order = "#{notes(:install_ruby)},#{notes(:install_rbenv)},#{notes(:install_rails)}" # exchange 1,2
-    patch :update, params: {id: @section, section: {article_id: article_id, heading: 'Updated Heading', note_order: note_order}},
-          session: {current_user_id: @user.id}
+    patch "/sections/#{@section.id}", params: {section: {article_id: article_id, heading: 'Updated Heading', note_order: note_order}}
     assert_redirected_to section_path(Section.last)
     assert_equal 'Section was successfully updated.', flash[:success]
     section = Section.find(@section.id)
@@ -133,29 +140,32 @@ class SectionsControllerTest < ActionController::TestCase
   end
 
   test "incorrect user shouldn't update section" do
+    login_another_user
     @article.update(w_public: 0) # off
-    patch :update, params: {id: @section, section: {heading: 'Updated Heading'}}, session: {current_user_id: @another_user.id}
+    patch "/sections/#{@section.id}", params: {section: {heading: 'Updated Heading'}}
     section = Section.find(@section.id) # reload
     assert_not_equal 'Updated Heading', section.heading, "Heading was updated."
     @article.update(w_public: 1) # on
-    patch :update, params: {id: @section, section: {heading: 'Updated Heading'}}, session: {current_user_id: @another_user.id}
+    patch "/sections/#{@section.id}", params: {section: {heading: 'Updated Heading'}}
     section = Section.find(@section.id) # reload
     assert_equal 'Updated Heading', section.heading, "Heading wasn't updated."
   end
 
-  test "login user should destroy article" do
+  test "logged in user should destroy article" do
+    login
     article = @section.article
     assert_difference('Section.count', -1) do
-      delete :destroy, params: {id: @section}, session: {current_user_id: @user.id}
+      delete "/sections/#{@section.id}"
     end
     assert_redirected_to article_path(article)
     assert_equal 'Section was successfully destroyed.', flash[:success]
   end
 
   test "incorrect user shouldn't destroy section" do
+    login_another_user
     @article.update(w_public: 1) # even if w_public is on
     assert_no_difference('Section.count') do
-      delete :destroy, params: {id: @section}, session: {current_user_id: @another_user.id}
+      delete "/sections/#{@section.id}"
     end
   end
 

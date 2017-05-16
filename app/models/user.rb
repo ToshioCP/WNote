@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :articles, dependent: :destroy
+  has_many :images, dependent: :destroy
   before_save do
     self.email && self.email.downcase!
     self.email_confirmation && self.email_confirmation.downcase!

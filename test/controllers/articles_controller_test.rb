@@ -1,13 +1,10 @@
 require 'test_helper'
 
-class ArticlesControllerTest < ActionController::TestCase
+class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @article = articles(:wnote)
     @user = users(:toshiocp)
-# @another_user is not the owner of @note.
-# It is used in the test for the read/write permission and r/w_public flag.
-    @another_user = users(:foobar)
 # Some situations make the redirection to :back.
 # For example GUEST can't access some action and it make the redirection to :back.
 # Testing such redirection needs HTTP_REFERER.
@@ -15,20 +12,22 @@ class ArticlesControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    get :index
+    get articles_path
     assert_response :success
     assert_select 'h2', 'Listing Articles'
 # The article(r_public=0) is in the list when its owner accesses the page.
     articles(:wnote).update(r_public: 0)
-    get :index, session: {current_user_id: @user.id}
+    login
+    get articles_path
     assert_response :success
     assert_select 'td'
     assert_select 'td'
     assert_select 'td', 'WNote_Howto'
   end
 
-  test "login user should get new" do
-    get :new, session: { current_user_id: @user.id }
+  test "logged in user should get new" do
+    login
+    get new_article_path
     assert_response :success
     assert_select 'div.wnote-main' do
       assert_select 'form.new_article' do
@@ -41,14 +40,15 @@ class ArticlesControllerTest < ActionController::TestCase
   end
 
   test "guest shouldn't get new" do
-    get :new
+    get new_article_path
     assert_redirected_to root_path
   end
 
-  test "login user should create article" do
+  test "logged in user should create article" do
+    login
     parameter = article_params('New Title', 'New Author', '0', '0', 'en', '2017-04-20 00:00:00 UTC', '50a7f095-6a62-4a39-966b-dcef11ebf810')
     assert_difference('Article.count') do
-      post :create, params: {article: parameter}, session: {current_user_id: @user.id}
+      post '/articles', params: {article: parameter}
     end
     article = Article.last
     assert_redirected_to article_path(article)
@@ -59,12 +59,13 @@ class ArticlesControllerTest < ActionController::TestCase
   test "guest shouldn't get create" do
     parameter = article_params('New Title', 'New Author', '0', '0', 'en', '2017-04-20 00:00:00 UTC', '50a7f095-6a62-4a39-966b-dcef11ebf810')
     assert_no_difference('Article.count') do
-      post :create, params: {article: parameter}
+      post '/articles', params: {article: parameter}
     end
   end
 
-  test "login user should show article" do
-    get :show, params: {id: @article}, session: {current_user_id: @user.id}
+  test "logged in user should show article" do
+    login
+    get article_path(@article)
     assert_response :success
     assert_select 'nav' do
 #      assert_select 'a.navbar-brand', 'WNote'
@@ -80,20 +81,26 @@ class ArticlesControllerTest < ActionController::TestCase
   end
 
   test "Only the owner can read section when r_public is off" do
+# Guest
     @article.update(r_public: 0) # off
-    get :show, params: {id: @article}, session: {current_user_id: @another_user.id}
-    assert_redirected_to root_path
-    get :show, params: {id: @article}, session: {current_user_id: nil} #GUEST
+    get article_path(@article)
     assert_redirected_to root_path
     @article.update(r_public: 1) # on
-    get :show, params: {id: @article}, session: {current_user_id: @another_user.id}
+    get article_path(@article)
     assert_response :success
-    get :show, params: {id: @article}, session: {current_user_id: nil} #GUEST
+# Another user
+    login_another_user
+    @article.update(r_public: 0) # off
+    get article_path(@article)
+    assert_redirected_to root_path
+    @article.update(r_public: 1) # on
+    get article_path(@article)
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, params: {id: @article} , session: {current_user_id: @user.id}
+    login
+    get edit_article_path(@article)
     assert_response :success
     assert_select 'div.wnote-main' do
       assert_select "input.form-control[name=?]", 'article[title]'
@@ -114,18 +121,20 @@ class ArticlesControllerTest < ActionController::TestCase
   end
 
   test "incorrect user shouldn't get edit" do
+    login_another_user
     @article.update(w_public: 0) # off
-    get :edit, params: {id: @article} , session: {current_user_id: @another_user.id}
+    get edit_article_path(@article)
     assert_response :redirect, "Incorrect user saw editing page." 
     @article.update(w_public: 1) # on
-    get :edit, params: {id: @article} , session: {current_user_id: @another_user.id}
+    get edit_article_path(@article)
     assert_response :success, "The other user couldn't see editing page, though w_public was on."
   end
 
   test "should update article" do
+    login
     parameter = article_params('New Title', 'New Author', '0', '0', 'en', '2017-04-20 00:00:00 UTC', '50a7f095-6a62-4a39-966b-dcef11ebf810')
     parameter = parameter.merge({section_order: "#{sections(:two).id},#{sections(:one).id}"})
-    patch :update, params: {id: @article, article: parameter}, session: {current_user_id: @user.id}
+    patch "/articles/#{@article.id}", params: {article: parameter}
     assert_redirected_to article_path(@article)
     assert_equal 'Article was successfully updated.', flash[:success]
     article = Article.find(@article.id) # reload
@@ -136,28 +145,31 @@ class ArticlesControllerTest < ActionController::TestCase
   end
 
   test "incorrect user shouldn't update section" do
+    login_another_user
     @article.update(w_public: 0) # off
-    patch :update, params: {id: @article, article: {title: 'New Title'}}, session: {current_user_id: @another_user.id}
+    patch "/articles/#{@article.id}", params: {article: {title: 'New Title'}}
     article = Article.find(@article.id) # reload
     assert_not_equal 'New Title', @article.title, "Title was updated."
     @article.update(w_public: 1) # on
-    patch :update, params: {id: @article, article: {title: 'New Title'}}, session: {current_user_id: @another_user.id}
+    patch "/articles/#{@article.id}", params: {article: {title: 'New Title'}}
     article = Article.find(@article.id) # reload
     assert_equal 'New Title', article.title, "Title wasn't updated."
   end
 
-  test "login user should destroy article" do
+  test "logged in user should destroy article" do
+    login
     assert_difference('Article.count', -1) do
-      delete :destroy, params: {id: @article}, session: {current_user_id: @user.id}
+      delete "/articles/#{@article.id}"
     end
     assert_redirected_to articles_path
     assert_equal 'Article was successfully destroyed.', flash[:success]
   end
 
   test "incorrect user shouldn't destroy section" do
+    login_another_user
     @article.update(w_public: 1) # even if w_public is on
     assert_no_difference('Article.count') do
-      delete :destroy, params: {id: @article}, session: {current_user_id: @another_user.id}
+      delete "/articles/#{@article.id}"
     end
   end
 

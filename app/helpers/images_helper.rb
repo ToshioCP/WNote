@@ -97,7 +97,7 @@ module ImagesHelper
           line = line + n[1]
         elsif n[0] == :C
           name, width, height, cl = image_element(n[1])
-          image = name ? Image.find_by(note_id: @note.id, name: name) : nil
+          image = name ? Image.find_by(name: "#{@user.id}_#{name}") : nil
           if image
             w = width ? "width = \"#{width}\"" : ""
             h = height ? "height = \"#{height}\"" : ""
@@ -111,6 +111,33 @@ module ImagesHelper
       text = text + line + "\n"
     end
     return text
+  end
+
+  def evaluate_for_epub(nodes)
+    image_ids = []
+    text = ""
+    nodes.each do |node|
+      line = ""
+      node.each do |n|
+        if n[0] == :L
+          line = line + n[1]
+        elsif n[0] == :C
+          name, width, height, cl = image_element(n[1])
+          image = name ? Image.find_by(name: "#{@user.id}_#{name}") : nil
+          if image
+            w = width ? "width = \"#{width}\"" : ""
+            h = height ? "height = \"#{height}\"" : ""
+            c = cl ? "class = \"#{cl}\"" : ""
+            line = line + "<img src=\"./images/b_#{name}.jpg\" " + w + " " + h + " />"
+            image_ids << image.id
+          end
+        else
+#          Unexpected error
+        end
+      end
+      text = text + line + "\n"
+    end
+    return text, image_ids
   end
 
 # @で囲まれたイメージの部分は、「イメージ名, 幅, 高さ, クラス」となっている	。

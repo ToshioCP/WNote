@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170509115527) do
+ActiveRecord::Schema.define(version: 20170514091516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,10 +36,11 @@ ActiveRecord::Schema.define(version: 20170509115527) do
   create_table "images", force: :cascade do |t|
     t.string "name"
     t.binary "image"
-    t.bigint "note_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["note_id"], name: "index_images_on_note_id"
+    t.bigint "user_id"
+    t.index ["name"], name: "index_images_on_name", unique: true
+    t.index ["user_id"], name: "index_images_on_user_id"
   end
 
   create_table "notes", id: :serial, force: :cascade do |t|
@@ -70,6 +71,7 @@ ActiveRecord::Schema.define(version: 20170509115527) do
   end
 
   add_foreign_key "articles", "users"
+  add_foreign_key "images", "users"
   add_foreign_key "notes", "sections"
   add_foreign_key "sections", "articles"
 end

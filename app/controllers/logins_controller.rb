@@ -14,7 +14,7 @@ class LoginsController < ApplicationController
   end
 
   def destroy
-    @_current_user = session[:current_user_id] = nil
+    logoff
     flash[:success] = "You have successfully logged out."
     redirect_to root_url
   end

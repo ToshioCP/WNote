@@ -3,14 +3,17 @@ require 'rmagick'
 require 'base64'
 
 class ArticlesController < ApplicationController
-  before_action :login_check_and_set_user, only: [:new, :create, :edit, :update, :destroy, :epub]
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :epub]
+
+  include ImagesHelper
+
+  before_action :set_models_variable, except: :index
+  before_action :verify_correct_user, only: [:new, :create, :destroy, :epub]
   before_action only: [:edit, :update] do
-    if @article.w_public == 0
-      check_correct_user
-    end
+    verify_correct_user if @article.w_public == 0
   end
-  before_action :check_correct_user, only: [:destroy, :epub]
+  before_action only: :show do
+    verify_correct_user if @article.r_public == 0
+  end
 
   def index
     @articles = Article.all
@@ -23,17 +26,8 @@ class ArticlesController < ApplicationController
     @articles = articles
   end
 
-  def show
-    if @article.r_public == 0
-      check_correct_user
-    end
-  end
-
   def new
     @article = Article.new
-  end
-
-  def edit
   end
 
   def create
@@ -46,6 +40,9 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   def update
     if @article.update(article_params)
       redirect_to @article, flash: { success: 'Article was successfully updated.' }
@@ -54,26 +51,20 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def show
+  end
+
   def destroy
     @article.destroy
     redirect_to articles_url, flash: { success: 'Article was successfully destroyed.' }
   end
 
   def epub
-#   epubデータの生成
+#   イメージファイルの配列
+    @image_ids = []
+#   epubデータ（本文、目次）の生成、イメージファイルの配列の生成
     mkepub
-#   epubのディレクトリの生成
-    tmpdir = Rails.root.to_s + '/tmp/' + "#{@article.user.id}"
-    if not File.exist?(tmpdir)
-      FileUtils.mkdir(tmpdir)
-    end
-    directories = ['META-INF', 'OEBPS', 'OEBPS/images', 'OEBPS/css'].map{|d| tmpdir + '/' + d}
-    directories.each do |d|
-      if not File.exist?(d)
-        FileUtils.mkdir(d)
-      end
-    end
-#   ファイルの生成
+#   表紙とCSSデータの生成
 #   表紙とCSSはデータがなければサンプルを代用する
     if @article.cover_image == ""
       @cover_image = IO.read(Rails.root.to_s + '/lib/sample.jpg')
@@ -85,55 +76,64 @@ class ArticlesController < ApplicationController
     else
       @css = @article.css
     end
-#  配列とeachを使ってプログラムを短縮化
-    files = [
-      [tmpdir + '/' + 'mimetype', 'application/epub+zip', 'w'],
-      [tmpdir + '/' + 'META-INF/container.xml', @container_data, 'w'],
-      [tmpdir + '/' + 'OEBPS/book.opf', @opf_data, 'w'],
-      [tmpdir + '/' + 'OEBPS/toc.xhtml', @toc_data, 'w'],
-      [tmpdir + '/' + 'OEBPS/book.xhtml', @xhtml_data, 'w'],
-      [tmpdir + '/' + 'OEBPS/images/cover.jpg', @cover_image, 'wb'],
-      [tmpdir + '/' + 'OEBPS/css/text.css', @css, 'w']
-    ]
-    files.each do |file|
-      File.open(file[0], file[2]) do |f|
-        f.write(file[1])
-      end
+#   epubファイルを置くディレクトリの生成
+    tmpdir = Rails.root.to_s + '/tmp/' + "#{@article.user.id}"
+#    ディレクトリが無ければ作成
+    if ! File.exist?(tmpdir)
+      FileUtils.mkdir(tmpdir)
     end
+#  配列とeachを使ってプログラムを短縮化
+    dirs = ['META-INF', 'OEBPS', 'OEBPS/images', 'OEBPS/css']
+    files = [
+      ['mimetype', 'application/epub+zip', 'w'],
+      ['META-INF/container.xml', @container_data, 'w'],
+      ['OEBPS/book.opf', @opf_data, 'w'],
+      ['OEBPS/toc.xhtml', @toc_data, 'w'],
+      ['OEBPS/book.xhtml', @xhtml_data, 'w'],
+      ['OEBPS/images/cover.jpg', @cover_image, 'wb'],
+      ['OEBPS/css/text.css', @css, 'w']
+    ]
 #   zip圧縮
-#   注意　：　zipファイルの生成は非同期に行われているようなのでzipfile.addの直後（一定時間）に元ファイルやディレクトリを削除すると上手く動かなくなる
-#           send_fileも非同期に実行されるようなので、zipファイルをすぐに削除することはできない
+#   注意　：　send_fileは非同期に実行されるようなので、zipファイルをすぐに削除することはできない
 #            以上から、一時ファイルはそのまま残すことにした。逆に始める時に以前の残りかすがある可能性に注意。
     zip_filename = tmpdir + '/' + "#{@article.title}.epub"
     if File.exist?(zip_filename)
       File.delete(zip_filename)
     end
-    input_filenames = ['mimetype', 'META-INF/container.xml',
-                       "OEBPS/book.opf", "OEBPS/toc.xhtml", "OEBPS/book.xhtml", 'OEBPS/images/cover.jpg', 'OEBPS/css/text.css']
     Zip.unicode_names = true
     Zip::File.open(zip_filename, Zip::File::CREATE) do |zipfile|
-      input_filenames.each do |filename|
-        zipfile.add(filename, tmpdir + '/' + filename)
+      dirs.each do |dir|
+        zipfile.mkdir(dir)
+      end
+      files.each do |file_array|
+        file, data, mode  = file_array
+        zipfile.get_output_stream(file) { |f| f.write data }
+      end
+#  画像の保存
+      if ! @image_ids.empty?
+        image_directory = 'OEBPS/images'
+        @image_ids.uniq!
+        @image_ids.each do |image_id|
+          image = Image.find(image_id)
+          image_name = image.name.gsub(/\A\d*_/,'')
+          zipfile.get_output_stream(image_directory + '/' + "b_#{image_name}.jpg") { |f| f.write image.image }
+        end
       end
     end
     send_file zip_filename, filename: "#{@article.title}.epub", type: "application/epub+zip"
   end
-1
+
   private
-    def login_check_and_set_user
-      if (@user = current_user) == nil
-        flash[:error] = "You don't have access to this section."
-        redirect_to root_path
+    def set_models_variable
+      if params[:id] # edit, update, show, destroy, epub
+        @article = Article.find(params[:id])
+        @user = @article.user
+      else # new, create
+        @user = current_user
       end
-    end
-    # Use callbacks to share common setup or constraints between actions.
-    def set_article
-      @article = Article.find(params[:id])
-    end
-    def check_correct_user
-      if (@user = current_user) != @article.user
-        flash[:warning] = "Only article's owner is allowed to access to this section."
-        redirect_to root_path
+      if ! @user
+        flash[:warning] = "The article couldn't read from the database or no logged in user."
+        redirect_back(fallback_location: root_path)
       end
     end
     # Strong parameter, only allow the white list through.
@@ -234,7 +234,9 @@ EOS
         @xhtml_data << "<a id=\"section#{section.id}\"><h2>#{section.heading}</h2></a>\n"
         section.ordered_notes.each do |note|
           @xhtml_data << "<a id=\"note#{note.id}\"><h3>#{note.title}</h3></a>\n"
-          @xhtml_data << markdown.render(note.text).html_safe
+          text, image_ids = evaluate_for_epub(parse(markdown.render(note.text)))
+          @xhtml_data << text
+          @image_ids.concat image_ids
         end
       end
       @xhtml_data << "</body>\n</html>\n"

@@ -9,22 +9,19 @@ require 'test_helper'
 class ImagesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @image = images(:one)
-    @note = @image.note
-    @section = @note.section
-    @article = @section.article
-    @user = @article.user
+    @user = @image.user
   end
 
   test "owner should get index" do
 # Guest can not access to index
-    get note_images_url(@note)
+    get images_url
     assert_response :redirect
     follow_redirect!
     assert_response :success
 # Login
     login
 # Owner can access to index
-    get note_images_url(@note)
+    get images_url
     assert_response :success
     assert_select 'td'
     assert_select 'td', @image.name
@@ -33,11 +30,11 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   test "owner should get new and create image" do
     login
 # new
-    get new_note_image_url(@note)
+    get new_image_url
     assert_response :success
 # create
     assert_difference('Image.count') do
-      post "/notes/#{@note.id}/images", params: {image: {
+      post "/images", params: {image: {
         name: 'new_name',
         image: fixture_file_upload("test/jogasaki.jpg", 'image/jpeg', true)
       } }
@@ -50,11 +47,11 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   test "owner should get edit and update image" do
     login
 # edit
-    get edit_note_image_url(@note, @image)
+    get edit_image_url(@image)
     assert_response :success
 # update
     update_image = IO.binread("test/jogasaki.jpg",nil)
-    patch "/notes/#{@note.id}/images/#{@image.id}", params: {image: {
+    patch "/images/#{@image.id}", params: {image: {
         name: 'update_name',
         image: fixture_file_upload("test/jogasaki.jpg", 'image/jpeg', true)
       } }
@@ -65,22 +62,14 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "owner should destroy note" do
+  test "owner should destroy image" do
     login
     assert_difference('Image.count', -1) do
-      delete "/notes/#{@note.id}/images/#{@image.id}"
+      delete "/images/#{@image.id}"
     end
     assert_response :redirect
     follow_redirect!
     assert_response :success
     assert_equal 'Note was successfully destroyed.', flash[:success]
   end
-
-  private
-    def login
-      post "/logins/create", params: {email: @user.email, password: 'aabbccddeeffgg'}
-      assert_response :redirect
-      follow_redirect!
-      assert_response :success
-    end
 end

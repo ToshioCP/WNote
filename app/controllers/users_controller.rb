@@ -1,11 +1,9 @@
 class UsersController < ApplicationController
   before_action :login_check_and_set_user, only: [:show, :edit, :update, :destroy, :backup, :upload, :restore, :reset]
 
-  def show
-  end
-
   def new
     @user= User.new
+    @method = "post"
   end
 
   def create
@@ -21,6 +19,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @method = "patch"
   end
 
   def update
@@ -35,6 +34,9 @@ class UsersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def show
   end
 
   def destroy

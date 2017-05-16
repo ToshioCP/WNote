@@ -11,20 +11,21 @@ Rails.application.routes.draw do
   get 'user/reset', to:'users#reset'
   get 'user/upload', to: 'users#upload'
   post 'user/restore', to:'users#restore'
+#resources
+  resource :user
+  resources :images, except: :show
 # Nested resources
-# user(s) - articles - sections - notes - images
-  resource :user do
-    resources :articles, only: :new
-  end
-  resources :articles, except: :new do
+#   Since the user is singular resource, it is not included in the nest. 
+# (user - ) articles - sections - notes
+# (user - ) images
+  get 'articles/:id/epub', to: 'articles#epub'
+  resources :articles do
     resources :sections, only: :new
   end
-  get 'articles/:id/epub', to: 'articles#epub'
   resources :sections, except: [:index, :new] do
     resources :notes, only: :new
   end
   resources :notes, except: [:index, :new] do
-    resources :images
   end
 # admin
   get 'admin/list_users'

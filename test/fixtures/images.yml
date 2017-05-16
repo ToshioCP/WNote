@@ -3,9 +3,10 @@
 one:
   name: Image1
   image: !!binary <%= Base64.strict_encode64(IO.read(Rails.root.to_s + '/lib/sample.jpg', nil)) %>
-  note: install_rbenv
+  user: toshiocp
 
 two:
   name: Image2
   image: <%= ('b'*(3.megabytes)).encode('ASCII-8BIT') %>
-  note: install_rbenv
+  user: toshiocp
+

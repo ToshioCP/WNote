@@ -57,7 +57,9 @@ class UserTest < ActiveSupport::TestCase
     assert_difference('Article.count',-1) do
       assert_difference('Section.count',-2) do
         assert_difference('Note.count',-4) do
-          users(:toshiocp).destroy
+          assert_difference('Image.count',-2) do
+            users(:toshiocp).destroy
+          end
         end
       end
     end

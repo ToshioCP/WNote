@@ -16,3 +16,18 @@ module FixtureFileHelpers
   end
 end
 ActiveRecord::FixtureSet.context_class.send :include, FixtureFileHelpers
+
+# helper method for all the test
+def login
+  post "/logins/create", params: {email: @user.email, password: 'aabbccddeeffgg'}
+  assert_response :redirect
+  follow_redirect!
+  assert_response :success
+end
+def login_another_user
+  post "/logins/create", params: {email: 'foobar@foobar.co.jp', password: 'hhiijjkkllmmnn'}
+  assert_response :redirect
+  follow_redirect!
+  assert_response :success
+end
+

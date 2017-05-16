@@ -1,4 +1,4 @@
-<%= form_for(@image, url: note_images_url(@note)) do |f| %>
+<%= form_for(@image, {url: @path, method: @method}) do |f| %>
   <% if @image.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@image.errors.count, "error") %> prohibited this note from being saved:</h2>

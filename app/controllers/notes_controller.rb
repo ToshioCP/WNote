@@ -1,26 +1,17 @@
 class NotesController < ApplicationController
-  before_action :login_check_and_set_user, only: [:new, :create, :edit, :update, :destroy]
-  before_action :set_note, only: [:show, :edit, :update, :destroy]
+  before_action :set_models_variable
+  before_action :verify_correct_user, only: [:new, :create, :destroy]
   before_action only: [:edit, :update] do
-    if @article.w_public == 0
-      check_correct_user
-    end
+    verify_correct_user if @article.w_public == 0
   end
-  before_action :check_correct_user, only: :destroy
-
-  def show
-    if @article.r_public == 0
-        check_correct_user
-    end
-    @prev_note = @section.prev_note(@note)
-    @next_note = @section.next_note(@note)
+  before_action only: :show do
+    verify_correct_user if @article.r_public == 0
   end
 
   def new
-    @section = Section.find(params[:section_id])
     @note = @section.notes.build
-    @article = @section.article
-    @redirect_path = notes_path
+    @path = notes_path
+    @method = 'post'
   end
 
   def create
@@ -34,7 +25,8 @@ class NotesController < ApplicationController
   end
 
   def edit
-    @redirect_path = note_path(@note)
+    @path = notes_path(@note)
+    @method = 'patch'
   end
 
   def update
@@ -46,6 +38,11 @@ class NotesController < ApplicationController
     end
   end
 
+  def show
+    @prev_note = @section.prev_note(@note)
+    @next_note = @section.next_note(@note)
+  end
+
   def destroy
     @note.destroy
     flash[:success] = 'Note was successfully destroyed.'
@@ -53,25 +50,20 @@ class NotesController < ApplicationController
   end
 
   private
-    def login_check_and_set_user
-      if (@user = current_user) == nil
-        flash[:warning] = "You aren't allowed to access to that page."
+    def set_models_variable
+      @note = Note.find(params[:id]) if params[:id] # edit, update, show, destroy
+      @section = @note.section if @note
+      @section = Section.find(params[:section_id]) if params[:section_id] # new
+      @section = Section.find(params[:note][:section_id]) if params[:note] && params[:note][:section_id] # create
+      @article = @section.article if @section
+      @user = @article.user if @article
+      if ! @user
+        flash[:warning] = "The note or the section couldn't read from the database."
         redirect_back(fallback_location: root_path)
       end
-    end
-    def set_note
-      @note = Note.find(params[:id])
-      @section = @note.section
-      @article = @section.article
     end
     def note_params
       params.require(:note).permit(:section_id, :title, :text)
-    end
-    def check_correct_user
-      if (@user = current_user) != @article.user
-        flash[:warning] = "Only article's owner is allowed to access to this section."
-        redirect_back(fallback_location: root_path)
-      end
     end
 
 end

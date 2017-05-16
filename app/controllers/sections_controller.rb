@@ -1,25 +1,17 @@
 class SectionsController < ApplicationController
-  before_action :login_check_and_set_user, only: [:new, :create, :edit, :update, :destroy]
-  before_action :set_section, only: [:show, :edit, :update, :destroy]
+  before_action :set_models_variable
+  before_action :verify_correct_user, only: [:new, :create, :destroy]
   before_action only: [:edit, :update] do
-    if @article.w_public == 0
-      check_correct_user
-    end
+    verify_correct_user if @article.w_public == 0
   end
-  before_action :check_correct_user, only: :destroy
-
-  def show
-    if @article.r_public == 0
-        check_correct_user
-    end
-    @prev_section = @article.prev_section(@section)
-    @next_section = @article.next_section(@section)
+  before_action only: :show do
+    verify_correct_user if @article.r_public == 0
   end
 
   def new
-    @article = Article.find(params[:article_id])
     @section = @article.sections.build
-    @redirect_path = sections_path
+    @path = sections_path
+    @method = 'post'
   end
 
   def create
@@ -33,7 +25,8 @@ class SectionsController < ApplicationController
   end
 
   def edit
-    @redirect_path = section_path(@section) 
+    @path = section_path(@section) 
+    @method = 'patch'
   end
 
   def update
@@ -45,6 +38,11 @@ class SectionsController < ApplicationController
     end
   end
 
+  def show
+    @prev_section = @article.prev_section(@section)
+    @next_section = @article.next_section(@section)
+  end
+
   def destroy
     @section.destroy
     flash[:success] = 'Section was successfully destroyed.'
@@ -52,24 +50,22 @@ class SectionsController < ApplicationController
   end
 
   private
-    def login_check_and_set_user
-      if (@user = current_user) == nil
-        flash[:warning] = "You don't have access to this section."
-        redirect_to root_path
+    def set_models_variable
+      if params[:id] # edit, update, show, destroy
+        @section = Section.find(params[:id]) if params[:id]
+        @article = @section.article
+      else
+        @article = Article.find(params[:article_id]) if params[:article_id] # new
+        @article = Article.find(params[:section][:article_id]) if params[:section] && params[:section][:article_id] # create
       end
-    end
-    def set_section
-      @section = Section.find(params[:id])
-      @article = @section.article
+      @user = @article.user
+      if ! @user
+        flash[:warning] = "The section or the article couldn't read from the database."
+        redirect_back(fallback_location: root_path)
+      end
     end
     def section_params
       params.require(:section).permit(:article_id, :heading, :note_order)
-    end
-    def check_correct_user
-      if (@user = current_user) != @article.user
-        flash[:warning] = "Only article's owner is allowed to access to this section."
-        redirect_to root_path
-      end
     end
 
 end

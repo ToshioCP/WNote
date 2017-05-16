@@ -35,6 +35,9 @@
             </a>
             <ul class="dropdown-menu" role="menu">
               <% if cu %>
+                <li><%= link_to 'Index Image', images_url %></li>
+                <li><%= link_to 'New Image', new_image_path %></li>
+                <li class="divider"></li>
                 <li><%= link_to 'Profile', controller: :users, action: :show %></li>
                 <li class="divider"></li>
                 <li><%= link_to 'Log out', logins_destroy_path, method: :delete %></li>

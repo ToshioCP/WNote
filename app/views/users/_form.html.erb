@@ -1,6 +1,4 @@
-<% url = '/users' %>
-<% method = from_new? ? 'post' : 'patch' %>
-<%= form_for @user, url: url, method: method do |f| %>
+<%= form_for(@user, {url: '/user', method: @method}) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -12,7 +10,7 @@
     </div>
   <% end %>
 
-  <% if from_edit? %>
+  <% if @user.id #i.e. when editting (@user.id == nil when new) %>
     <h2>Authentication</h2>
     <p>You must enter your password before editting your profile.</p>
     <div class="form-group">
