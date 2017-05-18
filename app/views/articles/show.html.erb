@@ -14,7 +14,7 @@
       <%= image_tag("data:image/png;base64," + @article.icon_base64, size: "32x32", alt: "<表紙画像>") %> 
     <% end %>
     <span style='padding-left: 30px'><%= @article.author %> / <%= @article.modified_datetime %></span>
-    <% if login? %>
+    <% if current_user == @article.user %>
       <%= link_to 'Epub', "#{@article.id}/epub", class: 'btn btn-sm btn-warning', role: 'button' %>
     <% end %>
   </small>
