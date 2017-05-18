@@ -31,17 +31,22 @@ It doesn't have enough power, yet.
 - user can backup/restore his or her data.
 - user can make epub data from his/her article.
 - admin can delete any user except him/her.
+- user can upload images
 
 ### Installation notes
 
-WNote runs on Heroku in production mode.
-(https://floating-shore-5277.herokuapp.com/)
-You need to use Postgresql database for the rails application on Heroku.
-So, WNote is configured to use Postgrsql as its database.
+Ruby 2.4.1, Rails 5.1.0 are required. 
+WNote is configured to use Postgrsql as its database.
 If you want to use other database ( for example Mysql ), modify 'Gemfile', 'config/database.yml'.
 With Postgresql you should notice that postgresql user has to be SUPERUSER.
-Because Rails Test does't work by no SUPERUSER.
-Everything without test works well even if you are not SUPERUSER of Postgresql.
+Because Rails Test does't work without SUPERUSER.
+Everything except test works well even if you are not SUPERUSER of Postgresql.
+### Wnote in the internet
+
+WNote is running on Heroku in production mode but unstable.
+(https://floating-shore-5277.herokuapp.com/)
+If you want to use this be careful.
+You should backup your data, against the unexpected errors.
 
 ----------
 
@@ -76,14 +81,20 @@ WNoteはまだ開発段階です。
 - ユーザは自身のデータをバックアップ、リストアできます
 - ユーザは自身のアーティクルからepubデータを作成することができます
 - 管理者（admin）は自分以外のユーザを削除することができます
+- ユーザは画像をアップロードすることができます
 
 ### インストレーション
 
-WNoteはHeroku上で「Ruby on Rails」のプロダクション・モードで動作しています。
-(https://floating-shore-5277.herokuapp.com/)
+Ruby 2.4.1, Rails 5.1.0 が必要です。
 WNoteは、「Ruby on Rails」とPostgresqlデータベースが必要です。
 というのは、HerokuではデータベースにPostgreaqlが使われているからです。
 もしも、他のデータベース（例えばMySql）を使いたい場合は、'Gemfile'と'config/database.yml'をそれに合うように変更してください。
 Postgresqlを使う場合、そのユーザはSUPERUSERでなければなりません。
 なぜなら、Ruby on RailsのテストはSUPERUSERでないと動作しないからです。
 テスト以外の機能はSUPERUSERでなくてもPostgresqlはきちんと動作します。
+
+### インターネット上のWNote
+
+WNoteはHeroku上で「Ruby on Rails」のプロダクション・モードで動作していますが、まだ不安定です。
+(https://floating-shore-5277.herokuapp.com/)
+不測の事態に備えてデータをバックアップしておいてください。
