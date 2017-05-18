@@ -9,10 +9,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.admin = false
-    if @user.savewelcome_to_wnote
+    if @user.save
       session[:current_user_id] = @user.id
       flash[:success] = I18n.t('welcome_to_wnote')
-      redirect_to action: :show
+      redirect_to user_path
     else
       render :new
     end
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     end
     if @user.update(update_params)
       flash[:success] = I18n.t('x_updated', x: I18n.t('User'))
-      redirect_to '/users'
+      redirect_to user_path
     else
       render :edit
     end
@@ -40,19 +40,12 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if request.delete?
-      render :destroy
-    elsif request.post?
-      if @user.authenticate(user_params[:password])
-        @user.destroy
-        logoff
-        redirect_to root_url, flash: { success: I18n.t('x_destroyed', x: I18n.t('User')) }
-      else
-      flash.now[:warning] = I18n.t('password_incorrect')
-      render :destroy
-      end
+    if @user.admin
+      redirect_to request.fullpath, flash: {warning: I18n.t('can_not_delete_self')}
     else
-      redirect_to '/users', flash: { warning: I18n.t('user_only') } 
+      @user.destroy
+      logoff
+      redirect_to root_url, flash: { success: I18n.t('x_destroyed', x: I18n.t('User')) }
     end
   end
 
@@ -67,9 +60,11 @@ class UsersController < ApplicationController
         end
         sections << [section,notes]
       end
-      articles << [article, sections]
+      cover = article.cover_image ? Base64.encode64(article.cover_image) : nil
+      article.cover_image = nil
+      articles << [article, cover, sections]
     end
-    backup_json_data = articles.to_json
+    backup_json_data = ActiveSupport::JSON.encode(articles)
     send_data backup_json_data, filename: "#{@user.name}.json", type: "application/json"
   end
 
@@ -82,10 +77,12 @@ class UsersController < ApplicationController
 #    content_type = uploaded_io.content_type
     articles = ActiveSupport::JSON.decode(uploaded_io.read)
     articles.each do |a|
-      article, sections = a
+      article, cover, sections = a
+      cover = cover ? Base64.decode64(cover) : nil
       @article = @user.articles.create(title: article['title'], author: article['author'],
         w_public: article['w_public'], r_public: article['r_public'],
-        language: article['language'], modified_datetime: article['modified_datetime'], identifier_uuid: article['identifier_uuid'],)
+        language: article['language'], modified_datetime: article['modified_datetime'], identifier_uuid: article['identifier_uuid'],
+        cover_image: cover, css: article['css'], icon_base64: article['icon_base64'])
       sections.each do |s|
         section, notes = s
         @section = @article.sections.create(heading: section['heading'])
@@ -94,14 +91,14 @@ class UsersController < ApplicationController
         end
       end
     end
-    redirect_to '/user', flash: { success: I18n.t('backup_data_restored') } 
+    redirect_to user_path, flash: { success: I18n.t('backup_data_restored') } 
   end
 
   def reset
     # destroy_all is written in 'Ruby on Rails API' ActiveRecord::Associations::CollectionProxy
     # The following line can be substituted by @user.articles.each { |article| article.destroy }
     @user.articles.destroy_all
-    redirect_to '/user', flash: { success: I18n.t('x_destroyed', x: I18n.t('All_Articles')) } 
+    redirect_to user_path, flash: { success: I18n.t('x_destroyed', x: I18n.t('All_Articles')) } 
   end
 
   private

@@ -308,3 +308,5 @@ en:
   backup_data_restored: Backup data was successfully restored.
   All_Articles: All Articles
   uuid_can_be_empty: Identifierd_UUID can be empty. Then new UUID will automatically generate.
+  List_Articles: List Articles
+  backup_except_image: Backup data excludes images.

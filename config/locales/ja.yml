@@ -231,19 +231,20 @@ ja:
   cover_page_message: 表紙画像のJpegデータ。ファイル指定しなければ、表紙は変更されない。
   change_ordering: 順序の変更
   change_section_order: ドラッグすることによってセクションの順を入れ替えできます。
-  edit_article: Articleの編集
+  edit_article: アーティクルの編集
   date_and_time: 日付と時刻
   following_field_can_be_empty: 以下のフィールドは空欄のままでも構いません。
+  List_Articles: アーティクル一覧
   cover_page_jpeg_data: 表紙画像 (jpeg data)
   css_file: Cssファイル
   submit: 送信
-  new_article: Articleの作成
+  new_article: アーティクルの作成
   Cover: 表紙
   Title: 題名
   Author: 著者
-  destroy_article: Articleの削除
-  new_section: Sectionの作成
-  section_heading: Sectionの表題
+  destroy_article: アーティクルの削除
+  new_section: セクションの作成
+  section_heading: セクションの表題
   image: 画像
   editing_image: 画像の編集
   edit: 編集
@@ -300,3 +301,4 @@ ja:
   backup_data_restored: バックアップデータは正常に復元されました。
   All_Articles: すべてのアーティクル
   uuid_can_be_empty: Identifierd_UUIDは空欄のままでも構いません。自動的にUUIDが生成されます。
+  backup_except_image: バックアップデータに画像は含まれません。
