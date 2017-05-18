@@ -1,8 +1,8 @@
 <% content_for :navigation do %>
-  <li><%= link_to 'Article', @article %></li>
+  <li><%= link_to t('Article'), @article %></li>
 <% end %>
 
-<h2>Edit Section</h2>
+<h2><%= t('Edit_Section') %></h2>
 
 <%= render 'form' %>
 

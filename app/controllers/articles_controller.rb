@@ -34,7 +34,7 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
     @article.user_id = @user.id
     if @article.save
-      redirect_to @article, flash: { success: 'Article was successfully created.'}
+      redirect_to @article, flash: { success: I18n.t('x_created', x: I18n.t('Article'))}
     else
       render :new
     end
@@ -45,7 +45,7 @@ class ArticlesController < ApplicationController
 
   def update
     if @article.update(article_params)
-      redirect_to @article, flash: { success: 'Article was successfully updated.' }
+      redirect_to @article, flash: { success: I18n.t('x_updated', x: I18n.t('Article')) }
     else
       render :edit
     end
@@ -56,7 +56,7 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article.destroy
-    redirect_to articles_url, flash: { success: 'Article was successfully destroyed.' }
+    redirect_to articles_url, flash: { success: I18n.t('x_destroyed', x: I18n.t('Article')) }
   end
 
   def epub

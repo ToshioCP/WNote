@@ -1,0 +1,302 @@
+---
+ja:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "バリデーションに失敗しました: %{errors}"
+        restrict_dependent_destroy:
+          has_one: "%{record}が存在しているので削除できません"
+          has_many: "%{record}が存在しているので削除できません"
+  date:
+    abbr_day_names:
+    - 日
+    - 月
+    - 火
+    - 水
+    - 木
+    - 金
+    - 土
+    abbr_month_names:
+    -
+    - 1月
+    - 2月
+    - 3月
+    - 4月
+    - 5月
+    - 6月
+    - 7月
+    - 8月
+    - 9月
+    - 10月
+    - 11月
+    - 12月
+    day_names:
+    - 日曜日
+    - 月曜日
+    - 火曜日
+    - 水曜日
+    - 木曜日
+    - 金曜日
+    - 土曜日
+    formats:
+      default: "%Y/%m/%d"
+      long: "%Y年%m月%d日(%a)"
+      short: "%m/%d"
+    month_names:
+    -
+    - 1月
+    - 2月
+    - 3月
+    - 4月
+    - 5月
+    - 6月
+    - 7月
+    - 8月
+    - 9月
+    - 10月
+    - 11月
+    - 12月
+    order:
+    - :year
+    - :month
+    - :day
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: 約1時間
+        other: 約%{count}時間
+      about_x_months:
+        one: 約1ヶ月
+        other: 約%{count}ヶ月
+      about_x_years:
+        one: 約1年
+        other: 約%{count}年
+      almost_x_years:
+        one: 1年弱
+        other: "%{count}年弱"
+      half_a_minute: 30秒前後
+      less_than_x_minutes:
+        one: 1分以内
+        other: "%{count}分未満"
+      less_than_x_seconds:
+        one: 1秒以内
+        other: "%{count}秒未満"
+      over_x_years:
+        one: 1年以上
+        other: "%{count}年以上"
+      x_days:
+        one: 1日
+        other: "%{count}日"
+      x_minutes:
+        one: 1分
+        other: "%{count}分"
+      x_months:
+        one: 1ヶ月
+        other: "%{count}ヶ月"
+      x_years:
+        one: 1年
+        other: "%{count}年"
+      x_seconds:
+        one: 1秒
+        other: "%{count}秒"
+    prompts:
+      day: 日
+      hour: 時
+      minute: 分
+      month: 月
+      second: 秒
+      year: 年
+  errors:
+    format: "%{attribute}%{message}"
+    messages:
+      accepted: を受諾してください
+      blank: を入力してください
+      present: は入力しないでください
+      confirmation: と%{attribute}の入力が一致しません
+      empty: を入力してください
+      equal_to: は%{count}にしてください
+      even: は偶数にしてください
+      exclusion: は予約されています
+      greater_than: は%{count}より大きい値にしてください
+      greater_than_or_equal_to: は%{count}以上の値にしてください
+      inclusion: は一覧にありません
+      invalid: は不正な値です
+      less_than: は%{count}より小さい値にしてください
+      less_than_or_equal_to: は%{count}以下の値にしてください
+      model_invalid: "バリデーションに失敗しました: %{errors}"
+      not_a_number: は数値で入力してください
+      not_an_integer: は整数で入力してください
+      odd: は奇数にしてください
+      required: を入力してください
+      taken: はすでに存在します
+      too_long: は%{count}文字以内で入力してください
+      too_short: は%{count}文字以上で入力してください
+      wrong_length: は%{count}文字で入力してください
+      other_than: は%{count}以外の値にしてください
+    template:
+      body: 次の項目を確認してください
+      header:
+        one: "%{model}にエラーが発生しました"
+        other: "%{model}に%{count}個のエラーが発生しました"
+  helpers:
+    select:
+      prompt: 選択してください
+    submit:
+      create: 登録する
+      submit: 保存する
+      update: 更新する
+  number:
+    currency:
+      format:
+        delimiter: ","
+        format: "%n%u"
+        precision: 0
+        separator: "."
+        significant: false
+        strip_insignificant_zeros: false
+        unit: 円
+    format:
+      delimiter: ","
+      precision: 3
+      separator: "."
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion: 十億
+          million: 百万
+          quadrillion: 千兆
+          thousand: 千
+          trillion: 兆
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n%u"
+        units:
+          byte: バイト
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ''
+        format: "%n%"
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: 、
+      two_words_connector: 、
+      words_connector: 、
+  time:
+    am: 午前
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+      long: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
+      short: "%y/%m/%d %H:%M"
+    pm: 午後
+  language:
+    language: 言語
+    en: 英語
+    ja: 日本語
+  guest: ゲスト
+  user: ユーザ
+  listing_articles: アーティクル一覧
+  log_in: ログイン
+  log_out: ログアウト
+  sign_up: サインアップ
+  profile: プロファイル
+  index_image: 画像一覧
+  new_image: 新規画像
+  admin: 管理者
+  list_users: ユーザ一覧
+  show: 閲覧
+  name: 名前
+  email: Eメール
+  delete: 削除
+  are_you_sure: よろしいですか?
+  title: 題名
+  author: 著者
+  modified_datetime: modified_datetime
+  identifier_uuid: identifier_uuid
+  cover_image: 表紙画像
+  cover_page_message: 表紙画像のJpegデータ。ファイル指定しなければ、表紙は変更されない。
+  change_ordering: 順序の変更
+  change_section_order: ドラッグすることによってセクションの順を入れ替えできます。
+  edit_article: Articleの編集
+  date_and_time: 日付と時刻
+  following_field_can_be_empty: 以下のフィールドは空欄のままでも構いません。
+  cover_page_jpeg_data: 表紙画像 (jpeg data)
+  css_file: Cssファイル
+  submit: 送信
+  new_article: Articleの作成
+  Cover: 表紙
+  Title: 題名
+  Author: 著者
+  destroy_article: Articleの削除
+  new_section: Sectionの作成
+  section_heading: Sectionの表題
+  image: 画像
+  editing_image: 画像の編集
+  edit: 編集
+  Image: 画像
+  Input_email_password: Eメールとパスワードを入力してログインボタンをクリックください。
+  password: パスワード
+  section: セクション
+  text: 記事
+  Section: セクション
+  Editing_Note: メモの編集
+  New_Note: メモの作成
+  Article: アーティクル
+  Edit_Note: メモの編集
+  Delete_Note: メモの削除
+  article: アーティクル
+  heading: 表題
+  change_note_order: ドラッグすることによってメモの順を入れ替えできます。
+  Edit_Section: セクションの編集
+  Delete_Section: セクションの削除
+  Text: 記事
+  Authentication: 認証
+  password_before_edit_profile: プロファイル編集の前にパスワードを入力してください。
+  current_password: 現在のパスワード
+  Edit_your_profile: プロファイルの編集
+  do_not_fill_in: 以下の項目を変えたくない場合は、空欄にしておいてください。
+  email_confirmation: Eメール（確認用）
+  Authentication_needed: 認証が必要です。
+  password_before_delete_account: アカウントを削除する前にパスワードの入力が必要です。
+  Edit_User_with_name: "%{user_name}さんのプロファイル編集"
+  Backup_data: データのバックアップ
+  Restore_data: データの復元
+  Reset: データの消去
+  Delete_Account: アカウントの削除
+  Key: 項目
+  Value: 内容
+  Restore: 復元
+  Upload_File: アップロード・ファイル
+  Upload: アップロード
+  can_not_delete_self: 管理者は自分自身のアカウントを削除できません。
+  user_destroyed: ユーザは削除されました。
+  access_denied_resource: ここにはアクセスできません。
+  only_owner: ここにアクセスできるのは所有者のみです。
+  x_created: "%{x}を作成しました。"
+  x_updated: "%{x}を変更しました。"
+  x_destroyed: "%{x}を削除しました。"
+  log_in_success: ログインしました。
+  log_out_success: ログアウトしました。
+  Note: メモ
+  note_or_section_not_being_read: メモ、またはセクションをデータベースから読み出すことができませんでした。
+  section_or_article_not_being_read: セクション、またはアーティクルをデータベースから読み出すことができませんでした。
+  welcome_to_wnote: WNoteへようこそ !!
+  password_incorrect: パスワードが間違っていました。
+  user_only: 所有者のみが自分自身のアカウントを削除できます。
+  backup_data_restored: バックアップデータは正常に復元されました。
+  All_Articles: すべてのアーティクル
+  uuid_can_be_empty: Identifierd_UUIDは空欄のままでも構いません。自動的にUUIDが生成されます。

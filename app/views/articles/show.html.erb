@@ -1,10 +1,10 @@
 <% content_for :navigation do %>
-  <li><%= link_to 'List Articles', articles_path %></li>
+  <li><%= link_to t('list_articles'), articles_path %></li>
   <% if login? %>
-    <li><%= link_to 'New Article', new_article_path %></li>
-    <li><%= link_to 'Edit Article', edit_article_path(@article) %></li>
-    <li><%= link_to 'Destroy Article', @article, method: :delete, data: { confirm: 'Are you sure?' } %></li>
-    <li><%= link_to 'New Section', new_article_section_path(@article) %></li>
+    <li><%= link_to t('new_article'), new_article_path %></li>
+    <li><%= link_to t('edit_article'), edit_article_path(@article) %></li>
+    <li><%= link_to t('destroy_article'), @article, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+    <li><%= link_to t('new_section'), new_article_section_path(@article) %></li>
   <% end %>
 <% end %>
 
@@ -23,15 +23,15 @@
 <table class="table">
   <thead>
     <tr>
-      <th class='col-md-1'>Show</th>
-      <th class='col-md-11'>Section heading</th>
+      <th class='col-md-1'><%= t('show') %></th>
+      <th class='col-md-11'><%= t('section_heading') %></th>
     </tr>
   </thead>
 
   <tbody>
     <% @article.ordered_sections.each do |section| %>
       <tr>
-        <td><%= link_to 'Show', section, class: 'btn btn-sm btn-info', role: 'button' %></td>
+        <td><%= link_to t('show'), section, class: 'btn btn-sm btn-info', role: 'button' %></td>
         <td><%= section.heading %></td>
       </tr>
     <% end %>

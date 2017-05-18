@@ -17,7 +17,7 @@ class ImagesController < ApplicationController
   def create
     @image = Image.new(image_params)
     if @image.save
-      flash[:success] = 'Image was successfully created.'
+      flash[:success] = I18n.t('x_created', x: I18n.t('Image'))
       redirect_to images_path
     else
       render :new
@@ -32,7 +32,7 @@ class ImagesController < ApplicationController
 
   def update
     if @image.update(image_params)
-      flash[:success] = 'Note was successfully updated.'
+      flash[:success] = I18n.t('x_updated', x: I18n.t('Image'))
       redirect_to images_path
     else
       render :edit
@@ -41,7 +41,7 @@ class ImagesController < ApplicationController
 
   def destroy
     @image.destroy
-    flash[:success] = 'Note was successfully destroyed.'
+    flash[:success] = I18n.t('x_destroyed', x: I18n.t('Image'))
     redirect_to images_path
   end
 
@@ -49,7 +49,7 @@ class ImagesController < ApplicationController
 # set instance variable and check current user
     def set_user
       if ! (@user = current_user)
-        flash[:error] = "You don't have access to this section."
+        flash[:error] = I18n.t('access_denied_resource')
         redirect_to root_path
       end
     end

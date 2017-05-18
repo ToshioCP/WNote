@@ -1,18 +1,18 @@
 <% if login? %>
   <% content_for :navigation do %>
-     <li><%= link_to 'New Article', new_article_path %></li>
+     <li><%= link_to t('new_article'), new_article_path %></li>
   <% end %>
 <% end %>
 
-<h2>Listing Articles</h2>
+<h2><%= t('listing_articles') %></h2>
 
 <table class="table">
   <thead>
     <tr>
-      <th class='col-md-1'>Show</th>
-      <th class='col-md-1'>Cover</th>
-      <th class='col-md-3'>Title</th>
-      <th class='col-md-3'>Author</th>
+      <th class='col-md-1'><%= t('show') %></th>
+      <th class='col-md-1'><%= t('Cover') %></th>
+      <th class='col-md-3'><%= t('Title') %></th>
+      <th class='col-md-3'><%= t('Author') %></th>
       <th class='col-md-5'>Modified_Datetime</th>
     </tr>
   </thead>
@@ -20,9 +20,9 @@
   <tbody>
     <% @articles.each do |article| %>
       <tr>
-        <td><%= link_to 'Show', article, class: 'btn btn-sm btn-info', role: 'button' %></td>
+        <td><%= link_to t('show'), article, class: 'btn btn-sm btn-info', role: 'button' %></td>
         <% if article.icon_base64 %>
-          <td><%= image_tag("data:image/png;base64," + article.icon_base64, size: "32x32", alt: "<表紙画像>") %> </td>
+          <td><%= image_tag("data:image/png;base64," + article.icon_base64, size: "32x32", alt: "<cover image>") %> </td>
         <% else %>
           <td></td>
         <% end %>

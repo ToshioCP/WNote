@@ -17,7 +17,7 @@ class NotesController < ApplicationController
   def create
     @note = Note.new(note_params)
     if @note.save
-      flash[:success] = 'Note was successfully created.'
+      flash[:success] = I18n.t('x_created', x: I18n.t('Note'))
       redirect_to @note
     else
       render :new
@@ -25,13 +25,13 @@ class NotesController < ApplicationController
   end
 
   def edit
-    @path = notes_path(@note)
+    @path = "/notes/#{@note.id}?locale=#{I18n.locale}"
     @method = 'patch'
   end
 
   def update
     if @note.update(note_params)
-      flash[:success] = 'Note was successfully updated.'
+      flash[:success] = I18n.t('x_updated', x: I18n.t('Note'))
       redirect_to @note
     else
       render :edit
@@ -45,7 +45,7 @@ class NotesController < ApplicationController
 
   def destroy
     @note.destroy
-    flash[:success] = 'Note was successfully destroyed.'
+    flash[:success] = I18n.t('x_destroyed', x: I18n.t('Note'))
     redirect_to @section
   end
 
@@ -58,7 +58,7 @@ class NotesController < ApplicationController
       @article = @section.article if @section
       @user = @article.user if @article
       if ! @user
-        flash[:warning] = "The note or the section couldn't read from the database."
+        flash[:warning] = I18n.t('note_or_section_not_being_read')
         redirect_back(fallback_location: root_path)
       end
     end

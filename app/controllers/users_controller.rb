@@ -9,9 +9,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.admin = false
-    if @user.save
+    if @user.savewelcome_to_wnote
       session[:current_user_id] = @user.id
-      flash[:success] = 'Welcome to WNote !!'
+      flash[:success] = I18n.t('welcome_to_wnote')
       redirect_to action: :show
     else
       render :new
@@ -24,12 +24,12 @@ class UsersController < ApplicationController
 
   def update
     if !@user.authenticate(params[:current_password])
-      flash.now[:warning] = 'Password was incorrect.'
+      flash.now[:warning] = I18n.t('password_incorrect')
       render :edit
       return
     end
     if @user.update(update_params)
-      flash[:success] = 'User was successfully updated.'
+      flash[:success] = I18n.t('x_updated', x: I18n.t('User'))
       redirect_to '/users'
     else
       render :edit
@@ -46,13 +46,13 @@ class UsersController < ApplicationController
       if @user.authenticate(user_params[:password])
         @user.destroy
         logoff
-        redirect_to root_url, flash: { success: 'User was successfully destroyed.' }
+        redirect_to root_url, flash: { success: I18n.t('x_destroyed', x: I18n.t('User')) }
       else
-      flash.now[:warning] = 'Password was incorrect.'
+      flash.now[:warning] = I18n.t('password_incorrect')
       render :destroy
       end
     else
-      redirect_to '/users', flash: { warning: 'The owner is the only person who can delete his/her account.' } 
+      redirect_to '/users', flash: { warning: I18n.t('user_only') } 
     end
   end
 
@@ -94,21 +94,21 @@ class UsersController < ApplicationController
         end
       end
     end
-    redirect_to '/user', flash: { success: 'Backup data was successfully restored.' } 
+    redirect_to '/user', flash: { success: I18n.t('backup_data_restored') } 
   end
 
   def reset
     # destroy_all is written in 'Ruby on Rails API' ActiveRecord::Associations::CollectionProxy
     # The following line can be substituted by @user.articles.each { |article| article.destroy }
     @user.articles.destroy_all
-    redirect_to '/user', flash: { success: 'All articles was successfully destroyed.' } 
+    redirect_to '/user', flash: { success: I18n.t('x_destroyed', x: I18n.t('All_Articles')) } 
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def login_check_and_set_user
       if (@user = current_user) == nil
-        flash[:error] = "You don't have access to this section."
+        flash[:error] = I18n.t('access_denied_resource')
         redirect_to root_path
       end
     end

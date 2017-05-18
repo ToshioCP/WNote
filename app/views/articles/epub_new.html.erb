@@ -2,37 +2,37 @@
 
 <%= form_tag({controller: "articles", action: "epub"}, {method: "post", multipart: true}) do %>
   <div class="form-group">
-    <%= label_tag(:language, "Language") %><br>
+    <%= label_tag(:language, <%= t('language') %>) %><br>
     <%= text_field_tag(:language, 'ja', {class: "form-control", placeholder: "language"}) %>
   </div>
   <div class="form-group">
-    <%= label_tag(:title, "Title") %><br>
+    <%= label_tag(:title, <%= t('title') %>) %><br>
     <%= text_field_tag(:title, @article.title, {class: "form-control", placeholder: "title"}) %>
   </div>
   <div class="form-group">
-    <%= label_tag(:author, "Author") %><br>
+    <%= label_tag(:author, <%= t('author') %>) %><br>
     <%= text_field_tag(:author, @user.name, {class: "form-control", placeholder: "author"}) %>
   </div>
   <div class="form-group">
-    <%= label_tag(:datetime, "Date & Time") %><br>
+    <%= label_tag(:datetime, <%= t('date_and_time') %>) %><br>
     <%= select_datetime Time.now, include_seconds: true%>
   </div>
   <div class="form-group">
-    <%= label_tag(:uuid, "UUID") %><br>
+    <%= label_tag(:uuid, <%= t('identifier_uuid') %>) %><br>
     <%= text_field_tag(:uuid, SecureRandom.uuid, {class: "form-control", placeholder: "uuid"}) %>
   </div>
   <p>
-    The following field can be empty if you want.
+    <%= t('following_field_can_be_empty') %>
   </p>
   <div class="form-group">
-    <%= label_tag(:cover_jpg, "Cover Jpeg Data") %><br>
+    <%= label_tag(:cover_jpg, t('cover_page_jpeg_data')) %><br>
     <%= file_field_tag :cover_jpg %>
   </div>
   <div class="form-group">
-    <%= label_tag(:css_file, "Css File") %><br>
+    <%= label_tag(:css_file, t('css_file')) %><br>
     <%= file_field_tag :css_file %>
   </div>
   <div class="form-group">
-    <%= submit_tag 'submit' %>
+    <%= submit_tag t('submit') %>
   </div>
 <% end %>

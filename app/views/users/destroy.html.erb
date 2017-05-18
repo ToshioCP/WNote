@@ -1,11 +1,11 @@
 <%= form_for @user, url: 'user/destroy', method: 'post' do |f| %>
-  <h2>Authentication is needed.</h2>
-  <p>You neeed to enter your password before deleting your account.</p>
+  <h2><%= t('Authentication_needed') %></h2>
+  <p><%= t('password_before_delete_account') %></p>
   <div class="form-group">
-    <%= f.label :password %><br>
-    <%= f.password_field :password, options = {class: "form-control", placeholder: "password"} %>
+    <%= f.label t('password') %><br>
+    <%= f.password_field :password, options = {class: "form-control", placeholder: t('password')} %>
   </div>
   <div class="form-group">
-    <%= f.submit 'Submit', options={class: "btn btn-primary"} %>
+    <%= f.submit t('submit'), options={class: "btn btn-primary"} %>
   </div>
 <% end %>

@@ -2,12 +2,12 @@
   <li>
     <%= link_to(@article) do %>
       <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>Article
+      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><%= t('Article') %>
     <% end %>
   </li>
   <li>
     <%= link_to(@section) do %>
-      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>Section
+      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><%= t('Section') %>
     <% end %>
   </li>
   <% if(@prev_note) then %><li><% else %><li class="disabled"><% end %>
@@ -21,9 +21,9 @@
     <% end %>
   </li>
   <% if login? %>
-    <li><%= link_to 'New Note', new_section_note_path(@section) %></li>
-    <li><%= link_to 'Edit Note', edit_note_path(@note) %></li>
-    <li><%= link_to 'Destroy Note', @note, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+    <li><%= link_to t('New_Note'), new_section_note_path(@section) %></li>
+    <li><%= link_to t('Edit_Note'), edit_note_path(@note) %></li>
+    <li><%= link_to t('Delete_Note'), @note, method: :delete, data: { confirm: t('are_you_sure') } %></li>
   <% end %>
 <% end %>
 

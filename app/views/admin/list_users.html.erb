@@ -1,19 +1,19 @@
-<h2>Listing Users</h2>
+<h2><%= t('listing_users') %></h2>
 
 <table class="table">
   <thead>
     <tr>
-      <th class='col-md-1'>Show</th>
-      <th class='col-md-3'>Name</th>
-      <th class='col-md-3'>Email</th>
-      <th class='col-md-5'>Admin</th>
+      <th class='col-md-1'><%= t('show') %></th>
+      <th class='col-md-3'><%= t('name') %></th>
+      <th class='col-md-3'><%= t('email') %></th>
+      <th class='col-md-5'><%= t('admin') %></th>
     </tr>
   </thead>
 
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= link_to 'Delete', "/admin/users/#{user.id}", {method: :delete, data: { confirm: 'Are you sure?' },
+        <td><%= link_to t('delete'), "/admin/users/#{user.id}", {method: :delete, data: { confirm: t('are_you_sure') },
                class: 'btn btn-sm btn-danger', role: 'button'} %></td>
         <td><%= user.name %></td>
         <td><%= user.email %></td>

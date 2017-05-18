@@ -8,10 +8,10 @@ before_action :admin_check
   def delete_user
     id = params[:id]
     if id.to_i == current_user.id then
-      redirect_to root_path, flash: { warnings: "User can't delete (him/her)self)." }
+      redirect_to root_path, flash: { warnings: I18n.t('can_not_delete_self') }
     else
       User.find(id).destroy
-      redirect_to root_path, flash: { success: 'User was successfully destroyed.' }
+      redirect_to root_path, flash: { success: I18n.t('user_destroyed') }
     end
   end
 
@@ -19,7 +19,7 @@ before_action :admin_check
 
     def admin_check
       if noadmin?
-        flash[:warnings] = "You don't have access to this section."
+        flash[:warnings] = I18n.t('access_denied_resource')
         redirect_to root_path
       end
     end

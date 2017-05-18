@@ -1,8 +1,8 @@
 <% content_for :navigation do %>
-  <li><%= link_to 'Section', section_path(params[:section_id]) %></li>
+  <li><%= link_to t('Section'), section_path(params[:section_id]) %></li>
 <% end %>
 
-<h2>New Note</h2>
+<h2><%= t('New_Note') %></h2>
 
 <%= render 'form' %>
 

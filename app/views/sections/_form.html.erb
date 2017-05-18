@@ -12,12 +12,12 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :article %><br>
+    <%= f.label t('article') %><br>
     <%= f.collection_select(:article_id, @user.articles, :id, :title, options = {}, html_options = {class: "form-control"}) %>
   </div>
   <div class="form-group">
-    <%= f.label :heading %><br>
-    <%= f.text_field :heading, options={class: "form-control", placeholder: "heading"} %>
+    <%= f.label t('heading') %><br>
+    <%= f.text_field :heading, options={class: "form-control", placeholder: t('heading')} %>
   </div>
 
   <% if ! @section.note_order.blank? %>
@@ -25,7 +25,7 @@
       <h5><strong>Change ordering</strong></h5>
       <%= f.hidden_field :note_order %>
       <p>
-      You can change the order of the notes by dragging it which you want to move.
+      <%= t('change_note_order') %>
       </p>
       <ul id="sortable">
         <% as = ArrayString.new(@section.note_order) %>

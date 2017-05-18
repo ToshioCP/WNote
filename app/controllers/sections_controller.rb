@@ -17,7 +17,7 @@ class SectionsController < ApplicationController
   def create
     @section = Section.new(section_params)
     if @section.save
-      flash[:success] = 'Section was successfully created.'
+      flash[:success] = I18n.t('x_created', x: I18n.t('Section'))
       redirect_to @section
     else
       render :new
@@ -31,7 +31,7 @@ class SectionsController < ApplicationController
 
   def update
     if @section.update(section_params)
-      flash[:success] = 'Section was successfully updated.'
+      flash[:success] = I18n.t('x_updated', x: I18n.t('Section'))
       redirect_to @section
     else
       render :edit
@@ -45,7 +45,7 @@ class SectionsController < ApplicationController
 
   def destroy
     @section.destroy
-    flash[:success] = 'Section was successfully destroyed.'
+    flash[:success] = I18n.t('x_destroyed', x: I18n.t('Section'))
     redirect_to @article
   end
 
@@ -60,7 +60,7 @@ class SectionsController < ApplicationController
       end
       @user = @article.user
       if ! @user
-        flash[:warning] = "The section or the article couldn't read from the database."
+        flash[:warning] = I18n.t('section_or_article_not_being_read')
         redirect_back(fallback_location: root_path)
       end
     end

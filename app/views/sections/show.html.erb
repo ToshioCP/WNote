@@ -1,7 +1,7 @@
 <% content_for :navigation do %>
   <li>
     <%= link_to(@article) do %>
-      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>Article
+      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><%= t('Article') %>
     <% end %>
   </li>
   <% if(@prev_section) then %><li><% else %><li class="disabled"><% end %>
@@ -15,10 +15,10 @@
     <% end %>
   </li>
   <% if login? %>
-    <li><%= link_to 'New Section', new_article_section_path(@article) %></li>
-    <li><%= link_to 'Edit Section', edit_section_path(@section) %></li>
-    <li><%= link_to 'Destroy Section', @section, method: :delete, data: { confirm: 'Are you sure?' } %></li>
-    <li><%= link_to 'New Note', new_section_note_path(@section) %></li>
+    <li><%= link_to t('new_section'), new_article_section_path(@article) %></li>
+    <li><%= link_to t('Edit_Section'), edit_section_path(@section) %></li>
+    <li><%= link_to t('Delete_Section'), @section, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+    <li><%= link_to t('New_Note'), new_section_note_path(@section) %></li>
   <% end %>
 <% end %>
 
@@ -27,9 +27,9 @@
 <table class="table">
   <thead>
     <tr>
-      <th class='col-md-1'>Show</th>
-      <th class='col-md-2'>Title</th>
-      <th class='col-md-9'>Text</th>
+      <th class='col-md-1'><%= t('show') %></th>
+      <th class='col-md-2'><%= t('Title') %></th>
+      <th class='col-md-9'><%= t('Text') %></th>
     </tr>
   </thead>
 
@@ -39,7 +39,7 @@
     <% as.each do |no| %>
       <% note = @section.notes.find(no) %>
       <tr>
-        <td> <%= link_to 'Show', note, class: 'btn btn-sm btn-info', role: 'button' %> </td>
+        <td> <%= link_to t('show'), note, class: 'btn btn-sm btn-info', role: 'button' %> </td>
         <td> <%= note.title %> </td>
         <td> <%= note.text.length >50 ? note.text[0, 46]+'...' : note.text %> </td>
       </tr>

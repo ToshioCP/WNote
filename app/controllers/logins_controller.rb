@@ -6,7 +6,7 @@ class LoginsController < ApplicationController
     user = User.find_by(email: params[:email].downcase)
     if user && user.authenticate(params[:password])
       session[:current_user_id] = user.id
-      flash[:success] = "You have successfully logged in."
+      flash[:success] = I18n.t('log_in_success')
       redirect_to controller: :users, action: :show
     else
       render :new
@@ -15,7 +15,7 @@ class LoginsController < ApplicationController
 
   def destroy
     logoff
-    flash[:success] = "You have successfully logged out."
+    flash[:success] = I18n.t('log_out_success')
     redirect_to root_url
   end
 end

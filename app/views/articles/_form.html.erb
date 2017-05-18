@@ -11,27 +11,27 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :title %><br>
+    <%= f.label t('title') %><br>
     <%= f.text_field :title, {class: "form-control", placeholder: "title"} %>
   </div>
   <div class="form-group">
-    <%= f.label :author %><br>
+    <%= f.label t('author') %><br>
     <%= f.text_field :author, {class: "form-control", placeholder: "author"} %>
   </div>
   <div class="form-group">
-    <%= f.label :language, "For example, ja、en-US" %><br>
+    <%= f.label t('language'), "For example, ja、en-US" %><br>
     <%= f.text_field :language, {class: "form-control", placeholder: "language"} %>
   </div>
   <div class="form-group">
-    <%= f.label :modified_datetime %><br>
+    <%= f.label t('modified_datetime') %><br>
     <%= f.datetime_select :modified_datetime, include_seconds: true %>
   </div>
   <div class="form-group">
-    <%= f.label :identifier_uuid, "Identifierd_UUID can be empty. Then new UUID will automatically generate." %><br>
+    <%= f.label t('identifier_uuid'), t('uuid_can_be_empty') %><br>
     <%= f.text_field :identifier_uuid, {class: "form-control", placeholder: "uuid"} %>
   </div>
   <div class="form-group">
-    <%= f.label :cover_image, "Cover page Jpeg Data. If no file is selected, cover page won't be changed." %><br>
+    <%= f.label t('cover_image'), t('cover_page_message') %><br>
     <% if @article.icon_base64 %>
       <%= image_tag("data:image/png;base64," + @article.icon_base64, size: "32x32", alt: "<表紙画像>") %> 
     <% end %>
@@ -55,10 +55,10 @@
 
   <% if ! @article.section_order.blank? %>
     <div class="form-group">
-      <h5><strong>Change ordering</strong></h5>
+      <h5><strong><%= t('change_ordering') %></strong></h5>
       <%= f.hidden_field :section_order %>
       <p>
-      You can change the order of the sections by dragging it which you want to move.
+      <%= t('change_section_order') %>
       </p>
       <ul id="sortable">
         <% as = ArrayString.new(@article.section_order) %>

@@ -11,31 +11,31 @@
   <% end %>
 
   <% if @user.id #i.e. when editting (@user.id == nil when new) %>
-    <h2>Authentication</h2>
-    <p>You must enter your password before editting your profile.</p>
+    <h2><%= t('Authentication') %></h2>
+    <p><%= t('password_before_edit_profile') %></p>
     <div class="form-group">
-      <%= label_tag :current_password, 'current password' %><br>
-      <%= password_field_tag :current_password, nil, {class: "form-control", placeholder: "current_password"} %>
+      <%= label_tag :current_password, t('current_password') %><br>
+      <%= password_field_tag :current_password, nil, {class: "form-control", placeholder: t('current_password')} %>
     </div>
     <hr>
-    <h2>Edit your profile</h2>
-    <p>If you don't want to modify some of the following attributes, don't fill in the blanks.</p>
+    <h2><%= t('Edit_your_profile') %></h2>
+    <p><%= t('do_not_fill_in') %></p>
   <% end %>
   <div class="form-group">
-    <%= f.label :name %><br>
-    <%= f.text_field :name, options={class: "form-control", placeholder: "name"} %>
+    <%= f.label t('name') %><br>
+    <%= f.text_field :name, options={class: "form-control", placeholder: t('name')} %>
   </div>
   <div class="form-group">
-    <%= f.label :email %><br>
-    <%= f.text_field :email, options={class: "form-control", placeholder: "email"} %>
+    <%= f.label t('email') %><br>
+    <%= f.text_field :email, options={class: "form-control", placeholder: t('email')} %>
   </div>
   <div class="form-group">
-    <%= f.label :"email\sconfirmation" %><br>
-    <%= f.text_field :email_confirmation, options={class: "form-control", placeholder: "email confirmation"} %>
+    <%= f.label t('email_confirmation') %><br>
+    <%= f.text_field :email_confirmation, options={class: "form-control", placeholder: t('email_confirmation')} %>
   </div>
   <div class="form-group">
-    <%= f.label :password %><br>
-    <%= f.password_field :password, options = {class: "form-control", placeholder: "password"} %>
+    <%= f.label t('password') %><br>
+    <%= f.password_field :password, options = {class: "form-control", placeholder: t('password')} %>
   </div>
   <div class="form-group">
     <%= f.label :"password\sconfirmation" %><br>
