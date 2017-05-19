@@ -10,8 +10,6 @@ class SectionsController < ApplicationController
 
   def new
     @section = @article.sections.build
-    @path = sections_path
-    @method = 'post'
   end
 
   def create
@@ -25,8 +23,6 @@ class SectionsController < ApplicationController
   end
 
   def edit
-    @path = section_path(@section) 
-    @method = 'patch'
   end
 
   def update

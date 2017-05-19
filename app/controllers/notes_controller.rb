@@ -10,8 +10,6 @@ class NotesController < ApplicationController
 
   def new
     @note = @section.notes.build
-    @path = notes_path
-    @method = 'post'
   end
 
   def create
@@ -25,8 +23,6 @@ class NotesController < ApplicationController
   end
 
   def edit
-    @path = "/notes/#{@note.id}?locale=#{I18n.locale}"
-    @method = 'patch'
   end
 
   def update

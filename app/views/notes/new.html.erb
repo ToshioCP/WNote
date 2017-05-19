@@ -1,5 +1,9 @@
 <% content_for :navigation do %>
-  <li><%= link_to t('Section'), section_path(params[:section_id]) %></li>
+  <li>
+    <%= link_to(@section) do %>
+      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><%= t('Section') %>
+    <% end %>
+  </li>
 <% end %>
 
 <h2><%= t('New_Note') %></h2>

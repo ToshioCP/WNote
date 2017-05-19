@@ -1,5 +1,9 @@
 <% content_for :navigation do %>
-          <li><%= link_to t('list_articles'), articles_path %></li>
+  <li>
+    <%= link_to articles_path do %>
+      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><%= t('List_Articles') %>
+    <% end %>
+  </li>
 <% end %>
 
 <h2><%= t('edit_article') %></h2>
