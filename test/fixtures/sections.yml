@@ -18,3 +18,9 @@ three:
   heading: Introduction
   article: rails_howto
   note_order: "<%= ActiveRecord::FixtureSet.identify(:getting_started) %>"
+
+four:
+  heading: Introduction
+  article: lua
+  note_order:
+

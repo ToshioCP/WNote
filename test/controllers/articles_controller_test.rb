@@ -41,7 +41,9 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
   test "guest shouldn't get new" do
     get new_article_path
-    assert_redirected_to root_path
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
   end
 
   test "logged in user should create article" do
@@ -51,7 +53,9 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       post '/articles', params: {article: parameter}
     end
     article = Article.last
-    assert_redirected_to article_path(article)
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal 'Article was successfully created.', flash[:success]
     assert_equal article.user, @user, "Created article does not belong to the creating user." 
   end
@@ -84,7 +88,9 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 # Guest
     @article.update(r_public: 0) # off
     get article_path(@article)
-    assert_redirected_to root_path
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     @article.update(r_public: 1) # on
     get article_path(@article)
     assert_response :success
@@ -92,7 +98,9 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     login_another_user
     @article.update(r_public: 0) # off
     get article_path(@article)
-    assert_redirected_to root_path
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     @article.update(r_public: 1) # on
     get article_path(@article)
     assert_response :success
@@ -135,7 +143,9 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     parameter = article_params('New Title', 'New Author', '0', '0', 'en', '2017-04-20 00:00:00 UTC', '50a7f095-6a62-4a39-966b-dcef11ebf810')
     parameter = parameter.merge({section_order: "#{sections(:two).id},#{sections(:one).id}"})
     patch "/articles/#{@article.id}", params: {article: parameter}
-    assert_redirected_to article_path(@article)
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal 'Article was successfully updated.', flash[:success]
     article = Article.find(@article.id) # reload
     assert_equal 'New Title', article.title, "Title wasn't updated."
@@ -161,7 +171,9 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Article.count', -1) do
       delete "/articles/#{@article.id}"
     end
-    assert_redirected_to articles_path
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal 'Article was successfully destroyed.', flash[:success]
   end
 

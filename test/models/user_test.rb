@@ -54,8 +54,8 @@ class UserTest < ActiveSupport::TestCase
   end
 # relation test
   test "deletion of the user" do
-    assert_difference('Article.count',-1) do
-      assert_difference('Section.count',-2) do
+    assert_difference('Article.count',-2) do
+      assert_difference('Section.count',-3) do
         assert_difference('Note.count',-4) do
           assert_difference('Image.count',-2) do
             users(:toshiocp).destroy

@@ -29,7 +29,7 @@ class UsersController < ApplicationController
       return
     end
     if @user.update(update_params)
-      flash[:success] = I18n.t('x_updated', x: I18n.t('User'))
+      flash[:success] = I18n.t('x_updated', x: I18n.t('user'))
       redirect_to user_path
     else
       render :edit
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
     else
       @user.destroy
       logoff
-      redirect_to root_url, flash: { success: I18n.t('x_destroyed', x: I18n.t('User')) }
+      redirect_to root_url, flash: { success: I18n.t('x_destroyed', x: I18n.t('user')) }
     end
   end
 

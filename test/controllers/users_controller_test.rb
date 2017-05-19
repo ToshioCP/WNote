@@ -1,13 +1,14 @@
 require 'test_helper'
 
-class UsersControllerTest < ActionController::TestCase
+class UsersControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @user = users(:toshiocp)
   end
 
   test "should show user" do
-    get :show, session: {'current_user_id' => @user.id}
+    login
+    get user_path
     assert_response :success
     assert_select 'nav' do
 #      assert_select 'a.navbar-brand', 'WNote'
@@ -22,13 +23,13 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should get new" do
-    get :new
+    get new_user_path
     assert_response :success
     assert_select 'nav' do
 #      assert_select 'a.navbar-brand', 'WNote'
     end
     assert_select 'div.wnote-main' do
-      assert_select 'h1','Sign Up'
+      assert_select 'h1','Sign up'
       assert_select 'form' do
         assert_select 'input.form-control',5
         assert_select 'input.btn'
@@ -39,14 +40,17 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should create user" do
     assert_difference('User.count') do
-      post :create, params: {user: user_param('Mayu','Mayu@sekiya.jp','mayuchan')}
+      post user_path, params: {user: user_param('Mayu','Mayu@sekiya.jp','mayuchan')}
     end
-    assert_redirected_to action: :show
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal 'Welcome to WNote !!', flash[:success]
   end
 
   test "should get edit" do
-    get :edit, session: {'current_user_id' => @user.id}
+    login
+    get edit_user_path
     assert_response :success
     assert_select 'div.wnote-main' do
       assert_select 'form' do
@@ -72,9 +76,12 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should update user" do
+    login
     parameter = {current_password: 'aabbccddeeffgg', user: user_param('Mayu', 'mayu@sekiya.jp', 'mayuchan')}
-    patch :update, params: parameter, session: {'current_user_id' => @user.id}
-    assert_redirected_to '/users'
+    patch user_path, params: parameter
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal 'User was successfully updated.', flash[:success]
     @user = User.find(@user.id) # reload
     assert_not_equal 'ToshioCP', @user.name, "Name wasn't updated."
@@ -82,29 +89,35 @@ class UsersControllerTest < ActionController::TestCase
     assert @user.authenticate('mayuchan'), "Password wasn't updated."
   end
 
-  test "before destroy user" do
-    delete :destroy, session: {'current_user_id' => @user.id}
-    assert_response :success
-    assert_select 'div.wnote-main' do
-      assert_select 'form' do
-        assert_select 'h2', 'Authentication is needed.'
-        assert_select "input.form-control[name=?]", 'user[password]'
-        assert_select "input[class='btn btn-primary']"
-      end
-    end
-  end
-
   test "should destroy user" do
     assert_difference('User.count', -1) do
-      post :destroy, params: {user: {password: 'aabbccddeeffgg'}}, session: {'current_user_id' => @user.id}
+      @user = users(:foobar)
+      login_another_user
+      delete user_path, params: {user: {password: 'hhiijjkkllmmnn'}}
     end
-    assert_redirected_to root_url
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal 'User was successfully destroyed.', flash[:success]
   end
 
+  test "should not destroy admin user" do
+    assert_no_difference('User.count') do
+      login
+      delete user_path, params: {user: {password: 'aabbccddeeffgg'}}
+    end
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
+    assert_equal "Admin user can't delete (him/her)self.", flash[:warning]
+  end
+
   test "should reset articles" do
-    get :reset, session: {'current_user_id' => @user.id}
-    assert_redirected_to '/user'
+    login
+    get user_reset_path
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_empty @user.articles
   end
 

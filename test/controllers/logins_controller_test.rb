@@ -6,7 +6,7 @@ class LoginsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'div.wnote-main' do
       assert_select 'form' do
-        assert_select 'label', 'email'
+        assert_select 'label', 'Email'
         assert_select 'input.form-control'
         assert_select 'label', 'password'
         assert_select 'input.form-control'

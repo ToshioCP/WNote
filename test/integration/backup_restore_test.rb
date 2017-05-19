@@ -26,7 +26,7 @@ class BackupRestoreTest < ActionDispatch::IntegrationTest
 # integration test では、path（リクエスト先）やstatus（レスポンスコード）というメソッドが使える
 # このことはドキュメントの例には出てくるが、解説はあまり見かけない
     assert_equal '/user', path
-    assert_equal 'All articles was successfully destroyed.', flash[:success]
+    assert_equal 'All Articles was successfully destroyed.', flash[:success]
 
 # 一時保存したダウンロードファイルをアップロード
 # このとき、インテグレーションテストでは、fixture_file_uploadメソッドを使うことができる

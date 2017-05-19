@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+image_one:
   name: Image1
   image: !!binary <%= Base64.strict_encode64(IO.read(Rails.root.to_s + '/lib/sample.jpg', nil)) %>
   user: toshiocp
 
-two:
+image_two:
   name: Image2
   image: <%= ('b'*(3.megabytes)).encode('ASCII-8BIT') %>
   user: toshiocp

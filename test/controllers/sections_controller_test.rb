@@ -31,7 +31,9 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
 
   test "guest shouldn't get new" do
     get new_article_section_path(@article)
-    assert_redirected_to root_path
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
   end
 
   test "logged in user should get create" do
@@ -40,7 +42,9 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
       post sections_path, params: {section: {article_id: @article.id, heading: 'New Heading'}}
     end
     section = Section.last
-    assert_redirected_to section_path(section)
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal 'Section was successfully created.', flash[:success]
     assert_equal @article, section.article
     assert_equal 'New Heading', section.heading
@@ -60,7 +64,7 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
       assert_select 'a', 'Article'
       assert_select 'a', 'New Section'
       assert_select 'a', 'Edit Section'
-      assert_select 'a', 'Destroy Section'
+      assert_select 'a', 'Delete Section'
       assert_select 'a', 'New Note'
     end
     assert_response :success
@@ -78,7 +82,9 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
 # Guest
     @article.update(r_public: 0) # off
     get section_path(@section)
-    assert_redirected_to root_path
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     @article.update(r_public: 1) # on
     get section_path(@section)
     assert_response :success
@@ -86,7 +92,9 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
     login_another_user
     @article.update(r_public: 0) # off
     get section_path(@section)
-    assert_redirected_to root_path
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     @article.update(r_public: 1) # on
     get section_path(@section)
     assert_response :success
@@ -128,10 +136,12 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
 
   test "logged in user should get update" do
     login
-    article_id = articles(:rails_howto).id
-    note_order = "#{notes(:install_ruby)},#{notes(:install_rbenv)},#{notes(:install_rails)}" # exchange 1,2
-    patch "/sections/#{@section.id}", params: {section: {article_id: article_id, heading: 'Updated Heading', note_order: note_order}}
-    assert_redirected_to section_path(Section.last)
+    article_id = articles(:lua).id
+    note_order = "#{notes(:install_ruby).id},#{notes(:install_rbenv).id},#{notes(:install_rails).id}" # exchange 1,2
+    patch section_path(@section), params: {section: {article_id: article_id, heading: 'Updated Heading', note_order: note_order}}
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal 'Section was successfully updated.', flash[:success]
     section = Section.find(@section.id)
     assert_equal article_id, section.article_id
@@ -157,7 +167,9 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Section.count', -1) do
       delete "/sections/#{@section.id}"
     end
-    assert_redirected_to article_path(article)
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal 'Section was successfully destroyed.', flash[:success]
   end
 

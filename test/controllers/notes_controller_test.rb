@@ -45,7 +45,9 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
       post notes_path, params: {note: {section_id: @section.id, title: 'New Title', text: 'New Text'}}
     end
     note = Note.last
-    assert_redirected_to note_path(note)
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal 'Note was successfully created.', flash[:success]
     assert_equal @section, note.section
     assert_equal 'New Title', note.title
@@ -62,7 +64,7 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
       assert_select 'a', 'Section'
       assert_select 'a', 'New Note'
       assert_select 'a', 'Edit Note'
-      assert_select 'a', 'Destroy Note'
+      assert_select 'a', 'Delete Note'
    end
     assert_select 'div.wnote-main' do
 #     @note_markdown.title = 'redcarpet'
@@ -84,7 +86,9 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
 #Guest
     @article.update(r_public: 0) # off
     get note_path(@note)
-    assert_redirected_to root_url
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     @article.update(r_public: 1) # on
     get note_path(@note)
     assert_response :success
@@ -131,7 +135,9 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
     login
     section_id = sections(:two).id
     patch "/notes/#{@note.id}", params: {note: {section_id: section_id, title: 'New Title', text: 'New Text'}}
-    assert_redirected_to note_path(Note.last)
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal 'Note was successfully updated.', flash[:success]
     note = Note.find(@note.id)
     assert_equal section_id, note.section_id
@@ -157,7 +163,9 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Note.count', -1) do
       delete "/notes/#{@note.id}"
     end
-    assert_redirected_to section_path(section)
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal 'Note was successfully destroyed.', flash[:success]
   end
 

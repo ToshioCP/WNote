@@ -8,7 +8,7 @@ require 'test_helper'
 
 class ImagesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @image = images(:one)
+    @image = images(:image_one)
     @user = @image.user
   end
 
@@ -70,6 +70,6 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     follow_redirect!
     assert_response :success
-    assert_equal 'Note was successfully destroyed.', flash[:success]
+    assert_equal 'Image was successfully destroyed.', flash[:success]
   end
 end

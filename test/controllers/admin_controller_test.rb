@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AdminControllerTest < ActionController::TestCase
+class AdminControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @admin = users(:toshiocp)
@@ -8,27 +8,43 @@ class AdminControllerTest < ActionController::TestCase
   end
 
   test "non admin" do
-    get :list_users, session: {current_user_id: @nonadmin.id}
-    assert_redirected_to root_path
+    @user = @nonadmin
+    login_another_user
+    get admin_list_users_path
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal "You don't have access to this section.", flash[:warnings]
-    delete :delete_user, params: {id: @admin.id}, session: {current_user_id: @nonadmin.id}
-    assert_redirected_to root_path
+
+    delete "/admin/users/#{@admin.id}"
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal "You don't have access to this section.", flash[:warnings]
   end
 
-  test "list users" do
-    get :list_users, session: {current_user_id: @admin.id}
+  test "admin lists users" do
+    @user = @admin
+    login
+    get admin_list_users_path
     assert_response :success
   end
-  test "delete user" do
-    delete :delete_user, params: {id: @nonadmin.id}, session: {current_user_id: @admin.id}
-    assert_redirected_to root_path
+
+  test "admin deletes user" do
+    @user = @admin
+    login
+    delete "/admin/users/#{@nonadmin.id}"
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
     assert_equal "User was successfully destroyed.", flash[:success]
     assert_nil User.find_by(id: @nonadmin.id), "User was not deleted."
 # admin can't delete (him/her)self
-    delete :delete_user, params: {id: @admin.id}, session: {current_user_id: @admin.id}
-    assert_redirected_to root_path
-    assert_equal "User can't delete (him/her)self).", flash[:warnings]
+    delete "/admin/users/#{@admin.id}"
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
+    assert_equal "Admin user can't delete (him/her)self.", flash[:warnings]
     assert_not_nil User.find_by(id: @admin.id), "User was deleted."
 
   end

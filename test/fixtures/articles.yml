@@ -11,6 +11,17 @@ wnote:
   modified_datetime: 2017-04-24 11:38:07 UTC
   identifier_uuid: 0657606a-2e3e-11e7-8eb9-4339b7fe4684
 
+lua:
+  title: Lua_Note
+  author: ToshioCP
+  section_order: "<%= ActiveRecord::FixtureSet.identify(:four) %>"
+  user: toshiocp
+  w_public: 0
+  r_public: 0
+  language: ja
+  modified_datetime: 2017-05-10 05:48:39 UTC
+  identifier_uuid: e8cc6770-e4ad-462b-b562-aac2e1434583
+
 rails_howto:
   title: Raiils_Howto
   author: Toshio_Sekiya
