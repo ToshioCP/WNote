@@ -20,7 +20,6 @@ So you can organize your notes, like a paper article.
 ### WNote is deployed to Heroku but it's still in development level.
 
 WNote is in development level.
-It doesn't have enough power, yet.
 
 ### features
 
@@ -32,6 +31,7 @@ It doesn't have enough power, yet.
 - user can make epub data from his/her article.
 - admin can delete any user except him/her.
 - user can upload images
+- Support Internationalization (English and Japanese)
 
 ### Installation notes
 
@@ -52,25 +52,24 @@ You should backup your data, against the unexpected errors.
 
 ### WNoteとは？
 
-WNoteは'Web Note（ウェブ上のノート）'です。
+WNoteは'Web Note（ウェブ上のメモ）'です。
 ユーザとはWNoteのウェブサイトにログインした人を指します。
 ゲストとはそのサイトにログインしていない人を指します。
 ユーザになりたい場合は、まずサインアップ（ユーザ登録）をしてください。
-ユーザはWNote上でノートを書いたり保存したりできます。
-また、保存したノートを読むこともできます。
-ゲストの場合は、r_publicフラグがオンになっているノートを読むことができますが、
-オフになっているノートは読むことができません。
+ユーザはWNote上でメモを書いたり保存したりできます。
+また、保存したメモを読むこともできます。
+ゲストの場合は、r_publicフラグがオンになっているメモを読むことができますが、
+オフになっているメモは読むことができません。
 
-### articleとsection
+### アーティクルとセクション
 
-ノートはセクションにまとめることができます。
+メモはセクションにまとめることができます。
 また、セクションはアーティクル（記事）にまとめることができます。
-そこで、紙に書かれた記事や論文にょうに、ノートをまとめることができます。
+そこで、紙に書かれた記事や論文のように、メモをまとめることができます。
 
 ### WNoteはHeroku上で稼働していますがまだ開発段階です
 
 WNoteはまだ開発段階です。
-まだ十分な能力を持っているとはいえません。
 
 ### 特長
 
@@ -82,6 +81,7 @@ WNoteはまだ開発段階です。
 - ユーザは自身のアーティクルからepubデータを作成することができます
 - 管理者（admin）は自分以外のユーザを削除することができます
 - ユーザは画像をアップロードすることができます
+- 国際化をサポートしています（英語と日本語）
 
 ### インストレーション
 
