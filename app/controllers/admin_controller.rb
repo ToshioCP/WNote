@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-before_action :admin_check
+before_action :verify_admin
 
   def list_users
     @users = User.all
@@ -17,8 +17,8 @@ before_action :admin_check
 
   private
 
-    def admin_check
-      if noadmin?
+    def verify_admin
+      if (! current_user) || (! current_user.admin)
         flash[:warnings] = I18n.t('access_denied_resource')
         redirect_to root_path
       end

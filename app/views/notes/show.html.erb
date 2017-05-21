@@ -20,9 +20,11 @@
       <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
     <% end %>
   </li>
-  <% if (@article.user == current_user) || @article.w_public? %>
+  <% if edit_permission? @article %>
     <li><%= link_to t('New_Note'), new_section_note_path(@section) %></li>
     <li><%= link_to t('Edit_Note'), edit_note_path(@note) %></li>
+  <% end %>
+  <% if destroy_permission? @article %>
     <li><%= link_to t('Delete_Note'), @note, method: :delete, data: { confirm: t('Are_you_sure') } %></li>
   <% end %>
 <% end %>

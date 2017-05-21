@@ -6,10 +6,12 @@
   </li>
   <% if login? %>
     <li><%= link_to t('New_Article'), new_article_path %></li>
-    <% if (@article.user == current_user) || @article.w_public? %>
+    <% if edit_permission? @article %>
       <li><%= link_to t('Edit_Article'), edit_article_path(@article) %></li>
-      <li><%= link_to t('Destroy_Article'), @article, method: :delete, data: { confirm: 'Are you sure?' } %></li>
       <li><%= link_to t('New_Section'), new_article_section_path(@article) %></li>
+    <% end %>
+    <% if destroy_permission? @article %>
+      <li><%= link_to t('Destroy_Article'), @article, method: :delete, data: { confirm: 'Are you sure?' } %></li>
     <% end %>
   <% end %>
 <% end %>

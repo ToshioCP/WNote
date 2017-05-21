@@ -165,7 +165,7 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
 
   test "incorrect user shouldn't destroy note" do
     login_another_user
-    @article.update(w_public: 1) # even if w_public is on
+    @article.update(w_public: 0)
     assert_no_difference('Note.count') do
       delete "/notes/#{@note.id}"
     end

@@ -2,12 +2,14 @@ class NotesController < ApplicationController
   before_action :set_note_variable, except: [:new, :create]
   before_action :set_models_variable
   before_action :verify_user, only: [:new, :create]
-  before_action :verify_correct_user, only: :destroy
-  before_action only: [:edit, :update] do
-    verify_correct_user if ! @article.w_public?
+  before_action only: [:new, :create, :edit, :update] do
+    access_denied if ! edit_permission? @article
+  end
+  before_action only: :destroy do
+    access_denied if ! destroy_permission? @article
   end
   before_action only: :show do
-    verify_correct_user if ! @article.r_public?
+    access_denied if ! read_permission? @article
   end
 
   def new

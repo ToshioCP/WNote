@@ -14,11 +14,13 @@
       <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
     <% end %>
   </li>
-  <% if (@article.user == current_user) || @article.w_public? %>
+  <% if edit_permission? @article %>
     <li><%= link_to t('New_Section'), new_article_section_path(@article) %></li>
     <li><%= link_to t('Edit_Section'), edit_section_path(@section) %></li>
-    <li><%= link_to t('Delete_Section'), @section, method: :delete, data: { confirm: 'Are you sure?' } %></li>
     <li><%= link_to t('New_Note'), new_section_note_path(@section) %></li>
+  <% end %>
+  <% if destroy_permission? @article %>
+    <li><%= link_to t('Delete_Section'), @section, method: :delete, data: { confirm: 'Are you sure?' } %></li>
   <% end %>
 <% end %>
 

@@ -22,11 +22,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def verify_correct_user
-    if ! (current_user && current_user == @article.user)
-      flash[:warning] = I18n.t('only_owner')
-      redirect_back(fallback_location: root_path)
-    end
+  def access_denied
+    flash[:warnings] = I18n.t('access_denied_resource')
+    redirect_to root_path
   end
 
 end

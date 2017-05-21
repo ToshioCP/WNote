@@ -8,19 +8,25 @@ class ArticlesController < ApplicationController
 
   before_action :set_models_variable, except: [:index, :new, :create]
   before_action :verify_user, except: [:index, :show]
-  before_action :verify_correct_user, only: :epub
-  before_action only: [:edit, :update, :destroy] do
-    verify_correct_user if ! @article.w_public?
+# verify_user checked login.
+  before_action only: :epub do
+    access_denied if current_user != @article.user
+  end
+  before_action only: [:edit, :update] do
+    access_denied if ! edit_permission? @article
+  end
+  before_action only: :destroy do
+    access_denied if ! destroy_permission? @article
   end
   before_action only: :show do
-    verify_correct_user if ! @article.r_public?
+    access_denied if ! read_permission? @article
   end
 
   def index
     @articles = Article.all
     articles = []
     @articles.each do |article|
-      if article.r_public? || (login? && article.user == current_user)
+      if read_permission? article
         articles << article
       end
     end

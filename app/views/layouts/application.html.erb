@@ -26,15 +26,15 @@
           <%= content_for :navigation %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-              <% if (cu = current_user) %>
-                <%= cu.name %>
+              <% if login? %>
+                <%= current_user.name %>
               <% else %>
                 <%= t('Guest') %>
               <% end %>
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
-              <% if cu %>
+              <% if login? %>
                 <li><%= link_to t('Index_Image'), images_url %></li>
                 <li><%= link_to t('New_Image'), new_image_path %></li>
                 <li class="divider"></li>
