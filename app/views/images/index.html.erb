@@ -1,5 +1,6 @@
 <% content_for :navigation do %>
-  <li><%= link_to t('listing_articles'), articles_path%></li>
+  <li><%= link_to t('Listing_Articles'), articles_path%></li>
+  <li><%= link_to t('Profile'), user_path %></li>
 <% end %>
 
 <h2>Listing Images of <%= @user.name %></h2>
@@ -7,24 +8,24 @@
 <table class="table">
   <thead>
     <tr>
-      <th class='col-md-1'><%= t('edit') %></th>
-      <th class='col-md-1'><%= t('name') %></th>
+      <th class='col-md-1'><%= t('Edit') %></th>
+      <th class='col-md-1'><%= t('Name') %></th>
       <th class='col-md-3'><%= t('Image') %></th>
-      <th class='col-md-3'><%= t('delete') %></th>
+      <th class='col-md-3'><%= t('Delete') %></th>
     </tr>
   </thead>
 
   <tbody>
     <% @images.each do |image| %>
       <tr>
-        <td><%= link_to t('edit'), edit_image_path(image), class: 'btn btn-sm btn-info', role: 'button' %></td>
+        <td><%= link_to t('Edit'), edit_image_path(image), class: 'btn btn-sm btn-info', role: 'button' %></td>
         <td><%= image.name.gsub(/\A\d*_/, "") %></td>
         <% if image.image %>
           <td><%= image_tag("data:image/jpeg;base64," + Base64.strict_encode64(image.image), height: "144", alt: "image of #{image.name}") %> </td>
         <% else %>
           <td></td>
         <% end %>
-        <td><%= link_to t('delete'), "/images/#{image.id}", method: :delete, class: "btn btn-danger", role: "button" %></td>
+        <td><%= link_to t('Delete'), image, method: :delete, class: "btn btn-danger", role: "button" %></td>
       </tr>
     <% end %>
   </tbody>

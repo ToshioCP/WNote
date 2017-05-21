@@ -34,4 +34,13 @@ class Article < ApplicationRecord
   def delete_section(section)
     update section_order: ArrayString.new(self.section_order).delete(section.id)
   end
+
+  def r_public?
+    return self.r_public == 1
+  end
+
+  def w_public?
+    return self.w_public == 1
+  end
+
 end

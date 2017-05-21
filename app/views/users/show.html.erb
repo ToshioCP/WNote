@@ -1,15 +1,23 @@
+<% content_for :navigation do %>
+  <li>
+    <%= link_to articles_path do %>
+      <%= t('List_Articles') %>
+    <% end %>
+  </li>
+<% end %>
+
 <div class="page-header">
   <h1>
     <span><%= @user.name %></span>
-    <%= link_to t('edit'), edit_user_path, class: "btn btn-primary", role: "button" %>
+    <%= link_to t('Edit'), edit_user_path, class: "btn btn-primary", role: "button" %>
     <%= link_to t('Backup_data'), user_backup_path, class: "btn btn-primary", role: "button" %>
     <%= link_to t('Restore_data'), user_upload_path, class: "btn btn-primary", role: "button" %>
     <%= link_to t('Reset'), user_reset_path, class: "btn btn-danger", role: "button" %>
-    <%= link_to t('Delete_Account'), '/user', method: :delete,  data: { confirm: t('are_you_sure') }, class: "btn btn-danger", role: "button" %>
+    <%= link_to t('Delete_Account'), user_path, method: :delete,  data: { confirm: t('Are_you_sure') }, class: "btn btn-danger", role: "button" %>
   </h1>
 </div>
 <p><%= t('backup_except_image') %></p>
-<h3><%= t('profile') %></h3>
+<h3><%= t('Profile') %></h3>
 <table class="table">
   <thead>
     <tr>
@@ -18,10 +26,10 @@
   </thead>
   <tbody>
     <tr>
-      <td class='col-md-2'><%= t('name') %></td><td class='col-md-10'><%= @user.name %></td>
+      <td class='col-md-2'><%= t('Name') %></td><td class='col-md-10'><%= @user.name %></td>
     </tr>
     <tr>
-      <td class='col-md-2'><%= t('email') %></td><td class='col-md-10'><%= @user.email %></td>
+      <td class='col-md-2'><%= t('Email') %></td><td class='col-md-10'><%= @user.email %></td>
     </tr>
   </tbody>
 </table>
@@ -29,7 +37,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th class='col-md-1'><%= t('show') %></th>
+      <th class='col-md-1'><%= t('Show') %></th>
       <th class='col-md-3'><%= t('Title') %></th>
       <th class='col-md-3'><%= t('Author') %></th>
       <th class='col-md-5'><%= t('modified_datetime') %></th>
@@ -39,7 +47,7 @@
   <tbody>
     <% @user.articles.each do |article| %>
       <tr>
-        <td><%= link_to t('show'), article, class: 'btn btn-sm btn-info', role: 'button' %></td>
+        <td><%= link_to t('Show'), article, class: 'btn btn-sm btn-info', role: 'button' %></td>
         <td><%= article.title %></td>
         <td><%= article.author %></td>
         <td><%= article.modified_datetime %></td>

@@ -179,8 +179,12 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
   test "incorrect user shouldn't destroy section" do
     login_another_user
-    @article.update(w_public: 1) # even if w_public is on
+    @article.update(w_public: 0)
     assert_no_difference('Article.count') do
+      delete "/articles/#{@article.id}"
+    end # if w_public==true => destroy
+    @article.update(w_public: 1)
+    assert_difference('Article.count', -1) do
       delete "/articles/#{@article.id}"
     end
   end

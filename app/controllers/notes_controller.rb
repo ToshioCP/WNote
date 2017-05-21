@@ -1,11 +1,13 @@
 class NotesController < ApplicationController
+  before_action :set_note_variable, except: [:new, :create]
   before_action :set_models_variable
-  before_action :verify_correct_user, only: [:new, :create, :destroy]
+  before_action :verify_user, only: [:new, :create]
+  before_action :verify_correct_user, only: :destroy
   before_action only: [:edit, :update] do
-    verify_correct_user if @article.w_public == 0
+    verify_correct_user if ! @article.w_public?
   end
   before_action only: :show do
-    verify_correct_user if @article.r_public == 0
+    verify_correct_user if ! @article.r_public?
   end
 
   def new
@@ -46,15 +48,24 @@ class NotesController < ApplicationController
   end
 
   private
+    def set_note_variable
+      @note = Note.find(params[:id]) if params[:id]
+      if ! @note # params[:id]が無かったか、Note.find(params[:id])で見つからなかった場合
+        flash[:warning] = I18n.t('Note_missing')
+        redirect_back(fallback_location: root_path)
+      end
+    end
     def set_models_variable
-      @note = Note.find(params[:id]) if params[:id] # edit, update, show, destroy
-      @section = @note.section if @note
+      @section = @note.section if @note # except new, create
       @section = Section.find(params[:section_id]) if params[:section_id] # new
       @section = Section.find(params[:note][:section_id]) if params[:note] && params[:note][:section_id] # create
-      @article = @section.article if @section
-      @user = @article.user if @article
-      if ! @user
-        flash[:warning] = I18n.t('note_or_section_not_being_read')
+      if ! @section
+        flash[:warning] = I18n.t('Section_missing')
+        redirect_back(fallback_location: root_path)
+      end
+      @article = @section.article
+      if ! @article
+        flash[:warning] = I18n.t('Article_missing')
         redirect_back(fallback_location: root_path)
       end
     end

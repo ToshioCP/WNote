@@ -13,7 +13,7 @@
 
   <div class="form-group">
     <%= f.label t('article') %><br>
-    <%= f.collection_select(:article_id, @user.articles, :id, :title, options = {}, html_options = {class: "form-control"}) %>
+    <%= f.collection_select(:article_id, @article.user.articles, :id, :title, options = {}, html_options = {class: "form-control"}) %>
   </div>
   <div class="form-group">
     <%= f.label t('heading') %><br>

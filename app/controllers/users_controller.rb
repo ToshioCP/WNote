@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :login_check_and_set_user, only: [:show, :edit, :update, :destroy, :backup, :upload, :restore, :reset]
+  before_action :verify_user, only: [:edit, :update, :show, :destroy, :backup, :upload, :restore, :reset]
 
   def new
     @user= User.new
@@ -12,6 +12,7 @@ class UsersController < ApplicationController
     if @user.save
       session[:current_user_id] = @user.id
       flash[:success] = I18n.t('welcome_to_wnote')
+    # userのルーティングは単数（resource user）なのでuser_pathを@userにはできない
       redirect_to user_path
     else
       render :new
@@ -26,10 +27,9 @@ class UsersController < ApplicationController
     if !@user.authenticate(params[:current_password])
       flash.now[:warning] = I18n.t('password_incorrect')
       render :edit
-      return
-    end
-    if @user.update(update_params)
-      flash[:success] = I18n.t('x_updated', x: I18n.t('user'))
+    elsif @user.update(update_params)
+      flash[:success] = I18n.t('x_updated', x: I18n.t('User'))
+    # userのルーティングは単数（resource user）なのでuser_pathを@userにはできない
       redirect_to user_path
     else
       render :edit
@@ -41,11 +41,11 @@ class UsersController < ApplicationController
 
   def destroy
     if @user.admin
-      redirect_to request.fullpath, flash: {warning: I18n.t('can_not_delete_self')}
+      redirect_to request.fullpath, flash: {warning: I18n.t('can_not_delete_admin')}
     else
       @user.destroy
       logoff
-      redirect_to root_url, flash: { success: I18n.t('x_destroyed', x: I18n.t('user')) }
+      redirect_to root_path, flash: { success: I18n.t('x_destroyed', x: I18n.t('User')) }
     end
   end
 
@@ -98,17 +98,11 @@ class UsersController < ApplicationController
     # destroy_all is written in 'Ruby on Rails API' ActiveRecord::Associations::CollectionProxy
     # The following line can be substituted by @user.articles.each { |article| article.destroy }
     @user.articles.destroy_all
+    # userのルーティングは単数（resource user）なのでuser_pathを@userにはできない
     redirect_to user_path, flash: { success: I18n.t('x_destroyed', x: I18n.t('All_Articles')) } 
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def login_check_and_set_user
-      if (@user = current_user) == nil
-        flash[:error] = I18n.t('access_denied_resource')
-        redirect_to root_path
-      end
-    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name, :email, :email_confirmation, :password, :password_confirmation )

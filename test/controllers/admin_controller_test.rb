@@ -44,7 +44,7 @@ class AdminControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     follow_redirect!
     assert_response :success
-    assert_equal "Admin user can't delete (him/her)self.", flash[:warnings]
+    assert_equal "Can't delete admin.", flash[:warnings]
     assert_not_nil User.find_by(id: @admin.id), "User was deleted."
 
   end

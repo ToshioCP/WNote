@@ -1,16 +1,16 @@
 require 'test_helper'
 
 class BackupRestoreTest < ActionDispatch::IntegrationTest
+
+  setup do
+    @user = users(:toshiocp)
+  end
+
   test "backup and restore" do
     @article_before = Article.find_by(title: 'WNote_Howto')
 
-    post "/logins/create", params: {email: 'lxboyjp@gmail.com', password: 'aabbccddeeffgg'}
-# ログインは成功するはずなので、リダイレクト
-    assert_response :redirect
-    follow_redirect!
-    assert_response :success
-
-    get "/user/backup"
+    login
+    get user_backup_path
     assert_response :success
 # integration testでは、getやpostの後に@responseでレスポンスを知ることができる
 # ダウンロードファイルを一時保存
@@ -18,7 +18,7 @@ class BackupRestoreTest < ActionDispatch::IntegrationTest
       f.write @response.body
     end
 
-    get "/user/reset"
+    get user_reset_path
     assert_response :redirect
     follow_redirect!
     assert_response :success

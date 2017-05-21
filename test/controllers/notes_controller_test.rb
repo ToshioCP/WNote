@@ -20,9 +20,6 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
 # Owner can access to new
     get new_section_note_url(@section)
     assert_response :success
-    assert_select 'nav' do
-      assert_select 'a', 'Section'
-    end
     assert_select 'select.form-control' do
       assert_select 'option',sections(:one).heading
       assert_select 'option',sections(:two).heading
@@ -107,9 +104,6 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
     login
     get edit_note_path(@note)
     assert_response :success
-    assert_select 'nav' do
-      assert_select 'a', 'Section'
-    end
     assert_select 'div.wnote-main' do
       assert_select 'select.form-control' do
         assert_select 'option',sections(:one).heading

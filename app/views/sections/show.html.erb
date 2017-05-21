@@ -14,8 +14,8 @@
       <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
     <% end %>
   </li>
-  <% if login? %>
-    <li><%= link_to t('new_section'), new_article_section_path(@article) %></li>
+  <% if (@article.user == current_user) || @article.w_public? %>
+    <li><%= link_to t('New_Section'), new_article_section_path(@article) %></li>
     <li><%= link_to t('Edit_Section'), edit_section_path(@section) %></li>
     <li><%= link_to t('Delete_Section'), @section, method: :delete, data: { confirm: 'Are you sure?' } %></li>
     <li><%= link_to t('New_Note'), new_section_note_path(@section) %></li>
@@ -27,7 +27,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th class='col-md-1'><%= t('show') %></th>
+      <th class='col-md-1'><%= t('Show') %></th>
       <th class='col-md-2'><%= t('Title') %></th>
       <th class='col-md-9'><%= t('Text') %></th>
     </tr>
@@ -39,7 +39,7 @@
     <% as.each do |no| %>
       <% note = @section.notes.find(no) %>
       <tr>
-        <td> <%= link_to t('show'), note, class: 'btn btn-sm btn-info', role: 'button' %> </td>
+        <td> <%= link_to t('Show'), note, class: 'btn btn-sm btn-info', role: 'button' %> </td>
         <td> <%= note.title %> </td>
         <td> <%= note.text.length >50 ? note.text[0, 46]+'...' : note.text %> </td>
       </tr>

@@ -1,8 +1,6 @@
 class ImagesController < ApplicationController
-  before_action :set_user
-  before_action except: [:index, :new, :create] do
-    @image = Image.find(params[:id])
-  end
+  before_action :verify_user
+  before_action :set_models_variable, except: [:index, :new, :create]
 
   def index
     @images = @user.images
@@ -10,8 +8,6 @@ class ImagesController < ApplicationController
 
   def new
     @image = @user.images.build
-    @method = "post"
-    @path = "/images"
   end
 
   def create
@@ -26,8 +22,6 @@ class ImagesController < ApplicationController
 
   def edit
     @image.name.gsub!(/\A\d*_/,'')
-    @method = "patch"
-    @path = image_path(@image)
   end
 
   def update
@@ -46,11 +40,11 @@ class ImagesController < ApplicationController
   end
 
   private
-# set instance variable and check current user
-    def set_user
-      if ! (@user = current_user)
-        flash[:error] = I18n.t('access_denied_resource')
-        redirect_to root_path
+    def set_models_variable
+      @image = Image.find(params[:id])
+      if ! @image # params[:id]が無かったか、Image.find(params[:id])で見つからなかった場合
+        flash[:warning] = t('Image_missing')
+        redirect_back(fallback_location: root_path)
       end
     end
     def image_params

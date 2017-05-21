@@ -6,20 +6,21 @@ class ArticlesController < ApplicationController
 
   include ImagesHelper
 
-  before_action :set_models_variable, except: :index
-  before_action :verify_correct_user, only: [:new, :create, :destroy, :epub]
-  before_action only: [:edit, :update] do
-    verify_correct_user if @article.w_public == 0
+  before_action :set_models_variable, except: [:index, :new, :create]
+  before_action :verify_user, except: [:index, :show]
+  before_action :verify_correct_user, only: :epub
+  before_action only: [:edit, :update, :destroy] do
+    verify_correct_user if ! @article.w_public?
   end
   before_action only: :show do
-    verify_correct_user if @article.r_public == 0
+    verify_correct_user if ! @article.r_public?
   end
 
   def index
     @articles = Article.all
     articles = []
     @articles.each do |article|
-      if article.r_public > 0 || (login? && article.user == current_user)
+      if article.r_public? || (login? && article.user == current_user)
         articles << article
       end
     end
@@ -56,7 +57,7 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article.destroy
-    redirect_to articles_url, flash: { success: I18n.t('x_destroyed', x: I18n.t('Article')) }
+    redirect_to articles_path, flash: { success: I18n.t('x_destroyed', x: I18n.t('Article')) }
   end
 
   def epub
@@ -125,14 +126,9 @@ class ArticlesController < ApplicationController
 
   private
     def set_models_variable
-      if params[:id] # edit, update, show, destroy, epub
-        @article = Article.find(params[:id])
-        @user = @article.user
-      else # new, create
-        @user = current_user
-      end
-      if ! @user
-        flash[:warning] = "The article couldn't read from the database or no logged in user."
+      @article = Article.find(params[:id]) if params[:id]
+      if ! @article # params[:id]が無かったか、Article.find(params[:id])で見つからなかった場合
+        flash[:warning] = t('Article_missing')
         redirect_back(fallback_location: root_path)
       end
     end

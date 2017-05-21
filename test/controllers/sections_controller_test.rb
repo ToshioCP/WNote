@@ -15,9 +15,6 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
     login
     get new_article_section_path(@article)
     assert_response :success
-    assert_select 'nav' do
-      assert_select 'a', 'Article'
-    end
     assert_select 'form' do
       assert_select 'select.form-control' do
         assert_select 'option',articles(:wnote).title
@@ -104,9 +101,6 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
     login
     get edit_section_path(@section)
     assert_response :success
-    assert_select 'nav' do
-      assert_select 'a', 'Article'
-    end
     assert_select 'div.wnote-main' do
       assert_select 'select.form-control' do
         assert_select 'option',articles(:wnote).title

@@ -1,11 +1,13 @@
 class SectionsController < ApplicationController
+  before_action :set_section_variable, except: [:new, :create]
   before_action :set_models_variable
-  before_action :verify_correct_user, only: [:new, :create, :destroy]
+  before_action :verify_user, only: [:new, :create]
+  before_action :verify_correct_user, only: :destroy
   before_action only: [:edit, :update] do
-    verify_correct_user if @article.w_public == 0
+    verify_correct_user if ! @article.w_public?
   end
   before_action only: :show do
-    verify_correct_user if @article.r_public == 0
+    verify_correct_user if ! @article.r_public?
   end
 
   def new
@@ -46,17 +48,19 @@ class SectionsController < ApplicationController
   end
 
   private
-    def set_models_variable
-      if params[:id] # edit, update, show, destroy
-        @section = Section.find(params[:id]) if params[:id]
-        @article = @section.article
-      else
-        @article = Article.find(params[:article_id]) if params[:article_id] # new
-        @article = Article.find(params[:section][:article_id]) if params[:section] && params[:section][:article_id] # create
+    def set_section_variable
+      @section = Section.find(params[:id]) if params[:id]
+      if ! @section # params[:id]が無かったか、Section.find(params[:id])で見つからなかった場合
+        flash[:warning] = I18n.t('Section_missing')
+        redirect_back(fallback_location: root_path)
       end
-      @user = @article.user
-      if ! @user
-        flash[:warning] = I18n.t('section_or_article_not_being_read')
+    end
+    def set_models_variable
+      @article = @section.article if @section
+      @article = Article.find(params[:article_id]) if params[:article_id] # new
+      @article = Article.find(params[:section][:article_id]) if params[:section] && params[:section][:article_id] # create
+      if ! @article
+        flash[:warning] = I18n.t('Article_missing')
         redirect_back(fallback_location: root_path)
       end
     end

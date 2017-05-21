@@ -5,10 +5,12 @@
     <% end %>
   </li>
   <% if login? %>
-    <li><%= link_to t('new_article'), new_article_path %></li>
-    <li><%= link_to t('edit_article'), edit_article_path(@article) %></li>
-    <li><%= link_to t('destroy_article'), @article, method: :delete, data: { confirm: 'Are you sure?' } %></li>
-    <li><%= link_to t('new_section'), new_article_section_path(@article) %></li>
+    <li><%= link_to t('New_Article'), new_article_path %></li>
+    <% if (@article.user == current_user) || @article.w_public? %>
+      <li><%= link_to t('Edit_Article'), edit_article_path(@article) %></li>
+      <li><%= link_to t('Destroy_Article'), @article, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+      <li><%= link_to t('New_Section'), new_article_section_path(@article) %></li>
+    <% end %>
   <% end %>
 <% end %>
 
@@ -27,15 +29,15 @@
 <table class="table">
   <thead>
     <tr>
-      <th class='col-md-1'><%= t('show') %></th>
-      <th class='col-md-11'><%= t('section_heading') %></th>
+      <th class='col-md-1'><%= t('Show') %></th>
+      <th class='col-md-11'><%= t('Section_Heading') %></th>
     </tr>
   </thead>
 
   <tbody>
     <% @article.ordered_sections.each do |section| %>
       <tr>
-        <td><%= link_to t('show'), section, class: 'btn btn-sm btn-info', role: 'button' %></td>
+        <td><%= link_to t('Show'), section, class: 'btn btn-sm btn-info', role: 'button' %></td>
         <td><%= section.heading %></td>
       </tr>
     <% end %>

@@ -215,22 +215,22 @@ en:
     language: language
     en: English
     ja: Japanese
-  guest: Guest
-  user: User
-  listing_articles: Listing Articles
-  log_in: Log in
-  log_out: Log out
-  sign_up: Sign up
-  profile: Profile
-  index_image: Index Image
-  new_image: New Image
-  admin: Admin
-  list_users: List Users
-  show: Show
-  name: Name
-  email: Email
-  delete: Delete
-  are_you_sure: Are you sure?
+  Guest: Guest
+  User: User
+  Listing_Articles: Listing Articles
+  Log_in: Log in
+  Log_out: Log out
+  Sign_up: Sign up
+  Profile: Profile
+  Index_Image: Index Image
+  New_Image: New Image
+  Admin: Admin
+  List_Users: List Users
+  Show: Show
+  Name: Name
+  Email: Email
+  Delete: Delete
+  Are_you_sure: Are you sure?
   title: title
   author: author
   modified_datetime: modified_datetime
@@ -239,22 +239,22 @@ en:
   cover_page_message: Cover page Jpeg Data. If no file is selected, cover page won't be changed.
   change_ordering: Change ordering
   change_section_order: You can change the order of the sections by dragging them.
-  edit_article: Edit Article
+  Edit_Article: Edit Article
   date_and_time: date & time
   following_field_can_be_empty: The following field can be empty if you want.
   cover_page_jpeg_data: cover page (jpeg data)
-  css_file: Css File
+  Css_file: Css File
   submit: submit
-  new_article: New Article
+  New_Article: New Article
   Cover: Cover
   Title: Title
   Author: Author
-  destroy_article: Destroy Article
-  new_section: New Section
-  section_heading: Section heading
+  Destroy_Article: Destroy Article
+  New_Section: New Section
+  Section_Heading: Section Heading
   image: image
-  editing_image: Editing Image
-  edit: Edit
+  Editing_Image: Editing Image
+  Edit: Edit
   Image: Image
   Input_email_password: Input email address and password, then click Log in button.
   password: password
@@ -290,7 +290,7 @@ en:
   Restore: Restore
   Upload_File: Upload File
   Upload: Upload
-  can_not_delete_self: Admin user can't delete (him/her)self.
+  can_not_delete_admin: Can't delete admin.
   user_destroyed: User was successfully destroyed.
   access_denied_resource: You don't have access to this section.
   only_owner: Only the owner is allowed to access to this section.
@@ -310,3 +310,8 @@ en:
   uuid_can_be_empty: Identifierd_UUID can be empty. Then new UUID will automatically generate.
   List_Articles: List Articles
   backup_except_image: Backup data excludes images.
+  Article_missing: Article is missing.
+  Guest_not_have_access: Guest don't have access to this section.
+  Image_missing: Image is missing.
+  Note_missing: Note is missing.
+  Section_missing: Section is missing.

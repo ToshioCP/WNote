@@ -1,15 +1,15 @@
 <% if login? %>
   <% content_for :navigation do %>
-     <li><%= link_to t('new_article'), new_article_path %></li>
+     <li><%= link_to t('New_Article'), new_article_path %></li>
   <% end %>
 <% end %>
 
-<h2><%= t('listing_articles') %></h2>
+<h2><%= t('Listing_Articles') %></h2>
 
 <table class="table">
   <thead>
     <tr>
-      <th class='col-md-1'><%= t('show') %></th>
+      <th class='col-md-1'><%= t('Show') %></th>
       <th class='col-md-1'><%= t('Cover') %></th>
       <th class='col-md-3'><%= t('Title') %></th>
       <th class='col-md-3'><%= t('Author') %></th>
@@ -20,7 +20,7 @@
   <tbody>
     <% @articles.each do |article| %>
       <tr>
-        <td><%= link_to t('show'), article, class: 'btn btn-sm btn-info', role: 'button' %></td>
+        <td><%= link_to t('Show'), article, class: 'btn btn-sm btn-info', role: 'button' %></td>
         <% if article.icon_base64 %>
           <td><%= image_tag("data:image/png;base64," + article.icon_base64, size: "32x32", alt: "<cover image>") %> </td>
         <% else %>

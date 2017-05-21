@@ -1,3 +1,11 @@
+<% content_for :navigation do %>
+  <li>
+    <%= link_to articles_path do %>
+      <%= t('List_Articles') %>
+    <% end %>
+  </li>
+<% end %>
+
 <div class="page-header jumbotron">
   <h1>WNote
   <small>
@@ -17,7 +25,7 @@ User can write notes and sets their r_public/w_public switch.
 Now, it's time to enter this site!!
 </p>
 <p class="text-center">
-  <%= link_to t('listing_articles'), articles_path, class: "btn btn-primary btn-lg", role: "button" %>
+  <%= link_to t('Listing_Articles'), articles_path, class: "btn btn-primary btn-lg", role: "button" %>
 </p>
 <p>
 <a href="http://getbootstrap.com/">Bootstrap</a>

@@ -3,17 +3,17 @@
 <table class="table">
   <thead>
     <tr>
-      <th class='col-md-1'><%= t('show') %></th>
-      <th class='col-md-3'><%= t('name') %></th>
-      <th class='col-md-3'><%= t('email') %></th>
-      <th class='col-md-5'><%= t('admin') %></th>
+      <th class='col-md-1'><%= t('Delete') %></th>
+      <th class='col-md-3'><%= t('Name') %></th>
+      <th class='col-md-3'><%= t('Email') %></th>
+      <th class='col-md-5'><%= t('Admin') %></th>
     </tr>
   </thead>
 
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= link_to t('delete'), "/admin/users/#{user.id}", {method: :delete, data: { confirm: t('are_you_sure') },
+        <td><%= link_to t('Delete'), "/admin/users/#{user.id}", {method: :delete, data: { confirm: t('Are_you_sure') },
                class: 'btn btn-sm btn-danger', role: 'button'} %></td>
         <td><%= user.name %></td>
         <td><%= user.email %></td>

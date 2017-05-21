@@ -6,11 +6,11 @@ before_action :admin_check
   end
 
   def delete_user
-    id = params[:id]
-    if id.to_i == current_user.id then
-      redirect_to root_path, flash: { warnings: I18n.t('can_not_delete_self') }
+    @user = User.find(params[:id]) # @user is Not current_user !!
+    if @user.admin then
+      redirect_to root_path, flash: { warnings: I18n.t('can_not_delete_admin') }
     else
-      User.find(id).destroy
+      @user.destroy
       redirect_to root_path, flash: { success: I18n.t('user_destroyed') }
     end
   end

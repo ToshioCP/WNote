@@ -20,10 +20,10 @@
       <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
     <% end %>
   </li>
-  <% if login? %>
+  <% if (@article.user == current_user) || @article.w_public? %>
     <li><%= link_to t('New_Note'), new_section_note_path(@section) %></li>
     <li><%= link_to t('Edit_Note'), edit_note_path(@note) %></li>
-    <li><%= link_to t('Delete_Note'), @note, method: :delete, data: { confirm: t('are_you_sure') } %></li>
+    <li><%= link_to t('Delete_Note'), @note, method: :delete, data: { confirm: t('Are_you_sure') } %></li>
   <% end %>
 <% end %>
 

@@ -15,8 +15,15 @@ class ApplicationController < ActionController::Base
     { locale: I18n.locale }
   end
 
+  def verify_user
+    if ! (@user = current_user)
+      flash[:warning] = I18n.t('Guest_not_have_access')
+      redirect_back(fallback_location: root_path)
+    end
+  end
+
   def verify_correct_user
-    if ! (current_user && current_user == @user)
+    if ! (current_user && current_user == @article.user)
       flash[:warning] = I18n.t('only_owner')
       redirect_back(fallback_location: root_path)
     end

@@ -109,7 +109,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     follow_redirect!
     assert_response :success
-    assert_equal "Admin user can't delete (him/her)self.", flash[:warning]
+    assert_equal "Can't delete admin.", flash[:warning]
   end
 
   test "should reset articles" do
