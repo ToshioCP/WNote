@@ -19,7 +19,7 @@ ActiveRecord::FixtureSet.context_class.send :include, FixtureFileHelpers
 
 # helper method for all the test
 def login
-  post "/logins/create", params: {email: @user.email, password: 'aabbccddeeffgg'}
+  post "/logins/create", params: {email: "lxboyjp@gmail.com", password: 'aabbccddeeffgg'}
   follow_redirect!
 end
 def login_another_user

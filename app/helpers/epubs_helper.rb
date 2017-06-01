@@ -1,0 +1,2 @@
+module EpubsHelper
+end

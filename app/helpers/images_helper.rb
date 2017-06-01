@@ -128,7 +128,7 @@ module ImagesHelper
             w = width ? "width = \"#{width}\"" : ""
             h = height ? "height = \"#{height}\"" : ""
             c = cl ? "class = \"#{cl}\"" : ""
-            line = line + "<img src=\"./images/b_#{name}.jpg\" " + w + " " + h + " />"
+            line = line + "<img id=\"image_#{name}\" src=\"./images/b_#{name}.jpg\" " + w + " " + h + " />"
             image_ids << image.id
           end
         else

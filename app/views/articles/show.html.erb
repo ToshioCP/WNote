@@ -23,7 +23,7 @@
     <% end %>
     <span style='padding-left: 30px'><%= @article.author %> / <%= @article.modified_datetime %></span>
     <% if current_user == @article.user %>
-      <%= link_to 'Epub', "#{@article.id}/epub", class: 'btn btn-sm btn-warning', role: 'button' %>
+      <%= link_to 'Epub', article_epub_path(@article), class: 'btn btn-sm btn-warning', role: 'button' %>
     <% end %>
   </small>
   </h1>

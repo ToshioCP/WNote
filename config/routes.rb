@@ -18,9 +18,9 @@ Rails.application.routes.draw do
 #   Since the user is singular resource, it is not included in the nest. 
 # (user - ) articles - sections - notes
 # (user - ) images
-  get 'articles/:id/epub', to: 'articles#epub'
   resources :articles do
     resources :sections, only: :new
+    resource :epub, only: :show
   end
   resources :sections, except: [:index, :new] do
     resources :notes, only: :new
