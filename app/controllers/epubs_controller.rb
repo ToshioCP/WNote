@@ -145,8 +145,9 @@ EOS
 <link rel=\"stylesheet\" type=\"text/css\" href=\"./css/text.css\"/>
 </head>
 <body>
-<h1>#{@article.title}</h1>
-<h1>目次</h1>
+<div id=\"title\">#{@article.title}</div>
+<div id=\"author\">#{@article.author}</div>
+<div id=\"toc\">目次</div>
 EOS
       @article.ordered_sections.each do |section|
         @xhtml_data << "<a href=\"#section#{section.id}\"><h3>#{section.heading}</h3></a>\n"
