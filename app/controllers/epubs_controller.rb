@@ -150,7 +150,7 @@ EOS
 <div id=\"toc\">目次</div>
 EOS
       @article.ordered_sections.each do |section|
-        @xhtml_data << "<a href=\"#section#{section.id}\"><h3>#{section.heading}</h3></a>\n"
+        @xhtml_data << "<div class=\"section\"><a href=\"#section#{section.id}\">#{section.heading}</a></div>\n"
         @xhtml_data << "<ul>\n"
         section.ordered_notes.each do |note|
           @xhtml_data << "<li><a href=\"#note#{note.id}\">#{note.title}</a></li>\n"
