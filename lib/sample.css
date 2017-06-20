@@ -1,22 +1,49 @@
 @charset "utf-8";
-@namespace "http://www.w3.org/1999/xhtml";
+
+/* title page | 標題紙 */
+div#title {
+  margin: 2em 0em;
+  text-align: center;
+  font-size: 4em;
+}
+div#author {
+  margin: 5em 0em;
+  text-align: center;
+  font-size: 2em;
+}
+
+/* table of contents | 目次 */
+div.section {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-size: 120%;
+}
+div.note {
+  margin-left: 1em;
+}
+
+/* headings | 見出し */
+
+/* table of contents | 目次 */
 h1 {
   page-break-before: always;
 }
+h1#html_toc {
+  page-break-before: always;
+  margin: 2em 0em;
+  font-size: x-large;
+}
+/* section heading | セクション */
 h2 {
   page-break-before: always;
 }
-div#title {
-  line-height: 30vh;
-  text-align: center;
-  font-size: x-large;
+h2.section{
+  font-family: sans-serif;
 }
-div#author {
-  line-height: 30vh;
-  text-align: center;
-  font-size: large;
+/* note's title | メモの見出し */ 
+h3.note {
+  margin: 2em 0em 1em;
+  font-family: serif;
+  background-color: #82ED03;
 }
-div#toc {
-  page-break-before: always;
-  font-size: x-large;
-}
+
