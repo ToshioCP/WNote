@@ -114,7 +114,7 @@ mode=1と2を区別することによって、プログラムが分かりやす�
           line = line + n[1]
         elsif n[0] == :C
           name, width, height, cl = image_element(n[1])
-          image = name ? Image.find_by(name: "#{@user.id}_#{name}") : nil
+          image = name ? Image.find_by(name: "#{@article.user.id}_#{name}") : nil
           if image
             w = width ? "width = \"#{width}\"" : ""
             h = height ? "height = \"#{height}\"" : ""
