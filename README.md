@@ -35,7 +35,7 @@ WNote is in development level.
 
 ### Installation notes
 
-Ruby 2.4.1, Rails 5.1.0 are required. 
+Ruby 2.4.1, Rails 5.1.4 are required. 
 WNote is configured to use Postgrsql as its database.
 If you want to use other database ( for example Mysql ), modify 'Gemfile', 'config/database.yml'.
 With Postgresql you should notice that postgresql user has to be SUPERUSER.
@@ -85,7 +85,7 @@ WNoteはまだ開発段階です。
 
 ### インストレーション
 
-Ruby 2.4.1, Rails 5.1.0 が必要です。
+Ruby 2.4.1, Rails 5.1.4 が必要です。
 WNoteは、「Ruby on Rails」とPostgresqlデータベースが必要です。
 というのは、HerokuではデータベースにPostgreaqlが使われているからです。
 もしも、他のデータベース（例えばMySql）を使いたい場合は、'Gemfile'と'config/database.yml'をそれに合うように変更してください。
