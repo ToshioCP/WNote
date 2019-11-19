@@ -42,7 +42,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'redcarpet'
 
 # Use Bootstrap
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap-sass', '~> 3.4.1'
 
 # zip compression
 gem 'rubyzip'
