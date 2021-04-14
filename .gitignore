@@ -31,3 +31,5 @@
 #Ignore sass cache file
 .sass-cache
 *.css.map
+
+vendor
