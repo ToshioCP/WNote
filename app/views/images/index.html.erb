@@ -1,5 +1,5 @@
 <% content_for :navigation do %>
-  <li><%= link_to t('Listing_Articles'), articles_path%></li>
+  <li><%= link_to t('Listing_Articles'), articles_path, class: "nav-link"%></li>
 <% end %>
 
 <h2>Listing Images of <%= @user.name %></h2>
@@ -24,9 +24,8 @@
         <% else %>
           <td></td>
         <% end %>
-        <td><%= link_to t('Delete'), image, method: :delete, class: "btn btn-danger", role: "button" %></td>
+        <td><%= link_to t('Delete'), image, data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "btn btn-danger", role: "button" %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-

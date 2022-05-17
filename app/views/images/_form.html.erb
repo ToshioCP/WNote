@@ -1,4 +1,4 @@
-<%= form_for @image do |f| %>
+<%= form_with model: @image do |f| %>
   <% if @image.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@image.errors.count, "error") %> prohibited this note from being saved:</h2>
@@ -11,15 +11,15 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= f.label t('Name') %><br>
-    <%= f.text_field :name, options={class: "form-control", placeholder: "Name"} %>
+  <div class="mb-3">
+    <%= f.label t('Name'), class: "form-label" %><br>
+    <%= f.text_field :name, {class: "form-control", placeholder: "Name"} %>
   </div>
-  <div class="form-group">
-    <%= f.label t('image') %><br>
-    <%= f.file_field :image, accept: 'image/jpeg' %>
+  <div class="mb-3">
+    <%= f.label t('image'), class: "form-label" %><br>
+    <%= f.file_field :image, accept: 'image/jpeg', class: "form-control" %>
   </div>
   <div style="margin-top:5px;">
-    <%= f.submit options={class: "btn btn-primary"} %>
+    <%= f.submit class: "btn btn-primary" %>
   </div>
 <% end %>

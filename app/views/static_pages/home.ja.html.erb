@@ -1,15 +1,15 @@
 <% content_for :navigation do %>
   <li>
-    <%= link_to articles_path do %>
+    <%= link_to articles_path, class: "nav-link" do %>
       <%= t('List_Articles') %>
     <% end %>
   </li>
 <% end %>
 
-<div class="page-header jumbotron">
-  <h1>WNote
-  <small>
-    は「Web Note」
+<div class="container-fluid" style="background-color:#eeeeee;">
+  <h1 class="display-1 text-center pt-5 pb-5">WNote
+  <small class="h2 text-secondary">
+    is 'Web Note'
   </small>
   </h1>
 </div>
@@ -31,9 +31,4 @@ WNoteは「Web Note」のことです。
 <a href="http://getbootstrap.com/">Bootstrap</a>
 は、最も人気のあるHTML, CSS, JavaScriptのフレームワークで、レスポンシブ・デザイン、モバイル対応のウェブ開発に活用できます。
 このサイトのデザインもBootstrapを使って実現しています。
-</p>
-<p>
-<a href="http://glyphicons.com/license/">Glyphicons</a>
-は精密な単色のアイコンと記号のライブラリで、単純さと使いやすさを重要視して作られました。
-このサイトでもメニューバーなどでグリフィコンズを使っています。
 </p>

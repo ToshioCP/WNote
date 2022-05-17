@@ -1,31 +1,33 @@
 <% content_for :navigation do %>
-  <li>
-    <%= link_to(@article) do %>
-      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><%= t('Article') %>
-    <% end %>
+  <li class="nav-item">
+    <%= link_to @article, class: "nav-link" do
+      svg_icon('arrow-up')
+      svg_icon('arrow-up')
+      t('Article')
+    end %>
   </li>
-  <li>
-    <%= link_to(@section) do %>
-      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><%= t('Section') %>
-    <% end %>
+  <li class="nav-item">
+    <%= link_to @section, class: "nav-link" do
+      svg_icon('arrow-up')
+      t('Section')
+    end %>
   </li>
-  <% if(@prev_note) then %><li><% else %><li class="disabled"><% end %>
-    <%= link_to(@prev_note || '#') do %>
-      <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-    <% end %>
+  <li class="nav-item">
+    <%= link_to (@prev_note || '#'), class: (@prev_note ? "nav-link" : "nav-link disabed") do
+      svg_icon('arrow-left')
+    end %>
   </li>
-  <% if(@next_note) then %><li><% else %><li class="disabled"><% end %>
-    <%= link_to(@next_note || '#') do %>
-      <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-    <% end %>
+  <li class="nav-item">
+    <%= link_to (@next_note || '#'), class: (@next_note ? "nav-link" : "nav-link disabed") do
+      svg_icon('arrow-right')
+    end %>
   </li>
   <% if edit_permission? @article %>
-    <li><%= link_to t('New_Note'), new_section_note_path(@section) %></li>
-    <li><%= link_to t('Edit_Note'), edit_note_path(@note) %></li>
+    <li class="nav-item"><%= link_to t('New_Note'), new_section_note_path(@section), class: "nav-link" %></li>
+    <li class="nav-item"><%= link_to t('Edit_Note'), edit_note_path(@note), class: "nav-link" %></li>
   <% end %>
   <% if destroy_permission? @article %>
-    <li><%= link_to t('Delete_Note'), @note, method: :delete, data: { confirm: t('Are_you_sure') } %></li>
+    <li class="nav-item"><%= link_to t('Delete_Note'), @note, data: {turbo_method: :delete, turbo_confirm: t('Are_you_sure')}, class: "nav-link" %></li>
   <% end %>
 <% end %>
 
@@ -33,7 +35,12 @@
   <%= @note.title %>
 </h2>
 
-<% renderer = Redcarpet::Render::HTML.new(render_options = {escape_html: true}) %>
-<% markdown = Redcarpet::Markdown.new(renderer, no_intra_emphasis: true, tables: true, lax_spacing: true, space_after_headers: true) %>
+<% renderer = Redcarpet::Render::HTML.new(escape_html: true) %>
+<% markdown = Redcarpet::Markdown.new(renderer, no_intra_emphasis: true, tables: true, fenced_code_blocks: true,\
+                                      lax_spacing: true, space_after_headers: true) %>
 <% text = markdown.render(@note.text).gsub("<table>", "<table class=\"table table-bordered\">") %>
+<%
+# See images_helper.rb for evaluate and parse.
+# The implementation for images may have to be changed.
+%>
 <%= evaluate(parse(text)).html_safe %>

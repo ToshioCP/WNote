@@ -1,26 +1,26 @@
 <% content_for :navigation do %>
-  <li>
-    <%= link_to(@article) do %>
-      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><%= t('Article') %>
-    <% end %>
+  <li class="nav-item">
+    <%= link_to articles_path, class: "nav-link" do
+      svg_icon('arrow-up') + t('List_Articles')
+    end %>
   </li>
-  <% if(@prev_section) then %><li><% else %><li class="disabled"><% end %>
-    <%= link_to(@prev_section || '#') do %>
-      <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-    <% end %>
+  <li class="nav-item">
+    <%= link_to (@prev_section || '#'), class: (@prev_section ? "nav-link" : "nav-link disabed") do
+      svg_icon('arrow-left')
+    end %>
   </li>
-  <% if(@next_section) then %><li><% else %><li class="disabled"><% end %>
-    <%= link_to(@next_section || '#') do %>
-      <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-    <% end %>
+  <li class="nav-item">
+    <%= link_to @next_section || '#', class: (@next_section ? "nav-link" : "nav-link disabed") do
+      svg_icon('arrow-right')
+    end %>
   </li>
   <% if edit_permission? @article %>
-    <li><%= link_to t('New_Section'), new_article_section_path(@article) %></li>
-    <li><%= link_to t('Edit_Section'), edit_section_path(@section) %></li>
-    <li><%= link_to t('New_Note'), new_section_note_path(@section) %></li>
+    <li class="nav-item"><%= link_to t('New_Section'), new_article_section_path(@article), class: "nav-link" %></li>
+    <li class="nav-item"><%= link_to t('Edit_Section'), edit_section_path(@section), class: "nav-link" %></li>
+    <li class="nav-item"><%= link_to t('New_Note'), new_section_note_path(@section), class: "nav-link" %></li>
   <% end %>
   <% if destroy_permission? @article %>
-    <li><%= link_to t('Delete_Section'), @section, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+    <li class="nav-item"><%= link_to t('Delete_Section'), @section, data: {turbo_method: :delete,  turbo_confirm: 'Are you sure?'}, class: "nav-link" %></li>
   <% end %>
 <% end %>
 
@@ -49,4 +49,3 @@
   <% end %>
   </tbody>
 </table>
-

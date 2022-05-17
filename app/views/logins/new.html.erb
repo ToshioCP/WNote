@@ -1,16 +1,17 @@
-<div class="page-header">
-  <h1><%= t('Log_in')+' ' %><small><%= t('Input_email_password') %></small></h1>
-</div>
-<%= form_tag({controller: "logins", action: "create"}, method: "post") do %>
-  <div class="form-group">
-    <%= label_tag :email, t('Email') %><br>
-    <%= text_field_tag :email, nil, class: "form-control", placeholder: t('Email') %>
+<h1>
+  <%= t('Log_in')+' ' %><small class="h4 text-secondary"><%= t('Input_email_password') %></small>
+</h1>
+
+<%= form_with url: "/logins/create", method: "post" do |f| %>
+  <div class="mb-3">
+    <%= f.label :email, t('Email'), class: "form-label" %><br>
+    <%= f.text_field :email, class: "form-control", placeholder: t('Email') %>
   </div>
-  <div class="form-group">
-    <%= label_tag :password, t('password') %><br>
-    <%= password_field_tag :password, nil, class: "form-control", placeholder: t('password') %>
+  <div class="mb-3">
+    <%= f.label :password, t('password'), class: "form-label" %><br>
+    <%= f.password_field :password, class: "form-control", placeholder: t('password') %>
   </div>
-  <div class="form-group">
-    <%= submit_tag t('Log_in'), class: "btn btn-primary" %>
+  <div class="mb-3">
+    <%= f.submit t('Log_in'), class: "btn btn-primary" %>
   </div>
 <% end %>

@@ -1,14 +1,14 @@
 <% content_for :navigation do %>
-  <li>
-    <%= link_to articles_path do %>
+  <li class="nav-item">
+    <%= link_to articles_path, class: "nav-link" do %>
       <%= t('List_Articles') %>
     <% end %>
   </li>
 <% end %>
 
-<div class="page-header jumbotron">
-  <h1>WNote
-  <small>
+<div class="container-fluid" style="background-color:#eeeeee;">
+  <h1 class="display-1 text-center pt-5 pb-5">WNote
+  <small class="h2 text-secondary">
     is 'Web Note'
   </small>
   </h1>
@@ -31,9 +31,4 @@ Now, it's time to enter this site!!
 <a href="http://getbootstrap.com/">Bootstrap</a>
  is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.
 This site is designed with bootstrap.
-</p>
-<p>
-<a href="http://glyphicons.com/license/">Glyphicons</a>
- is a library of precisely prepared monochromatic icons and symbols, created with an emphasis to simplicity and easy orientation.
-You will find glyphincons in this site (in menubar and so on).
 </p>

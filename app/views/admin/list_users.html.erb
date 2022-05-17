@@ -1,6 +1,6 @@
 <h2><%= t('listing_users') %></h2>
 
-<table class="table">
+<table class='table'>
   <thead>
     <tr>
       <th class='col-md-1'><%= t('Delete') %></th>
@@ -13,8 +13,10 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= link_to t('Delete'), "/admin/users/#{user.id}", {method: :delete, data: { confirm: t('Are_you_sure') },
-               class: 'btn btn-sm btn-danger', role: 'button'} %></td>
+        <td><%= link_to t('Delete'), "/admin/users/#{user.id}",
+                           data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'},
+                           class: 'btn btn-danger btn-sm', role: 'button' %>
+        </td>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
         <td><%= user.admin %></td>
@@ -22,4 +24,3 @@
     <% end %>
   </tbody>
 </table>
-

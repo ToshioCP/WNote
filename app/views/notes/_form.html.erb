@@ -1,4 +1,4 @@
-<%= form_for @note do |f| %>
+<%= form_with model: @note do |f| %>
   <% if @note.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@note.errors.count, "error") %> prohibited this note from being saved:</h2>
@@ -11,16 +11,16 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= f.label t('section') %><br>
+  <div class="mb-3">
+    <%= f.label t('section'), class: "form-label" %><br>
     <%= f.collection_select(:section_id, @article.sections, :id, :heading, options = {}, html_options = {class: "form-control"}) %>
   </div>
-  <div class="form-group">
-    <%= f.label t('title') %><br>
+  <div class="mb-3">
+    <%= f.label t('title'), class: "form-label" %><br>
     <%= f.text_field :title, options={class: "form-control", placeholder: t('title')} %>
   </div>
-  <div class="form-group">
-    <%= f.label t('text') %><br>
+  <div class="mb-3">
+    <%= f.label t('text'), class: "form-label" %><br>
     <%= f.text_area :text, options={class: "form-control",rows: "10", placeholder: t('text')} %>
   </div>
   <div style="margin-top:5px;">

@@ -1,21 +1,20 @@
 <% content_for :navigation do %>
-  <li>
-    <%= link_to articles_path do %>
+  <li class="nav-item">
+    <%= link_to articles_path, class: "nav-link" do %>
       <%= t('List_Articles') %>
     <% end %>
   </li>
 <% end %>
 
-<div class="page-header">
-  <h1>
-    <span><%= @user.name %></span>
-    <%= link_to t('Edit'), edit_user_path, class: "btn btn-primary", role: "button" %>
-    <%= link_to t('Backup_data'), user_backup_path, class: "btn btn-primary", role: "button" %>
-    <%= link_to t('Restore_data'), user_upload_path, class: "btn btn-primary", role: "button" %>
-    <%= link_to t('Reset'), user_reset_path, class: "btn btn-danger", role: "button" %>
-    <%= link_to t('Delete_Account'), user_path, method: :delete,  data: { confirm: t('Are_you_sure') }, class: "btn btn-danger", role: "button" %>
-  </h1>
-</div>
+<h1>
+  <span><%= @user.name %></span>
+  <%= link_to t('Edit'), edit_user_path, class: "btn btn-primary", role: "button" %>
+  <%= link_to t('Backup_data'), user_backup_path, class: "btn btn-primary", role: "button" %>
+  <%= link_to t('Restore_data'), user_upload_path, class: "btn btn-primary", role: "button" %>
+  <%= link_to t('Reset'), user_reset_path, class: "btn btn-danger", role: "button" %>
+  <%= link_to t('Delete_Account'), user_path, data: {turbo_method: :delete, turbo_confirm: t('Are_you_sure') }, class: "btn btn-danger", role: "button" %>
+</h1>
+
 <p><%= t('backup_except_image') %></p>
 <h3><%= t('Profile') %></h3>
 <table class="table">
@@ -55,4 +54,3 @@
     <% end %>
   </tbody>
 </table>
-

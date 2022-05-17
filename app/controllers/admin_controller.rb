@@ -8,10 +8,10 @@ before_action :verify_admin
   def delete_user
     @user = User.find(params[:id]) # @user is Not current_user !!
     if @user.admin then
-      redirect_to root_path, flash: { warnings: I18n.t('can_not_delete_admin') }
+      redirect_to root_path, status: :see_other, flash: { warnings: I18n.t('can_not_delete_admin') }
     else
       @user.destroy
-      redirect_to root_path, flash: { success: I18n.t('user_destroyed') }
+      redirect_to root_path, status: :see_other, flash: { success: I18n.t('user_destroyed') }
     end
   end
 

@@ -60,7 +60,7 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article.destroy
-    redirect_to articles_path, flash: { success: I18n.t('x_destroyed', x: I18n.t('Article')) }
+    redirect_to articles_path, status: :see_other, flash: { success: I18n.t('x_destroyed', x: I18n.t('Article')) }
   end
 
   private

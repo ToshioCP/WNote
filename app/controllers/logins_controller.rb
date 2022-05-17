@@ -16,6 +16,6 @@ class LoginsController < ApplicationController
   def destroy
     logoff
     flash[:success] = I18n.t('log_out_success')
-    redirect_to root_path
+    redirect_to root_path, status: :see_other
   end
 end

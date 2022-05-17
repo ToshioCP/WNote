@@ -1,6 +1,6 @@
 <% if login? %>
   <% content_for :navigation do %>
-     <li><%= link_to t('New_Article'), new_article_path %></li>
+     <li><%= link_to t('New_Article'), new_article_path, class: "nav-link" %></li>
   <% end %>
 <% end %>
 
@@ -33,4 +33,3 @@
     <% end %>
   </tbody>
 </table>
-

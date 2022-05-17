@@ -2,12 +2,12 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_tag({action: :restore}, multipart: true, locale: I18n.locale) do %>
-      <div class="form-group">
-        <%= label_tag :restore_data, t('Upload_File') %>
-        <%= file_field_tag 'restore_data', {class: "file"} %>
+    <%= form_with url: "/user/restore", multipart: true, locale: I18n.locale do %>
+      <div class="mb-3">
+        <%= label_tag :restore_data, t('Upload_File'), class: "form-label" %>
+        <%= file_field_tag 'restore_data', class: "file" %>
       </div>
-      <div class="form-group">
+      <div class="mb-3">
         <%= submit_tag t('Upload'), class: "btn btn-large btn-primary" %>
       </div>
     <% end %>

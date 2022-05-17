@@ -1,4 +1,4 @@
-<%= form_for(@user, {url: user_path, method: @method, locale: I18n.locale}) do |f| %>
+<%= form_with model: @user, url: user_path, method: @method, locale: I18n.locale do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -13,35 +13,35 @@
   <% if @user.id #i.e. when editting (@user.id == nil when new) %>
     <h2><%= t('Authentication') %></h2>
     <p><%= t('password_before_edit_profile') %></p>
-    <div class="form-group">
-      <%= label_tag :current_password, t('current_password') %><br>
-      <%= password_field_tag :current_password, nil, {class: "form-control", placeholder: t('current_password')} %>
+    <div class="mb-3">
+      <%= f.label :current_password, t('current_password', class: "form-label") %><br>
+      <%= f.password_field :current_password, nil, {class: "form-control", placeholder: t('current_password')} %>
     </div>
     <hr>
     <h2><%= t('Edit_your_profile') %></h2>
     <p><%= t('do_not_fill_in') %></p>
   <% end %>
-  <div class="form-group">
-    <%= f.label t('Name') %><br>
+  <div class="mb-3">
+    <%= f.label t('Name'), class: "form-label" %><br>
     <%= f.text_field :name, options={class: "form-control", placeholder: t('Name')} %>
   </div>
-  <div class="form-group">
-    <%= f.label t('Email') %><br>
+  <div class="mb-3">
+    <%= f.label t('Email'), class: "form-label" %><br>
     <%= f.text_field :email, options={class: "form-control", placeholder: t('Email')} %>
   </div>
-  <div class="form-group">
-    <%= f.label t('email_confirmation') %><br>
+  <div class="mb-3">
+    <%= f.label t('email_confirmation'), class: "form-label" %><br>
     <%= f.text_field :email_confirmation, options={class: "form-control", placeholder: t('email_confirmation')} %>
   </div>
-  <div class="form-group">
-    <%= f.label t('password') %><br>
+  <div class="mb-3">
+    <%= f.label t('password'), class: "form-label" %><br>
     <%= f.password_field :password, options = {class: "form-control", placeholder: t('password')} %>
   </div>
-  <div class="form-group">
-    <%= f.label :"password\sconfirmation" %><br>
+  <div class="mb-3">
+    <%= f.label :"password\sconfirmation", class: "form-label" %><br>
     <%= f.password_field :password_confirmation, options = {class: "form-control", placeholder: "password confirmation"} %>
   </div>
-  <div class="form-group">
+  <div class="mb-3">
     <%= f.submit options={class: "btn btn-primary"} %>
   </div>
 <% end %>

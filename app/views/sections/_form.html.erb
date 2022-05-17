@@ -1,4 +1,4 @@
-<%= form_for @section do |f| %>
+<%= form_with model: @section do |f| %>
   <% if @section.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@section.errors.count, "error") %> prohibited this section from being saved:</h2>
@@ -11,33 +11,33 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= f.label t('article') %><br>
+  <div class="mb-3">
+    <%= f.label t('article'), class: "form-label" %><br>
     <%= f.collection_select(:article_id, @article.user.articles, :id, :title, options = {}, html_options = {class: "form-control"}) %>
   </div>
-  <div class="form-group">
-    <%= f.label t('heading') %><br>
+  <div class="mb-3">
+    <%= f.label t('heading'), class: "form-label" %><br>
     <%= f.text_field :heading, options={class: "form-control", placeholder: t('heading')} %>
   </div>
 
   <% if ! @section.note_order.blank? %>
-    <div class="form-group">
+    <div class="mb-3">
       <h5><strong>Change ordering</strong></h5>
       <%= f.hidden_field :note_order %>
       <p>
       <%= t('change_note_order') %>
       </p>
-      <ul id="sortable">
+      <ul id="sortable" class="list-group">
         <% as = ArrayString.new(@section.note_order) %>
         <% as.each do |no| %>
           <% note = @section.notes.find(no) %>
-          <li class="ui-state-default" id="<%=note.id%>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><%= note.title %></li>
+          <li class="ui-state-default list-group-item" id="<%=note.id%>"><%= note.title %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="form-group">
+  <div class="mb-3">
   <% if ! @section.note_order.blank? %>
     <%= f.submit options={class: "btn btn-primary", id: "edit_section_submit"} %>
   <% else %>
@@ -45,3 +45,4 @@
   <% end %>
   </div>
 <% end %>
+<%= javascript_include_tag "jquery", "jquery-ui.min", "wnote" %>

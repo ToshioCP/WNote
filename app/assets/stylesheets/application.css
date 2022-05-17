@@ -11,7 +11,5 @@
  * file per style scope.
  *
  *= require_self
- *= require jquery-ui/sortable
  *= require_tree .
  */
-

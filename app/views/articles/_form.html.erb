@@ -1,4 +1,4 @@
-<%= form_for(@article, multipart: true) do |f| %>
+<%= form_with model: @article, multipart: true do |f| %>
   <% if @article.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>
@@ -10,67 +10,68 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= f.label t('title') %><br>
+  <div class="mb-3">
+    <%= f.label :titile, t('title'), class: "form-label" %><br>
     <%= f.text_field :title, {class: "form-control", placeholder: "title"} %>
   </div>
-  <div class="form-group">
-    <%= f.label t('author') %><br>
+  <div class="mb-3">
+    <%= f.label :author, t('author'), class: "form-label" %><br>
     <%= f.text_field :author, {class: "form-control", placeholder: "author"} %>
   </div>
-  <div class="form-group">
-    <%= f.label t('language'), "For example, ja、en-US" %><br>
+  <div class="mb-3">
+    <%= f.label :language, t('language.language')+" (en-US or ja)", class: "form-label" %><br>
     <%= f.text_field :language, {class: "form-control", placeholder: "language"} %>
   </div>
-  <div class="form-group">
-    <%= f.label t('modified_datetime') %><br>
-    <%= f.datetime_select :modified_datetime, include_seconds: true %>
+  <div class="mb-3">
+    <%= f.label :modified_datetime, t('modified_datetime'), class: "form-label" %><br>
+    <% # include_seconds are described in DateHelper in the API reference. %>
+    <%= f.datetime_select :modified_datetime, include_seconds: true, class: "form-control" %>
   </div>
-  <div class="form-group">
-    <%= f.label t('identifier_uuid'), t('uuid_can_be_empty') %><br>
+  <div class="mb-3">
+    <%= f.label :identifier_uuid, t('uuid_can_be_empty', class: "form-label") %><br>
     <%= f.text_field :identifier_uuid, {class: "form-control", placeholder: "uuid"} %>
   </div>
-  <div class="form-group">
-    <%= f.label t('cover_image'), t('cover_page_message') %><br>
+  <div class="mb-3">
+    <%= f.label :cover_image, t('cover_page_message'), class: "form-label" %><br>
     <% if @article.icon_base64 %>
-      <%= image_tag("data:image/png;base64," + @article.icon_base64, size: "32x32", alt: "<表紙画像>") %> 
+      <%= image_tag("data:image/png;base64," + @article.icon_base64, size: "32x32", alt: "<表紙画像>") %>
     <% end %>
     <%= f.file_field :cover_image, accept: 'image/jpeg' %>
   </div>
-  <div class="form-group">
-    <%= f.label :css %><br>
+  <div class="mb-3">
+    <%= f.label :css, 'css', class: "form-label" %><br>
     <%= f.text_area :css, options={class: "form-control",rows: "5", placeholder: "css"} %>
   </div>
 
-  <div class="checkbox">
+  <div class="form-check">
     <label>
-    <%= f.check_box :r_public %> r_public
+    <%= f.check_box :r_public, class: "form-check-input" %> r_public
     </label>
   </div>
-  <div class="checkbox">
+  <div class="form-check">
     <label>
-    <%= f.check_box :w_public %> w_public
+    <%= f.check_box :w_public, class: "form-check-input" %> w_public
     </label>
   </div>
 
   <% if ! @article.section_order.blank? %>
-    <div class="form-group">
+    <div class="mb-3">
       <h5><strong><%= t('change_ordering') %></strong></h5>
       <%= f.hidden_field :section_order %>
       <p>
       <%= t('change_section_order') %>
       </p>
-      <ul id="sortable">
+      <ul id="sortable" class="list-group">
         <% as = ArrayString.new(@article.section_order) %>
         <% as.each do |no| %>
           <% section = @article.sections.find(no) %>
-          <li class="ui-state-default" id="<%=section.id%>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><%= section.heading %></li>
+          <li class="ui-state-default list-group-item" id="<%=section.id%>"><%= section.heading %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="form-group">
+  <div class="mb-3">
   <% if ! @article.section_order.blank? %>
     <%= f.submit options={class: "btn btn-primary", id: "edit_article_submit"} %>
   <% else %>
@@ -78,3 +79,4 @@
   <% end %>
   </div>
 <% end %>
+<%= javascript_include_tag "jquery", "jquery-ui.min", "wnote" %>
