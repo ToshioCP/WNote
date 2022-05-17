@@ -46,7 +46,7 @@ class NotesController < ApplicationController
   def destroy
     @note.destroy
     flash[:success] = I18n.t('x_destroyed', x: I18n.t('Note'))
-    redirect_to @section
+    redirect_to @section, status: :see_other
   end
 
   private

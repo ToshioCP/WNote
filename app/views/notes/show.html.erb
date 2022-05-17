@@ -1,15 +1,12 @@
 <% content_for :navigation do %>
   <li class="nav-item">
     <%= link_to @article, class: "nav-link" do
-      svg_icon('arrow-up')
-      svg_icon('arrow-up')
-      t('Article')
+      svg_icon('arrow-up') + svg_icon('arrow-up') + t('Article')
     end %>
   </li>
   <li class="nav-item">
     <%= link_to @section, class: "nav-link" do
-      svg_icon('arrow-up')
-      t('Section')
+      svg_icon('arrow-up') + t('Section')
     end %>
   </li>
   <li class="nav-item">

@@ -45,7 +45,7 @@ class UsersController < ApplicationController
     else
       @user.destroy
       logoff
-      redirect_to root_path, flash: { success: I18n.t('x_destroyed', x: I18n.t('User')) }
+      redirect_to root_path, status: :see_other, flash: { success: I18n.t('x_destroyed', x: I18n.t('User')) }
     end
   end
 
@@ -91,7 +91,7 @@ class UsersController < ApplicationController
         end
       end
     end
-    redirect_to user_path, flash: { success: I18n.t('backup_data_restored') } 
+    redirect_to user_path, flash: { success: I18n.t('backup_data_restored') }
   end
 
   def reset
@@ -99,7 +99,7 @@ class UsersController < ApplicationController
     # The following line can be substituted by @user.articles.each { |article| article.destroy }
     @user.articles.destroy_all
     # userのルーティングは単数（resource user）なのでuser_pathを@userにはできない
-    redirect_to user_path, flash: { success: I18n.t('x_destroyed', x: I18n.t('All_Articles')) } 
+    redirect_to user_path, flash: { success: I18n.t('x_destroyed', x: I18n.t('All_Articles')) }
   end
 
   private

@@ -36,7 +36,7 @@ class ImagesController < ApplicationController
   def destroy
     @image.destroy
     flash[:success] = I18n.t('x_destroyed', x: I18n.t('Image'))
-    redirect_to images_path
+    redirect_to images_path, status: :see_other
   end
 
   private

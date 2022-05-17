@@ -50,4 +50,4 @@
 .sass-cache
 *.css.map
 
-vendor
+vendor/bundle

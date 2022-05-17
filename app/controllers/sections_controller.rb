@@ -46,7 +46,7 @@ class SectionsController < ApplicationController
   def destroy
     @section.destroy
     flash[:success] = I18n.t('x_destroyed', x: I18n.t('Section'))
-    redirect_to @article
+    redirect_to @article, status: :see_other
   end
 
   private
