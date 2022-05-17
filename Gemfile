@@ -85,3 +85,5 @@ gem 'rubyzip'
 
 # Use rmagick. It's interface between ruby and ImageMagick.
 gem 'rmagick'
+
+gem 'terser'
