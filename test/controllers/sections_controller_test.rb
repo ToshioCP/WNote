@@ -58,7 +58,7 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
     get section_path(@section)
     assert_select 'nav' do
 #      assert_select 'a.navbar-brand', 'WNote'
-      assert_select 'a', 'Article'
+      # assert_select 'a', 'List_Articles'
       assert_select 'a', 'New Section'
       assert_select 'a', 'Edit Section'
       assert_select 'a', 'Delete Section'
@@ -122,7 +122,7 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
     login_another_user
     @article.update(w_public: 0) # off
     get edit_section_path(@section)
-    assert_response :redirect, "Incorrect user saw editing page." 
+    assert_response :redirect, "Incorrect user saw editing page."
     @article.update(w_public: 1) # on
     get edit_section_path(@section)
     assert_response :success, "The other user couldn't see editing page, though w_public was on."

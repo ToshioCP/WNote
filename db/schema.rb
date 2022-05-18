@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_19_123256) do
-
+ActiveRecord::Schema[7.0].define(version: 2021_01_19_123256) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,7 +19,7 @@ ActiveRecord::Schema.define(version: 2021_01_19_123256) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -33,7 +32,7 @@ ActiveRecord::Schema.define(version: 2021_01_19_123256) do
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -46,14 +45,14 @@ ActiveRecord::Schema.define(version: 2021_01_19_123256) do
   create_table "articles", id: :serial, force: :cascade do |t|
     t.string "title"
     t.string "author"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "section_order"
     t.integer "user_id"
     t.integer "w_public"
     t.integer "r_public"
     t.string "language"
-    t.datetime "modified_datetime"
+    t.datetime "modified_datetime", precision: nil
     t.string "identifier_uuid"
     t.binary "cover_image"
     t.text "css"
@@ -64,8 +63,8 @@ ActiveRecord::Schema.define(version: 2021_01_19_123256) do
   create_table "images", force: :cascade do |t|
     t.string "name"
     t.binary "image"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "user_id"
     t.index ["name"], name: "index_images_on_name", unique: true
     t.index ["user_id"], name: "index_images_on_user_id"
@@ -74,8 +73,8 @@ ActiveRecord::Schema.define(version: 2021_01_19_123256) do
   create_table "notes", id: :serial, force: :cascade do |t|
     t.string "title"
     t.text "text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "section_id"
     t.index ["section_id"], name: "index_notes_on_section_id"
   end
@@ -83,8 +82,8 @@ ActiveRecord::Schema.define(version: 2021_01_19_123256) do
   create_table "sections", id: :serial, force: :cascade do |t|
     t.string "heading"
     t.integer "article_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "note_order"
     t.index ["article_id"], name: "index_sections_on_article_id"
   end
@@ -93,8 +92,8 @@ ActiveRecord::Schema.define(version: 2021_01_19_123256) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "admin"
   end
 

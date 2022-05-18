@@ -30,7 +30,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     get new_article_path
     assert_response :success
     assert_select 'div.wnote-main' do
-      assert_select 'form.new_article' do
+      assert_select 'form' do
         assert_select "input.form-control[name=?]", 'article[title]'
         assert_select "input.form-control[name=?]", 'article[author]'
 #        and so on ....
@@ -57,7 +57,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_response :success
     assert_equal 'Article was successfully created.', flash[:success]
-    assert_equal article.user, @user, "Created article does not belong to the creating user." 
+    assert_equal article.user, @user, "Created article does not belong to the creating user."
   end
 
   test "guest shouldn't get create" do
@@ -132,7 +132,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     login_another_user
     @article.update(w_public: 0) # off
     get edit_article_path(@article)
-    assert_response :redirect, "Incorrect user saw editing page." 
+    assert_response :redirect, "Incorrect user saw editing page."
     @article.update(w_public: 1) # on
     get edit_article_path(@article)
     assert_response :success, "The other user couldn't see editing page, though w_public was on."

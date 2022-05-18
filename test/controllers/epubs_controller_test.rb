@@ -12,6 +12,6 @@ class EpubsControllerTest < ActionDispatch::IntegrationTest
     get article_epub_url(articles(:wnote))
     assert_response :success
     assert_equal "application/epub+zip", @response.content_type
-    assert_equal 'attachment; filename="WNote_Howto.epub"', @response.get_header('Content-Disposition')
+    assert_equal 'attachment; filename="WNote_Howto.epub"; filename*=UTF-8\'\'WNote_Howto.epub', @response.get_header('Content-Disposition')
   end
 end

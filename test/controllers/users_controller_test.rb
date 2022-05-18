@@ -57,12 +57,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
         assert_select "input[type='hidden'][value='patch']"
         assert_select 'h2', 'Authentication'
 # when using regexp
-        assert_select "input.form-control:match('name', ?)", /current_password/
+        assert_select "input.form-control:match('name', ?)", /user\[current_password\]/
 # ? is the sign of the substitution
-        assert_select "input.form-control[name=?]", 'current_password'
+        assert_select "input.form-control[name=?]", 'user[current_password]'
 # You don't need to use substitution anyway.
 # It's also OK to write like this.
-        assert_select "input.form-control[name=current_password]"
+        assert_select "input.form-control[name='user[current_password]']"
 # Those three above have the same meaning.
         assert_select 'h2', 'Edit your profile'
         assert_select "input.form-control[name=?]", 'user[name]'
