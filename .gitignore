@@ -51,3 +51,5 @@
 *.css.map
 
 vendor/bundle
+vendor/stylesheet/*
+vendor/javascript/*
