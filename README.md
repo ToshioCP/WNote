@@ -45,11 +45,11 @@ Bootstrap5 and JQuery-UI are required.
 
 1. Download WNote from this repository and decompress it.
 2. Download [Bootstrap5](https://getbootstrap.jp/).
-3. Copy bootstrap.css to (WNote)/vendor/stylesheet/bootstrap.css.
+3. Copy bootstrap.css to (WNote)/vendor/assets/stylesheet/bootstrap.css.
 4. Copy bootstrap.js to (WNote)/vendor/javascript/bootstrap.js
 5. Download [JQuery-UI 1.13.1](https://jqueryui.com/).
-6. Copy jquery-ui.js to (WNote)/vendr/javascript/jquery-ui.js
-7. Copy external/jquery/jquery.js to (WNote)/vendor/javascript/jquery.js
+6. Copy jquery-ui.js to (WNote)/vendor/assets/javascript/jquery-ui.js
+7. Copy external/jquery/jquery.js to (WNote)/vendor/assets/javascript/jquery.js
 
 After the installation above, try to run the WNote in development mode.
 
@@ -114,11 +114,11 @@ Bootstrap5 と JQuery-UI が必要です。
 
 1. WNote をこのレポジトリからダウンロードし、解凍する。
 2. [Bootstrap5](https://getbootstrap.jp/) をダウンロードする。
-3. bootstrap.css を (WNote)/vendor/stylesheet/bootstrap.css にコピーする。
-4. bootstrap.js を (WNote)/vendor/javascript/bootstrap.js にコピーする。
+3. bootstrap.css を (WNote)/vendor/assets/stylesheet/bootstrap.css にコピーする。
+4. bootstrap.js を (WNote)/vendor/assets/javascript/bootstrap.js にコピーする。
 5. [JQuery-UI 1.13.1.](https://jqueryui.com/) をダウンロードする。
 6. jquery-ui.js を (WNote)/vendr/javascript/jquery-ui.js にコピーする。
-7. external/jquery/jquery.js を (WNote)/vendor/javascript/jquery.js にコピーする。
+7. external/jquery/jquery.js を (WNote)/vendor/assets/javascript/jquery.js にコピーする。
 
 以上のインストールの後に、WNote を development mode で起動してテストしてください。
 

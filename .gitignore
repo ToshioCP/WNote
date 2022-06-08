@@ -46,10 +46,12 @@
 # But includes *.tex files
 !/doc/*.tex
 
-#Ignore sass cache file
+# Ignore sass cache file
 .sass-cache
 *.css.map
 
 vendor/bundle
-vendor/stylesheet/*
-vendor/javascript/*
+vendor/assets/*
+
+# Ignore rbenv local ruby version
+.ruby-version

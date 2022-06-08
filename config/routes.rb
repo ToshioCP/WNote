@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resource :user
   resources :images, except: :show
 # Nested resources
-#   Since the user is singular resource, it is not included in the nest. 
+#   Since the user is singular resource, it is not included in the nest.
 # (user - ) articles - sections - notes
 # (user - ) images
   resources :articles do

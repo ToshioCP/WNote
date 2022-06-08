@@ -95,7 +95,7 @@ en:
         other: "%{count} months"
       x_years:
         one: 1 year
-        other: "%{count} years"  
+        other: "%{count} years"
       x_seconds:
         one: 1 second
         other: "%{count} seconds"
@@ -316,3 +316,4 @@ en:
   Note_missing: Note is missing.
   Section_missing: Section is missing.
   ToC: Table of Contents
+  User_not_found: User not found.

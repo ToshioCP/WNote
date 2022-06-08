@@ -3,7 +3,6 @@ class UsersController < ApplicationController
 
   def new
     @user= User.new
-    @method = "post"
   end
 
   def create
@@ -20,19 +19,19 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @method = "patch"
   end
 
   def update
-    if !@user.authenticate(params[:current_password])
+    if !@user.authenticate(params[:user][:current_password])
       flash.now[:warning] = I18n.t('password_incorrect')
-      render :edit
+      render :edit, status: :unauthorized
     elsif @user.update(update_params)
       flash[:success] = I18n.t('x_updated', x: I18n.t('User'))
     # userのルーティングは単数（resource user）なのでuser_pathを@userにはできない
       redirect_to user_path
     else
-      render :edit
+      flash.now[:warning] = "Fail update."
+      render :edit, status: :forbidden
     end
   end
 
